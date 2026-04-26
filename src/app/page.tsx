@@ -1,20 +1,17 @@
 import {
-  Heading,
-  Text,
   Button,
-  Avatar,
-  RevealFx,
   Column,
-  Badge,
+  Heading,
+  Line,
+  Meta,
+  RevealFx,
   Row,
   Schema,
-  Meta,
-  Line,
+  Tag,
+  Text,
 } from "@once-ui-system/core";
-import { home, about, person, baseURL, routes } from "@/resources";
-import { Mailchimp } from "@/components";
 import { Projects } from "@/components/work/Projects";
-import { Posts } from "@/components/blog/Posts";
+import { about, baseURL, heroOffer, home, homeHighlights, person, processSteps } from "@/resources";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -28,7 +25,7 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <Column maxWidth="m" gap="xl" paddingY="12" horizontal="center">
+    <Column maxWidth="m" gap="xl" paddingTop="0" paddingBottom="12" horizontal="center">
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -42,89 +39,149 @@ export default function Home() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Column fillWidth horizontal="center" gap="m">
-        <Column maxWidth="s" horizontal="center" align="center">
+      <Column fillWidth horizontal="center" gap="xl">
+        <Column maxWidth="s" horizontal="center" align="center" gap="20">
+          <RevealFx translateY="4" horizontal="center" paddingTop="0">
+            <img
+              alt="Melvin Mihaylov logo with description"
+              src="/images/EnglishLogoWithDescriptionStretched.png"
+              style={{
+                width: "100%",
+                maxWidth: "22rem",
+                height: "auto",
+                display: "block",
+                borderRadius: "1rem",
+              }}
+            />
+          </RevealFx>
           {home.featured.display && (
-            <RevealFx
-              fillWidth
-              horizontal="center"
-              paddingTop="16"
-              paddingBottom="32"
-              paddingLeft="12"
-            >
-              <Badge
-                background="brand-alpha-weak"
-                paddingX="12"
-                paddingY="4"
-                onBackground="neutral-strong"
-                textVariant="label-default-s"
-                arrow={false}
-                href={home.featured.href}
-              >
-                <Row paddingY="2">{home.featured.title}</Row>
-              </Badge>
+            <RevealFx fillWidth horizontal="center">
+              <Tag size="l">{home.featured.title}</Tag>
             </RevealFx>
           )}
-          <RevealFx translateY="4" fillWidth horizontal="center" paddingBottom="16">
+          <RevealFx translateY="4" fillWidth horizontal="center">
             <Heading wrap="balance" variant="display-strong-l">
               {home.headline}
             </Heading>
           </RevealFx>
-          <RevealFx translateY="8" delay={0.2} fillWidth horizontal="center" paddingBottom="32">
+          <RevealFx translateY="8" delay={0.2} fillWidth horizontal="center">
             <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
               {home.subline}
             </Text>
           </RevealFx>
-          <RevealFx paddingTop="12" delay={0.4} horizontal="center" paddingLeft="12">
-            <Button
-              id="about"
-              data-border="rounded"
-              href={about.path}
-              variant="secondary"
-              size="m"
-              weight="default"
-              arrowIcon
-            >
-              <Row gap="8" vertical="center" paddingRight="4">
-                {about.avatar.display && (
-                  <Avatar
-                    marginRight="8"
-                    style={{ marginLeft: "-0.75rem" }}
-                    src={person.avatar}
-                    size="m"
-                  />
-                )}
-                {about.title}
-              </Row>
-            </Button>
+          <RevealFx delay={0.4} horizontal="center">
+            <Row gap="12" wrap horizontal="center">
+              <Button
+                id="services"
+                data-border="rounded"
+                href="/work"
+                variant="primary"
+                size="m"
+                weight="default"
+                arrowIcon
+              >
+                See services
+              </Button>
+              <Button
+                id="about"
+                data-border="rounded"
+                href={about.path}
+                variant="secondary"
+                size="m"
+                weight="default"
+                arrowIcon
+              >
+                About me
+              </Button>
+              <Button
+                data-border="rounded"
+                href={`mailto:${person.email}`}
+                variant="tertiary"
+                size="m"
+                weight="default"
+                arrowIcon
+              >
+                Get a free demo
+              </Button>
+            </Row>
+          </RevealFx>
+          <RevealFx delay={0.5} horizontal="center">
+            <Row gap="8" wrap horizontal="center">
+              {heroOffer.tags.map((tag) => (
+                <Tag key={tag} size="m">
+                  {tag}
+                </Tag>
+              ))}
+            </Row>
           </RevealFx>
         </Column>
       </Column>
-      <RevealFx translateY="16" delay={0.6}>
-        <Projects range={[1, 1]} />
-      </RevealFx>
-      {routes["/blog"] && (
-        <Column fillWidth gap="24" marginBottom="l">
-          <Row fillWidth paddingRight="64">
-            <Line maxWidth={48} />
-          </Row>
-          <Row fillWidth gap="24" marginTop="40" s={{ direction: "column" }}>
-            <Row flex={1} paddingLeft="l" paddingTop="24">
-              <Heading as="h2" variant="display-strong-xs" wrap="balance">
-                Latest from the blog
+      <Column fillWidth gap="24">
+        <Row fillWidth paddingRight="64">
+          <Line maxWidth={48} />
+        </Row>
+        <Row fillWidth gap="16" wrap>
+          {homeHighlights.map((item) => (
+            <Column
+              key={item.title}
+              flex={1}
+              background="neutral-alpha-weak"
+              border="neutral-alpha-medium"
+              radius="xl"
+              padding="24"
+              gap="12"
+              style={{ minWidth: "16rem" }}
+            >
+              <Heading as="h2" variant="heading-strong-l">
+                {item.title}
               </Heading>
-            </Row>
-            <Row flex={3} paddingX="20">
-              <Posts range={[1, 2]} columns="2" />
-            </Row>
-          </Row>
-          <Row fillWidth paddingLeft="64" horizontal="end">
-            <Line maxWidth={48} />
-          </Row>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {item.description}
+              </Text>
+            </Column>
+          ))}
+        </Row>
+        <Row fillWidth paddingLeft="64" horizontal="end">
+          <Line maxWidth={48} />
+        </Row>
+      </Column>
+      <RevealFx translateY="16" delay={0.6} fillWidth>
+        <Column fillWidth gap="24">
+          <Heading as="h2" variant="display-strong-xs" align="center">
+            Services
+          </Heading>
+          <Projects range={[1, 3]} />
         </Column>
-      )}
-      <Projects range={[2]} />
-      <Mailchimp />
+      </RevealFx>
+      <Column fillWidth gap="24" marginBottom="l">
+        <Heading as="h2" variant="display-strong-xs" align="center">
+          How it usually goes
+        </Heading>
+        <Row fillWidth gap="16" wrap>
+          {processSteps.map((step, index) => (
+            <Column
+              key={step.title}
+              flex={1}
+              background="neutral-alpha-weak"
+              border="neutral-alpha-medium"
+              radius="xl"
+              padding="24"
+              gap="12"
+              style={{ minWidth: "16rem" }}
+            >
+              <Text variant="label-default-s" onBackground="brand-weak">
+                Step {index + 1}
+              </Text>
+              <Heading as="h3" variant="heading-strong-l">
+                {step.title}
+              </Heading>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {step.description}
+              </Text>
+            </Column>
+          ))}
+        </Row>
+      </Column>
     </Column>
   );
 }

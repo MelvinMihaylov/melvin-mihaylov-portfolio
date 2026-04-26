@@ -1,5 +1,5 @@
 import { Row, IconButton, SmartLink, Text } from "@once-ui-system/core";
-import { person, social } from "@/resources";
+import { contactDetails, person, social } from "@/resources";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
@@ -30,20 +30,24 @@ export const Footer = () => {
             <SmartLink href="https://once-ui.com/products/magic-portfolio">Once UI</SmartLink>
           </Text>
         </Text>
-        <Row gap="16">
-          {social.map(
-            (item) =>
-              item.link && (
-                <IconButton
-                  key={item.name}
-                  href={item.link}
-                  icon={item.icon}
-                  tooltip={item.name}
-                  size="s"
-                  variant="ghost"
-                />
-              ),
-          )}
+        <Row gap="16" wrap horizontal="center">
+          <SmartLink href={`mailto:${contactDetails.email}`}>{contactDetails.email}</SmartLink>
+          <SmartLink href={`tel:${contactDetails.phone}`}>{contactDetails.phoneDisplay}</SmartLink>
+          {social
+            .filter((item) => item.name !== "Email")
+            .map(
+              (item) =>
+                item.link && (
+                  <IconButton
+                    key={item.name}
+                    href={item.link}
+                    icon={item.icon}
+                    tooltip={item.name}
+                    size="s"
+                    variant="ghost"
+                  />
+                ),
+            )}
         </Row>
       </Row>
       <Row height="80" hide s={{ hide: false }} />

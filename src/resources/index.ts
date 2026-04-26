@@ -11,6 +11,19 @@ export {
 } from "./content";
 
 export {
+  aboutFacts,
+  aboutHighlights,
+  contactDetails,
+  galleryDirections,
+  galleryNotes,
+  heroOffer,
+  homeHighlights,
+  processSteps,
+  serviceOffers,
+  supportOptions,
+} from "./portfolio";
+
+export {
   display,
   mailchimp,
   routes,

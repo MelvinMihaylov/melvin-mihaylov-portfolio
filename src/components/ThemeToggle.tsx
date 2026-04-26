@@ -23,6 +23,7 @@ export const ThemeToggle: React.FC = () => {
   return (
     <ToggleButton
       prefixIcon={icon}
+      size="m"
       onClick={() => setTheme(nextTheme)}
       aria-label={`Switch to ${nextTheme} mode`}
     />

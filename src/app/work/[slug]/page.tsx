@@ -1,25 +1,22 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import { getPosts } from "@/utils/utils";
 import {
-  Meta,
-  Schema,
   AvatarGroup,
-  Button,
   Column,
   Flex,
   Heading,
-  Media,
-  Text,
-  SmartLink,
-  Row,
-  Avatar,
   Line,
+  Media,
+  Meta,
+  Row,
+  Schema,
+  SmartLink,
+  Text,
 } from "@once-ui-system/core";
-import { baseURL, about, person, work } from "@/resources";
-import { formatDate } from "@/utils/formatDate";
-import { ScrollToHash, CustomMDX } from "@/components";
-import { Metadata } from "next";
+import { BrandLogo, CustomMDX, ScrollToHash } from "@/components";
 import { Projects } from "@/components/work/Projects";
+import { about, baseURL, person, work } from "@/resources";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const posts = getPosts(["src", "app", "work", "projects"]);
@@ -39,7 +36,7 @@ export async function generateMetadata({
     : routeParams.slug || "";
 
   const posts = getPosts(["src", "app", "work", "projects"]);
-  let post = posts.find((post) => post.slug === slugPath);
+  const post = posts.find((entry) => entry.slug === slugPath);
 
   if (!post) return {};
 
@@ -62,21 +59,21 @@ export default async function Project({
     ? routeParams.slug.join("/")
     : routeParams.slug || "";
 
-  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === slugPath);
+  const post = getPosts(["src", "app", "work", "projects"]).find(
+    (entry) => entry.slug === slugPath,
+  );
 
   if (!post) {
     notFound();
   }
 
-  const avatars =
-    post.metadata.team?.map((person) => ({
-      src: person.avatar,
-    })) || [];
+  const avatars = post.metadata.team?.map((member) => ({ src: member.avatar })) || [];
+  const hasTeam = (post.metadata.team?.length || 0) > 0;
 
   return (
     <Column as="section" maxWidth="m" horizontal="center" gap="l">
       <Schema
-        as="blogPosting"
+        as="webPage"
         baseURL={baseURL}
         path={`${work.path}/${post.slug}`}
         title={post.metadata.title}
@@ -94,42 +91,75 @@ export default async function Project({
       />
       <Column maxWidth="s" gap="16" horizontal="center" align="center">
         <SmartLink href="/work">
-          <Text variant="label-strong-m">Projects</Text>
+          <Text variant="label-strong-m">{work.label}</Text>
         </SmartLink>
-        <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
-          {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
-        </Text>
-        <Heading variant="display-strong-m">{post.metadata.title}</Heading>
-      </Column>
-      <Row marginBottom="32" horizontal="center">
-        <Row gap="16" vertical="center">
-          {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="s" />}
-          <Text variant="label-default-m" onBackground="brand-weak">
-            {post.metadata.team?.map((member, idx) => (
-              <span key={idx}>
-                {idx > 0 && (
-                  <Text as="span" onBackground="neutral-weak">
-                    ,{" "}
-                  </Text>
-                )}
-                <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
-              </span>
-            ))}
+        {post.metadata.subtitle && (
+          <Text variant="body-default-xs" onBackground="neutral-weak">
+            {post.metadata.subtitle}
           </Text>
+        )}
+        <Heading variant="display-strong-m">{post.metadata.title}</Heading>
+        <Text variant="body-default-m" onBackground="neutral-weak" align="center">
+          {post.metadata.summary}
+        </Text>
+      </Column>
+      {hasTeam && (
+        <Row marginBottom="32" horizontal="center">
+          <Row gap="16" vertical="center">
+            <AvatarGroup reverse avatars={avatars} size="s" />
+            <Text variant="label-default-m" onBackground="brand-weak">
+              {post.metadata.team?.map((member, idx) => (
+                <span key={`${member.name}-${idx}`}>
+                  {idx > 0 && (
+                    <Text as="span" onBackground="neutral-weak">
+                      ,{" "}
+                    </Text>
+                  )}
+                  {member.linkedIn ? (
+                    <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
+                  ) : (
+                    member.name
+                  )}
+                </span>
+              ))}
+            </Text>
+          </Row>
         </Row>
-      </Row>
-      {post.metadata.images.length > 0 && (
-        <Media priority aspectRatio="16 / 9" radius="m" alt="image" src={post.metadata.images[0]} />
+      )}
+      {post.metadata.images.length > 0 ? (
+        <Media
+          priority
+          aspectRatio="16 / 9"
+          radius="m"
+          alt={post.metadata.title}
+          src={post.metadata.images[0]}
+        />
+      ) : (
+        <Flex
+          fillWidth
+          background="neutral-alpha-weak"
+          border="neutral-alpha-medium"
+          radius="xl"
+          padding="40"
+          horizontal="center"
+        >
+          <Column horizontal="center" align="center" gap="16">
+            <BrandLogo maxWidth={120} />
+            <Text variant="label-default-s" onBackground="neutral-weak">
+              {person.name}
+            </Text>
+          </Column>
+        </Flex>
       )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
         <CustomMDX source={post.content} />
       </Column>
       <Column fillWidth gap="40" horizontal="center" marginTop="40">
-        <Line maxWidth="40" />
+        <Line maxWidth={40} />
         <Heading as="h2" variant="heading-strong-xl" marginBottom="24">
-          Related projects
+          More services
         </Heading>
-        <Projects exclude={[post.slug]} range={[2]} />
+        <Projects exclude={[post.slug]} range={[1, 2]} />
       </Column>
       <ScrollToHash />
     </Column>
