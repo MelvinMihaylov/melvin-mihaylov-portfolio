@@ -2,15 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { routes, protectedRoutes } from "@/resources";
-import { Flex, Spinner, Button, Heading, Column, PasswordInput } from "@once-ui-system/core";
-import NotFound from "@/app/not-found";
+import { protectedRoutes, routes } from "@/resources";
+import { Button, Column, Flex, Heading, PasswordInput, Spinner, Text } from "@once-ui-system/core";
 
 interface RouteGuardProps {
   children: React.ReactNode;
+  notFoundTitle: string;
+  notFoundDescription: string;
+  strings: {
+    protectedTitle: string;
+    passwordLabel: string;
+    submit: string;
+    incorrectPassword: string;
+  };
 }
 
-const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
+const RouteGuard: React.FC<RouteGuardProps> = ({
+  children,
+  notFoundTitle,
+  notFoundDescription,
+  strings,
+}) => {
   const pathname = usePathname();
   const [isRouteEnabled, setIsRouteEnabled] = useState(false);
   const [isPasswordRequired, setIsPasswordRequired] = useState(false);
@@ -72,7 +84,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       setIsAuthenticated(true);
       setError(undefined);
     } else {
-      setError("Incorrect password");
+      setError(strings.incorrectPassword);
     }
   };
 
@@ -85,24 +97,31 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   }
 
   if (!isRouteEnabled) {
-    return <NotFound />;
+    return (
+      <Column as="section" fill center paddingBottom="160">
+        <Heading marginBottom="l" variant="display-default-xs">
+          {notFoundTitle}
+        </Heading>
+        <Text onBackground="neutral-weak">{notFoundDescription}</Text>
+      </Column>
+    );
   }
 
   if (isPasswordRequired && !isAuthenticated) {
     return (
       <Column paddingY="128" maxWidth={24} gap="24" center>
         <Heading align="center" wrap="balance">
-          This page is password protected
+          {strings.protectedTitle}
         </Heading>
         <Column fillWidth gap="8" horizontal="center">
           <PasswordInput
             id="password"
-            label="Password"
+            label={strings.passwordLabel}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             errorMessage={error}
           />
-          <Button onClick={handlePasswordSubmit}>Submit</Button>
+          <Button onClick={handlePasswordSubmit}>{strings.submit}</Button>
         </Column>
       </Column>
     );

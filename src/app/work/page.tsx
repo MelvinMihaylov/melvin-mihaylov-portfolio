@@ -1,27 +1,25 @@
 import { Button, Column, Heading, Meta, Row, Schema, Text } from "@once-ui-system/core";
-import {
-  about,
-  baseURL,
-  contactDetails,
-  howItWorks,
-  person,
-  work,
-  workSupportAreas,
-  workWebsiteTypes,
-  workShowcase,
-} from "@/resources";
+import { baseURL, contactDetails, getSiteContent } from "@/resources";
+import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const { person, work } = getSiteContent(locale);
+
   return Meta.generate({
     title: work.title,
     description: work.description,
     baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(work.title)}`,
+    image: `/api/og/generate?title=${encodeURIComponent(work.title)}&role=${encodeURIComponent(person.role)}`,
     path: work.path,
   });
 }
 
-export default function Work() {
+export default async function Work() {
+  const locale = await getRequestLocale();
+  const { about, howItWorks, person, ui, work, workSupportAreas, workWebsiteTypes, workShowcase } =
+    getSiteContent(locale);
+
   return (
     <Column maxWidth="m" paddingTop="24" gap="xl">
       <Schema
@@ -30,7 +28,7 @@ export default function Work() {
         path={work.path}
         title={work.title}
         description={work.description}
-        image={`/api/og/generate?title=${encodeURIComponent(work.title)}`}
+        image={`/api/og/generate?title=${encodeURIComponent(work.title)}&role=${encodeURIComponent(person.role)}`}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -39,11 +37,10 @@ export default function Work() {
       />
       <Column fillWidth horizontal="center" align="center" gap="20">
         <Heading variant="display-strong-l" align="center">
-          What I do, explained simply.
+          {ui.work.introTitle}
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          This page is the simple version: what kinds of websites I build, what extra help I can
-          provide, and where SEO, Google visibility, hosting, and marketing-related pages fit in.
+          {work.description}
         </Text>
       </Column>
       <Column fillWidth gap="24" horizontal="center">
@@ -69,7 +66,7 @@ export default function Work() {
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Types of websites I do
+          {ui.work.websiteTypesTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {workWebsiteTypes.map((item) => (
@@ -102,7 +99,7 @@ export default function Work() {
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Support around the website
+          {ui.work.supportTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {workSupportAreas.map((item) => (
@@ -135,15 +132,14 @@ export default function Work() {
       </Column>
       <Column fillWidth horizontal="center" align="center" gap="20" marginBottom="40">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Want the simple process too?
+          {ui.work.ctaTitle}
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          The How it works page explains the full flow from first contact and examples to free
-          demo, build, SEO, hosting, and launch help.
+          {ui.work.ctaDescription}
         </Text>
         <Row gap="12" wrap horizontal="center">
           <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
-            Email me
+            {ui.work.emailCta}
           </Button>
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}

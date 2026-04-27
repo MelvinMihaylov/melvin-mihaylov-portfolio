@@ -1,17 +1,52 @@
 "use client";
 
+import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { Fade, Line, Row, ToggleButton } from "@once-ui-system/core";
 
-import { routes, about, display, howItWorks, pricing, work } from "@/resources";
+import { display, routes, type Locale } from "@/resources";
+import { LanguageToggle } from "./LanguageToggle";
 import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Header.module.scss";
 
-export const Header = () => {
+const headerRoutes = ["/", "/about", "/work", "/pricing", "/how-it-works"] as const;
+
+type HeaderProps = {
+  locale: Locale;
+  labels: {
+    about: string;
+    work: string;
+    pricing: string;
+    howItWorks: string;
+  };
+  languageToggleLabels: {
+    switchToBg: string;
+    switchToEn: string;
+  };
+  themeToggleLabels: {
+    switchToLight: string;
+    switchToDark: string;
+  };
+};
+
+export const Header = ({
+  locale,
+  labels,
+  languageToggleLabels,
+  themeToggleLabels,
+}: HeaderProps) => {
   const pathname = usePathname() ?? "";
   const router = useRouter();
   const navButtonSize = "m" as const;
+
+  useEffect(() => {
+    headerRoutes.forEach((route) => {
+      if (routes[route]) {
+        void router.prefetch(route);
+      }
+    });
+  }, [locale, router]);
 
   const scrollToPageTop = () => {
     const runScroll = () => {
@@ -90,7 +125,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="person"
                       onClick={() => navigateTo("/about")}
-                      label={about.label}
+                      label={labels.about}
                       selected={pathname === "/about"}
                       size={navButtonSize}
                     />
@@ -111,7 +146,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="grid"
                       onClick={() => navigateTo("/work")}
-                      label={work.label}
+                      label={labels.work}
                       selected={pathname.startsWith("/work")}
                       size={navButtonSize}
                     />
@@ -132,7 +167,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="card"
                       onClick={() => navigateTo("/pricing")}
-                      label={pricing.label}
+                      label={labels.pricing}
                       selected={pathname.startsWith("/pricing")}
                       size={navButtonSize}
                     />
@@ -153,7 +188,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="rocket"
                       onClick={() => navigateTo("/how-it-works")}
-                      label={howItWorks.label}
+                      label={labels.howItWorks}
                       selected={pathname.startsWith("/how-it-works")}
                       size={navButtonSize}
                     />
@@ -168,11 +203,17 @@ export const Header = () => {
                   </Row>
                 </>
               )}
+              <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              <LanguageToggle
+                locale={locale}
+                switchToBgLabel={languageToggleLabels.switchToBg}
+                switchToEnLabel={languageToggleLabels.switchToEn}
+              />
               {display.themeSwitcher && (
-                <>
-                  <Line background="neutral-alpha-medium" vert maxHeight="24" />
-                  <ThemeToggle />
-                </>
+                <ThemeToggle
+                  switchToLightLabel={themeToggleLabels.switchToLight}
+                  switchToDarkLabel={themeToggleLabels.switchToDark}
+                />
               )}
             </Row>
           </Row>

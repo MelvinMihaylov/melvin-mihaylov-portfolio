@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  AvatarGroup,
   Carousel,
   Column,
   Flex,
@@ -16,20 +15,20 @@ interface ProjectCardProps {
   priority?: boolean;
   images: string[];
   title: string;
-  content: string;
   description: string;
-  avatars: { src: string }[];
   link: string;
+  readDetailsLabel: string;
+  viewProjectLabel: string;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   href,
   images = [],
   title,
-  content,
   description,
-  avatars,
   link,
+  readDetailsLabel,
+  viewProjectLabel,
 }) => {
   return (
     <Column fillWidth gap="m">
@@ -73,31 +72,26 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </Heading>
           </Flex>
         )}
-        {(avatars?.length > 0 || description?.trim() || content?.trim()) && (
+        {description?.trim() && (
           <Column flex={7} gap="16">
-            {avatars?.length > 0 && <AvatarGroup avatars={avatars} size="m" reverse />}
-            {description?.trim() && (
-              <Text wrap="balance" variant="body-default-s" onBackground="neutral-weak">
-                {description}
-              </Text>
-            )}
+            <Text wrap="balance" variant="body-default-s" onBackground="neutral-weak">
+              {description}
+            </Text>
             <Flex gap="24" wrap>
-              {content?.trim() && (
-                <SmartLink
-                  suffixIcon="arrowRight"
-                  style={{ margin: "0", width: "fit-content" }}
-                  href={href}
-                >
-                  <Text variant="body-default-s">Read details</Text>
-                </SmartLink>
-              )}
+              <SmartLink
+                suffixIcon="arrowRight"
+                style={{ margin: "0", width: "fit-content" }}
+                href={href}
+              >
+                <Text variant="body-default-s">{readDetailsLabel}</Text>
+              </SmartLink>
               {link && (
                 <SmartLink
                   suffixIcon="arrowUpRightFromSquare"
                   style={{ margin: "0", width: "fit-content" }}
                   href={link}
                 >
-                  <Text variant="body-default-s">View project</Text>
+                  <Text variant="body-default-s">{viewProjectLabel}</Text>
                 </SmartLink>
               )}
             </Flex>

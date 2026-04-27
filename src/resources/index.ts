@@ -1,39 +1,20 @@
-// import a pre-defined template for config and content options
 export {
-  person,
-  social,
-  newsletter,
-  home,
-  about,
-  blog,
-  work,
-  pricing,
-  howItWorks,
-} from "./content";
+  contactDetails,
+  getSiteContent,
+  type MarketingShowcaseSlide,
+  type ServiceDetail,
+  type SiteContent,
+} from "./site-content";
 
 export {
-  aboutFacts,
-  aboutHighlights,
-  contactDetails,
-  heroOffer,
-  homeHighlights,
-  homeShowcase,
-  homeShowcaseSlides,
-  pricingEstimates,
-  pricingNotes,
-  pricingSummary,
-  workSupportAreas,
-  workWebsiteTypes,
-  workShowcase,
-  howItWorksCoverage,
-  howItWorksImagePrompts,
-  howItWorksIntro,
-  howItWorksPreparationNotes,
-  howItWorksSteps,
-  processSteps,
-  serviceOffers,
-  supportOptions,
-} from "./portfolio";
+  defaultLocale,
+  getAlternateLocale,
+  isLocale,
+  localeCookieName,
+  locales,
+  normalizeLocale,
+  type Locale,
+} from "./i18n";
 
 export {
   display,

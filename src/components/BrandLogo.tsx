@@ -5,7 +5,7 @@ type BrandLogoProps = {
 
 export function BrandLogo({
   maxWidth = 160,
-  alt = "Melvin Mihaylov logo",
+  alt = "Melvin Mihaylov",
 }: BrandLogoProps) {
   return (
     <img

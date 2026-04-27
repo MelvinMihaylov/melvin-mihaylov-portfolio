@@ -14,15 +14,19 @@ import {
   SpacingToken,
 } from "@once-ui-system/core";
 import { Footer, Header, RouteGuard, Providers } from "@/components";
-import { baseURL, effects, fonts, style, dataStyle, home } from "@/resources";
+import { baseURL, dataStyle, effects, fonts, getSiteContent, style } from "@/resources";
+import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const { home, person } = getSiteContent(locale);
+
   return Meta.generate({
     title: home.title,
     description: home.description,
     baseURL: baseURL,
     path: home.path,
-    image: home.image,
+    image: `/api/og/generate?title=${encodeURIComponent(home.title)}&role=${encodeURIComponent(person.role)}`,
   });
 }
 
@@ -31,11 +35,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getRequestLocale();
+  const { about, howItWorks, pricing, ui, work } = getSiteContent(locale);
+
   return (
     <Flex
       suppressHydrationWarning
       as="html"
-      lang="en"
+      lang={locale}
       fillWidth
       className={classNames(
         fonts.heading.variable,
@@ -156,7 +163,17 @@ export default async function RootLayout({
             />
           </RevealFx>
           <Flex fillWidth minHeight="8" s={{ hide: true }} />
-          <Header />
+          <Header
+            locale={locale}
+            labels={{
+              about: about.label,
+              work: work.label,
+              pricing: pricing.label,
+              howItWorks: howItWorks.label,
+            }}
+            languageToggleLabels={ui.languageToggle}
+            themeToggleLabels={ui.themeToggle}
+          />
           <Flex
             zIndex={0}
             fillWidth
@@ -167,7 +184,13 @@ export default async function RootLayout({
             flex={1}
           >
             <Flex horizontal="center" fillWidth minHeight="0">
-              <RouteGuard>{children}</RouteGuard>
+              <RouteGuard
+                notFoundTitle={ui.notFound.title}
+                notFoundDescription={ui.notFound.description}
+                strings={ui.routeGuard}
+              >
+                {children}
+              </RouteGuard>
             </Flex>
           </Flex>
           <Footer />

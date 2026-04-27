@@ -1,27 +1,31 @@
 import { Button, Column, Heading, Line, Meta, RevealFx, Row, Schema, Tag, Text } from "@once-ui-system/core";
-import {
-  about,
-  baseURL,
-  contactDetails,
-  howItWorks,
-  person,
-  pricing,
-  pricingEstimates,
-  pricingNotes,
-  pricingSummary,
-} from "@/resources";
+import { baseURL, contactDetails, getSiteContent } from "@/resources";
+import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const { person, pricing } = getSiteContent(locale);
+
   return Meta.generate({
     title: pricing.title,
     description: pricing.description,
     baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(pricing.title)}`,
+    image: `/api/og/generate?title=${encodeURIComponent(pricing.title)}&role=${encodeURIComponent(person.role)}`,
     path: pricing.path,
   });
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const locale = await getRequestLocale();
+  const { about, howItWorks, person, pricing, pricingEstimates, pricingNotes, pricingSummary, ui } =
+    getSiteContent(locale);
+  const currentRate = locale === "bg" ? "50 EUR / час" : "50 EUR / hour";
+  const standardRate = locale === "bg" ? "100 EUR / час" : "100 EUR / hour";
+  const pricingTags =
+    locale === "bg"
+      ? ["Уебсайтове", "SEO помощ", "Хостинг помощ", "Google-ready страници"]
+      : ["Websites", "SEO support", "Hosting help", "Google-ready pages"];
+
   return (
     <Column maxWidth="m" paddingTop="24" gap="xl">
       <Schema
@@ -30,7 +34,7 @@ export default function PricingPage() {
         path={pricing.path}
         title={pricing.title}
         description={pricing.description}
-        image={`/api/og/generate?title=${encodeURIComponent(pricing.title)}`}
+        image={`/api/og/generate?title=${encodeURIComponent(pricing.title)}&role=${encodeURIComponent(person.role)}`}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -65,23 +69,22 @@ export default function PricingPage() {
           >
             <Row fillWidth wrap gap="12" horizontal="between" vertical="start">
               <Text variant="label-default-s" onBackground="brand-weak">
-                Current project rate
+                {ui.pricing.currentRateLabel}
               </Text>
-              <Tag size="m">Most clients start here</Tag>
+              <Tag size="m">{ui.pricing.popularBadge}</Tag>
             </Row>
             <Heading as="h2" variant="display-strong-l">
-              50 EUR / hour
+              {currentRate}
             </Heading>
             <Text variant="body-default-l" onBackground="neutral-weak">
-              This is the current working rate for new projects. You still get the same modern
-              design work, practical communication, and launch support - just at a lighter entry
-              price.
+              {ui.pricing.currentRateDescription}
             </Text>
             <Row gap="8" wrap>
-              <Tag size="m">Websites</Tag>
-              <Tag size="m">SEO support</Tag>
-              <Tag size="m">Hosting help</Tag>
-              <Tag size="m">Google-ready pages</Tag>
+              {pricingTags.map((tag) => (
+                <Tag key={tag} size="m">
+                  {tag}
+                </Tag>
+              ))}
             </Row>
           </Column>
           <Column
@@ -93,21 +96,21 @@ export default function PricingPage() {
             style={{ minWidth: "16rem", flex: "1 1 16rem" }}
           >
             <Text variant="label-default-s" onBackground="brand-weak">
-              Standard rate
+              {ui.pricing.standardRateLabel}
             </Text>
             <Heading
               as="h2"
               variant="display-strong-s"
               style={{ textDecoration: "line-through", textDecorationThickness: "0.08em" }}
             >
-              100 EUR / hour
+              {standardRate}
             </Heading>
             <Text variant="body-default-m" onBackground="neutral-weak">
-              Current projects save 50 EUR per hour compared with the standard rate.
+              {ui.pricing.savingsDescription}
             </Text>
             <Column gap="8">
               <Text variant="label-default-s" onBackground="brand-weak">
-                Typical smaller project starts from
+                {ui.pricing.projectStartsFrom}
               </Text>
               <Heading as="h3" variant="heading-strong-xl">
                 300 EUR
@@ -121,11 +124,10 @@ export default function PricingPage() {
           <Line maxWidth={48} />
         </Row>
         <Heading as="h2" variant="display-strong-s" align="center">
-          Quick project estimates
+          {ui.pricing.estimatesTitle}
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          These are simple ballpark examples so the pricing feels easier to understand before we
-          even talk.
+          {ui.pricing.estimatesDescription}
         </Text>
         <Row fillWidth gap="16" wrap>
           {pricingEstimates.map((estimate) => (
@@ -156,7 +158,7 @@ export default function PricingPage() {
                 onBackground="neutral-weak"
                 style={{ textDecoration: "line-through", textDecorationThickness: "0.08em" }}
               >
-                Standard: {estimate.standardPrice}
+                {ui.pricing.standardPriceLabel}: {estimate.standardPrice}
               </Text>
               <Text variant="body-default-m" onBackground="neutral-weak">
                 {estimate.description}
@@ -170,7 +172,7 @@ export default function PricingPage() {
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
-          What affects the final price
+          {ui.pricing.finalPriceTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {pricingNotes.map((note) => (
@@ -196,15 +198,14 @@ export default function PricingPage() {
       </Column>
       <Column fillWidth horizontal="center" align="center" gap="20" marginBottom="40">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Want a more exact estimate?
+          {ui.pricing.ctaTitle}
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          Send a short description, a few examples you like, or even an AI-made outline and I can
-          give you a more realistic estimate and project direction.
+          {ui.pricing.ctaDescription}
         </Text>
         <Row gap="12" wrap horizontal="center">
           <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
-            Email me
+            {ui.pricing.emailCta}
           </Button>
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}

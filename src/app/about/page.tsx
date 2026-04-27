@@ -10,30 +10,28 @@ import {
   Tag,
   Text,
 } from "@once-ui-system/core";
-import {
-  about,
-  aboutFacts,
-  aboutHighlights,
-  baseURL,
-  contactDetails,
-  person,
-  processSteps,
-  social,
-  supportOptions,
-} from "@/resources";
+import { baseURL, contactDetails, getSiteContent } from "@/resources";
+import { getRequestLocale } from "@/resources/get-request-locale";
 import React from "react";
 
 export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const { about, person } = getSiteContent(locale);
+
   return Meta.generate({
     title: about.title,
     description: about.description,
     baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(about.title)}`,
+    image: `/api/og/generate?title=${encodeURIComponent(about.title)}&role=${encodeURIComponent(person.role)}`,
     path: about.path,
   });
 }
 
-export default function About() {
+export default async function About() {
+  const locale = await getRequestLocale();
+  const { about, aboutFacts, aboutHighlights, person, processSteps, social, supportOptions, ui, work } =
+    getSiteContent(locale);
+
   return (
     <Column maxWidth="m" gap="xl" paddingY="12">
       <Schema
@@ -42,7 +40,7 @@ export default function About() {
         title={about.title}
         description={about.description}
         path={about.path}
-        image={`/api/og/generate?title=${encodeURIComponent(about.title)}`}
+        image={`/api/og/generate?title=${encodeURIComponent(about.title)}&role=${encodeURIComponent(person.role)}`}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -140,7 +138,7 @@ export default function About() {
       </Row>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s">
-          How we can work together
+          {ui.about.processTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {processSteps.map((step, index) => (
@@ -155,7 +153,7 @@ export default function About() {
               style={{ minWidth: "16rem" }}
             >
               <Text variant="label-default-s" onBackground="brand-weak">
-                Step {index + 1}
+                {ui.about.stepLabel} {index + 1}
               </Text>
               <Heading as="h3" variant="heading-strong-l">
                 {step.title}
@@ -169,21 +167,20 @@ export default function About() {
       </Column>
       <Column fillWidth horizontal="center" align="center" gap="20">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Start with a free call, meeting, or first visual direction.
+          {ui.about.ctaTitle}
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          If you already have references, sketches, or even a partially built AI version of the
-          site, I can help turn that into a cleaner real project.
+          {ui.about.ctaDescription}
         </Text>
         <Row gap="12" wrap horizontal="center">
           <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
-            Send email
+            {ui.about.emailCta}
           </Button>
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}
           </Button>
-          <Button href="/work" variant="tertiary" size="m" arrowIcon>
-            See services
+          <Button href={work.path} variant="tertiary" size="m" arrowIcon>
+            {ui.about.servicesCta}
           </Button>
         </Row>
         <Row gap="8" wrap horizontal="center">

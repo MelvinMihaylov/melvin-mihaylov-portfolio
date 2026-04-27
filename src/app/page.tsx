@@ -10,30 +10,29 @@ import {
   Tag,
   Text,
 } from "@once-ui-system/core";
-import {
-  about,
-  baseURL,
-  heroOffer,
-  home,
-  homeHighlights,
-  homeShowcase,
-  homeShowcaseSlides,
-  person,
-  processSteps,
-} from "@/resources";
+import { BrandLogo } from "@/components";
 import { HomeShowcaseCarousel } from "@/components/home/HomeShowcaseCarousel";
+import { baseURL, contactDetails, getSiteContent } from "@/resources";
+import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const { home, person } = getSiteContent(locale);
+
   return Meta.generate({
     title: home.title,
     description: home.description,
     baseURL: baseURL,
     path: home.path,
-    image: home.image,
+    image: `/api/og/generate?title=${encodeURIComponent(home.title)}&role=${encodeURIComponent(person.role)}`,
   });
 }
 
-export default function Home() {
+export default async function Home() {
+  const locale = await getRequestLocale();
+  const { about, heroOffer, home, homeHighlights, homeShowcase, homeShowcaseSlides, person, processSteps, ui, work } =
+    getSiteContent(locale);
+
   return (
     <Column maxWidth="m" gap="xl" paddingTop="0" paddingBottom="12" horizontal="center">
       <Schema
@@ -42,7 +41,7 @@ export default function Home() {
         path={home.path}
         title={home.title}
         description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}`}
+        image={`/api/og/generate?title=${encodeURIComponent(home.title)}&role=${encodeURIComponent(person.role)}`}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -52,17 +51,7 @@ export default function Home() {
       <Column fillWidth horizontal="center" gap="xl">
         <Column maxWidth="s" horizontal="center" align="center" gap="20">
           <RevealFx translateY="4" horizontal="center" paddingTop="0">
-            <img
-              alt="Melvin Mihaylov logo with description"
-              src="/images/EnglishLogoWithDescriptionStretched.png"
-              style={{
-                width: "100%",
-                maxWidth: "22rem",
-                height: "auto",
-                display: "block",
-                borderRadius: "1rem",
-              }}
-            />
+            <BrandLogo maxWidth={220} alt={ui.brandLogoAlt} />
           </RevealFx>
           {home.featured.display && (
             <RevealFx fillWidth horizontal="center">
@@ -84,13 +73,13 @@ export default function Home() {
               <Button
                 id="services"
                 data-border="rounded"
-                href="/work"
+                href={work.path}
                 variant="primary"
                 size="m"
                 weight="default"
                 arrowIcon
               >
-                See what I do
+                {ui.home.primaryCta}
               </Button>
               <Button
                 id="about"
@@ -101,17 +90,17 @@ export default function Home() {
                 weight="default"
                 arrowIcon
               >
-                About me
+                {ui.home.secondaryCta}
               </Button>
               <Button
                 data-border="rounded"
-                href={`mailto:${person.email}`}
+                href={`mailto:${contactDetails.email}`}
                 variant="tertiary"
                 size="m"
                 weight="default"
                 arrowIcon
               >
-                Get a free demo
+                {ui.home.tertiaryCta}
               </Button>
             </Row>
           </RevealFx>
@@ -170,7 +159,7 @@ export default function Home() {
       </Column>
       <Column fillWidth gap="24" marginBottom="l">
         <Heading as="h2" variant="display-strong-xs" align="center">
-          How it usually goes
+          {ui.home.processTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {processSteps.map((step, index) => (
@@ -185,7 +174,7 @@ export default function Home() {
               style={{ minWidth: "16rem" }}
             >
               <Text variant="label-default-s" onBackground="brand-weak">
-                Step {index + 1}
+                {ui.home.stepLabel} {index + 1}
               </Text>
               <Heading as="h3" variant="heading-strong-l">
                 {step.title}

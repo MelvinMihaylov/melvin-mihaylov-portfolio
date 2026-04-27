@@ -1,21 +1,28 @@
 import { Button, Column, Heading, Line, Row, Tag, Text } from "@once-ui-system/core";
 import { BrandLogo } from "@/components";
-import {
-  contactDetails,
-  howItWorksCoverage,
-  howItWorksImagePrompts,
-  howItWorksIntro,
-  howItWorksPreparationNotes,
-  howItWorksSteps,
-} from "@/resources";
+import { contactDetails, getSiteContent, type Locale } from "@/resources";
 
 const cardStyle = { minWidth: "16rem" } as const;
 
-export default function HowItWorksView() {
+type HowItWorksViewProps = {
+  locale: Locale;
+};
+
+export default function HowItWorksView({ locale }: HowItWorksViewProps) {
+  const {
+    howItWorksCoverage,
+    howItWorksImagePrompts,
+    howItWorksIntro,
+    howItWorksPreparationNotes,
+    howItWorksSteps,
+    ui,
+    work,
+  } = getSiteContent(locale);
+
   return (
     <Column maxWidth="m" gap="xl" paddingTop="24" paddingBottom="40">
       <Column fillWidth horizontal="center" align="center" gap="20">
-        <BrandLogo maxWidth={96} />
+        <BrandLogo maxWidth={96} alt={ui.brandLogoAlt} />
         <Tag size="l">{howItWorksIntro.label}</Tag>
         <Heading variant="display-strong-l" align="center">
           {howItWorksIntro.title}
@@ -25,10 +32,10 @@ export default function HowItWorksView() {
         </Text>
         <Row gap="12" wrap horizontal="center">
           <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
-            Request free demo
+            {ui.howItWorks.primaryCta}
           </Button>
-          <Button href="/work" variant="secondary" size="m" arrowIcon>
-            See services
+          <Button href={work.path} variant="secondary" size="m" arrowIcon>
+            {ui.howItWorks.secondaryCta}
           </Button>
         </Row>
         <Row gap="8" wrap horizontal="center">
@@ -44,7 +51,7 @@ export default function HowItWorksView() {
           <Line maxWidth={48} />
         </Row>
         <Heading as="h2" variant="display-strong-s" align="center">
-          What I can handle for you
+          {ui.howItWorks.coverageTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {howItWorksCoverage.map((item) => (
@@ -80,7 +87,7 @@ export default function HowItWorksView() {
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
-          How the flow usually works
+          {ui.howItWorks.stepsTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {howItWorksSteps.map((step, index) => (
@@ -95,7 +102,7 @@ export default function HowItWorksView() {
               style={cardStyle}
             >
               <Text variant="label-default-s" onBackground="brand-weak">
-                Step {index + 1}
+                {ui.howItWorks.stepLabel} {index + 1}
               </Text>
               <Heading as="h3" variant="heading-strong-l">
                 {step.title}
@@ -109,7 +116,7 @@ export default function HowItWorksView() {
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
-          What helps the project move faster
+          {ui.howItWorks.preparationTitle}
         </Heading>
         <Row fillWidth gap="16" wrap>
           {howItWorksPreparationNotes.map((note) => (
@@ -135,11 +142,10 @@ export default function HowItWorksView() {
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Ready-to-use image prompt ideas
+          {ui.howItWorks.promptsTitle}
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          If you want modern visuals for the homepage or other pages, these prompt directions are
-          ready to paste into an AI image tool.
+          {ui.howItWorks.promptsDescription}
         </Text>
         <Row fillWidth gap="16" wrap>
           {howItWorksImagePrompts.map((idea) => (
@@ -160,7 +166,7 @@ export default function HowItWorksView() {
                 {idea.description}
               </Text>
               <Text variant="label-default-s" onBackground="brand-weak">
-                Prompt to paste into AI
+                {ui.howItWorks.promptLabel}
               </Text>
               <Text variant="body-default-s" onBackground="neutral-weak">
                 {idea.prompt}
@@ -171,16 +177,14 @@ export default function HowItWorksView() {
       </Column>
       <Column fillWidth horizontal="center" align="center" gap="20">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Start with a free message, examples you like, and I can build a first direction from
-          there.
+          {ui.howItWorks.ctaTitle}
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          If you already have a rough idea, references, or an AI-made plan, send it over and I can
-          shape it into a real site.
+          {ui.howItWorks.ctaDescription}
         </Text>
         <Row gap="12" wrap horizontal="center">
           <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
-            Email me
+            {ui.howItWorks.emailCta}
           </Button>
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}

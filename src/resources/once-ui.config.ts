@@ -11,8 +11,10 @@ import {
   SocialSharingConfig,
   StyleConfig,
 } from "@/types";
-import { home } from "./index";
-import { contactDetails } from "./portfolio";
+import { Geist_Mono } from "next/font/google";
+import { Nunito } from "next/font/google";
+import { defaultLocale } from "./i18n";
+import { contactDetails, getSiteContent } from "./site-content";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
 const baseURL: string = "https://demo.magic-portfolio.com";
@@ -36,25 +38,23 @@ const display: DisplayConfig = {
 // Set password in the .env file, refer to .env.example
 const protectedRoutes: ProtectedRoutesConfig = {};
 
-// Import and set font for each variant
-import { Geist } from "next/font/google";
-import { Geist_Mono } from "next/font/google";
+const defaultContent = getSiteContent(defaultLocale);
 
-const heading = Geist({
+const heading = Nunito({
   variable: "--font-heading",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   display: "swap",
 });
 
-const body = Geist({
+const body = Nunito({
   variable: "--font-body",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   display: "swap",
 });
 
-const label = Geist({
+const label = Nunito({
   variable: "--font-label",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   display: "swap",
 });
 
@@ -189,7 +189,7 @@ const schema: SchemaConfig = {
   logo: "/images/mmlogo.png",
   type: "Person",
   name: "Melvin Mihaylov",
-  description: home.description,
+  description: defaultContent.home.description,
   email: contactDetails.email,
 };
 

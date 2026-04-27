@@ -1,28 +1,23 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getPosts } from "@/utils/utils";
 import {
-  AvatarGroup,
   Column,
   Flex,
   Heading,
   Line,
-  Media,
   Meta,
   Row,
   Schema,
   SmartLink,
   Text,
 } from "@once-ui-system/core";
-import { BrandLogo, CustomMDX, ScrollToHash } from "@/components";
+import { BrandLogo, ScrollToHash } from "@/components";
 import { Projects } from "@/components/work/Projects";
-import { about, baseURL, person, work } from "@/resources";
+import { baseURL, defaultLocale, getSiteContent } from "@/resources";
+import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return getSiteContent(defaultLocale).serviceDetails.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({
@@ -30,22 +25,23 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string | string[] }>;
 }): Promise<Metadata> {
+  const locale = await getRequestLocale();
+  const { person, serviceDetails, work } = getSiteContent(locale);
   const routeParams = await params;
   const slugPath = Array.isArray(routeParams.slug)
     ? routeParams.slug.join("/")
     : routeParams.slug || "";
 
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  const post = posts.find((entry) => entry.slug === slugPath);
+  const service = serviceDetails.find((entry) => entry.slug === slugPath);
 
-  if (!post) return {};
+  if (!service) return {};
 
   return Meta.generate({
-    title: post.metadata.title,
-    description: post.metadata.summary,
+    title: service.title,
+    description: service.summary,
     baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
-    path: `${work.path}/${post.slug}`,
+    image: `/api/og/generate?title=${encodeURIComponent(service.title)}&role=${encodeURIComponent(person.role)}`,
+    path: `${work.path}/${service.slug}`,
   });
 }
 
@@ -54,35 +50,30 @@ export default async function Project({
 }: {
   params: Promise<{ slug: string | string[] }>;
 }) {
+  const locale = await getRequestLocale();
+  const { about, person, serviceDetails, ui, work } = getSiteContent(locale);
   const routeParams = await params;
   const slugPath = Array.isArray(routeParams.slug)
     ? routeParams.slug.join("/")
     : routeParams.slug || "";
 
-  const post = getPosts(["src", "app", "work", "projects"]).find(
-    (entry) => entry.slug === slugPath,
-  );
+  const service = serviceDetails.find((entry) => entry.slug === slugPath);
 
-  if (!post) {
+  if (!service) {
     notFound();
   }
-
-  const avatars = post.metadata.team?.map((member) => ({ src: member.avatar })) || [];
-  const hasTeam = (post.metadata.team?.length || 0) > 0;
 
   return (
     <Column as="section" maxWidth="m" horizontal="center" gap="l">
       <Schema
         as="webPage"
         baseURL={baseURL}
-        path={`${work.path}/${post.slug}`}
-        title={post.metadata.title}
-        description={post.metadata.summary}
-        datePublished={post.metadata.publishedAt}
-        dateModified={post.metadata.publishedAt}
-        image={
-          post.metadata.image || `/api/og/generate?title=${encodeURIComponent(post.metadata.title)}`
-        }
+        path={`${work.path}/${service.slug}`}
+        title={service.title}
+        description={service.summary}
+        datePublished={service.publishedAt}
+        dateModified={service.publishedAt}
+        image={`/api/og/generate?title=${encodeURIComponent(service.title)}&role=${encodeURIComponent(person.role)}`}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -90,76 +81,61 @@ export default async function Project({
         }}
       />
       <Column maxWidth="s" gap="16" horizontal="center" align="center">
-        <SmartLink href="/work">
+        <SmartLink href={work.path}>
           <Text variant="label-strong-m">{work.label}</Text>
         </SmartLink>
-        {post.metadata.subtitle && (
-          <Text variant="body-default-xs" onBackground="neutral-weak">
-            {post.metadata.subtitle}
-          </Text>
-        )}
-        <Heading variant="display-strong-m">{post.metadata.title}</Heading>
+        <Text variant="body-default-xs" onBackground="neutral-weak">
+          {service.subtitle}
+        </Text>
+        <Heading variant="display-strong-m">{service.title}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak" align="center">
-          {post.metadata.summary}
+          {service.summary}
         </Text>
       </Column>
-      {hasTeam && (
-        <Row marginBottom="32" horizontal="center">
-          <Row gap="16" vertical="center">
-            <AvatarGroup reverse avatars={avatars} size="s" />
-            <Text variant="label-default-m" onBackground="brand-weak">
-              {post.metadata.team?.map((member, idx) => (
-                <span key={`${member.name}-${idx}`}>
-                  {idx > 0 && (
-                    <Text as="span" onBackground="neutral-weak">
-                      ,{" "}
-                    </Text>
-                  )}
-                  {member.linkedIn ? (
-                    <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
-                  ) : (
-                    member.name
-                  )}
-                </span>
-              ))}
-            </Text>
-          </Row>
-        </Row>
-      )}
-      {post.metadata.images.length > 0 ? (
-        <Media
-          priority
-          aspectRatio="16 / 9"
-          radius="m"
-          alt={post.metadata.title}
-          src={post.metadata.images[0]}
-        />
-      ) : (
-        <Flex
-          fillWidth
-          background="neutral-alpha-weak"
-          border="neutral-alpha-medium"
-          radius="xl"
-          padding="40"
-          horizontal="center"
-        >
-          <Column horizontal="center" align="center" gap="16">
-            <BrandLogo maxWidth={120} />
-            <Text variant="label-default-s" onBackground="neutral-weak">
-              {person.name}
-            </Text>
+      <Flex
+        fillWidth
+        background="neutral-alpha-weak"
+        border="neutral-alpha-medium"
+        radius="xl"
+        padding="40"
+        horizontal="center"
+      >
+        <Column horizontal="center" align="center" gap="16">
+          <BrandLogo maxWidth={120} />
+          <Text variant="label-default-s" onBackground="neutral-weak">
+            {person.name}
+          </Text>
+        </Column>
+      </Flex>
+      <Column style={{ margin: "auto" }} as="article" maxWidth="xs" gap="24">
+        {service.sections.map((section) => (
+          <Column key={section.title} gap="12">
+            <Heading as="h2" variant="heading-strong-xl">
+              {section.title}
+            </Heading>
+            {section.description && (
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {section.description}
+              </Text>
+            )}
+            {section.bullets && (
+              <Column gap="8">
+                {section.bullets.map((bullet) => (
+                  <Text key={bullet} variant="body-default-m" onBackground="neutral-weak">
+                    - {bullet}
+                  </Text>
+                ))}
+              </Column>
+            )}
           </Column>
-        </Flex>
-      )}
-      <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
-        <CustomMDX source={post.content} />
+        ))}
       </Column>
       <Column fillWidth gap="40" horizontal="center" marginTop="40">
         <Line maxWidth={40} />
         <Heading as="h2" variant="heading-strong-xl" marginBottom="24">
-          More services
+          {ui.serviceDetails.moreServices}
         </Heading>
-        <Projects exclude={[post.slug]} range={[1, 2]} />
+        <Projects exclude={[service.slug]} range={[1, 2]} locale={locale} />
       </Column>
       <ScrollToHash />
     </Column>
