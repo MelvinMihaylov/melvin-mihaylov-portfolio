@@ -10,8 +10,18 @@ import {
   Tag,
   Text,
 } from "@once-ui-system/core";
-import { Projects } from "@/components/work/Projects";
-import { about, baseURL, heroOffer, home, homeHighlights, person, processSteps } from "@/resources";
+import {
+  about,
+  baseURL,
+  heroOffer,
+  home,
+  homeHighlights,
+  homeShowcase,
+  homeShowcaseSlides,
+  person,
+  processSteps,
+} from "@/resources";
+import { HomeShowcaseCarousel } from "@/components/home/HomeShowcaseCarousel";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -80,7 +90,7 @@ export default function Home() {
                 weight="default"
                 arrowIcon
               >
-                See services
+                See what I do
               </Button>
               <Button
                 id="about"
@@ -116,6 +126,19 @@ export default function Home() {
           </RevealFx>
         </Column>
       </Column>
+      <RevealFx translateY="12" delay={0.55} fillWidth>
+        <Column fillWidth gap="24" horizontal="center">
+          <Column maxWidth="s" horizontal="center" align="center" gap="12">
+            <Heading as="h2" variant="display-strong-xs" align="center">
+              {homeShowcase.title}
+            </Heading>
+            <Text variant="body-default-l" onBackground="neutral-weak" align="center">
+              {homeShowcase.description}
+            </Text>
+          </Column>
+          <HomeShowcaseCarousel slides={homeShowcaseSlides} />
+        </Column>
+      </RevealFx>
       <Column fillWidth gap="24">
         <Row fillWidth paddingRight="64">
           <Line maxWidth={48} />
@@ -145,14 +168,6 @@ export default function Home() {
           <Line maxWidth={48} />
         </Row>
       </Column>
-      <RevealFx translateY="16" delay={0.6} fillWidth>
-        <Column fillWidth gap="24">
-          <Heading as="h2" variant="display-strong-xs" align="center">
-            Services
-          </Heading>
-          <Projects range={[1, 3]} />
-        </Column>
-      </RevealFx>
       <Column fillWidth gap="24" marginBottom="l">
         <Heading as="h2" variant="display-strong-xs" align="center">
           How it usually goes

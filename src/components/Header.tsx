@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 import { Fade, Line, Row, ToggleButton } from "@once-ui-system/core";
 
-import { routes, about, display, gallery, work } from "@/resources";
+import { routes, about, display, howItWorks, work } from "@/resources";
 import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Header.module.scss";
 
@@ -101,22 +101,22 @@ export const Header = () => {
                   </Row>
                 </>
               )}
-              {routes["/gallery"] && (
+              {routes["/how-it-works"] && (
                 <>
                   <Row s={{ hide: true }}>
                     <ToggleButton
-                      prefixIcon="gallery"
-                      href="/gallery"
-                      label={gallery.label}
-                      selected={pathname.startsWith("/gallery")}
+                      prefixIcon="rocket"
+                      href="/how-it-works"
+                      label={howItWorks.label}
+                      selected={pathname.startsWith("/how-it-works")}
                       size={navButtonSize}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
-                      prefixIcon="gallery"
-                      href="/gallery"
-                      selected={pathname.startsWith("/gallery")}
+                      prefixIcon="rocket"
+                      href="/how-it-works"
+                      selected={pathname.startsWith("/how-it-works")}
                       size={navButtonSize}
                     />
                   </Row>

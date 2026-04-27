@@ -1,5 +1,4 @@
-import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/types";
-import { Text } from "@once-ui-system/core";
+import { About, Blog, Home, HowItWorks, Newsletter, Person, Social, Work } from "@/types";
 import { aboutFacts, contactDetails, heroOffer, serviceOffers } from "./portfolio";
 
 const person: Person = {
@@ -113,15 +112,14 @@ const work: Work = {
   path: "/work",
   label: "Work",
   title: `Work – ${person.name}`,
-  description: `Modern websites, custom work, and launch help by ${person.name}`,
+  description: `Simple overview of the website types, SEO help, Google visibility support, hosting, and launch work offered by ${person.name}.`,
 };
 
-const gallery: Gallery = {
-  path: "/gallery",
-  label: "Gallery",
-  title: `Gallery – ${person.name}`,
-  description: `Sample website directions, layouts, and visual ideas by ${person.name}`,
-  images: [],
+const howItWorks: HowItWorks = {
+  path: "/how-it-works",
+  label: "How it works",
+  title: `How it works – ${person.name}`,
+  description: `See the full website process: contact, examples, free demo, build, hosting, SEO, and launch support.`,
 };
 
-export { person, social, newsletter, home, about, blog, work, gallery };
+export { person, social, newsletter, home, about, blog, work, howItWorks };

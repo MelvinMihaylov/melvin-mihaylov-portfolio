@@ -1,13 +1,14 @@
-import { Button, Column, Heading, Meta, Row, Schema, Tag, Text } from "@once-ui-system/core";
-import { Projects } from "@/components/work/Projects";
+import { Button, Column, Heading, Meta, Row, Schema, Text } from "@once-ui-system/core";
 import {
   about,
   baseURL,
   contactDetails,
+  howItWorks,
   person,
-  processSteps,
-  supportOptions,
   work,
+  workSupportAreas,
+  workWebsiteTypes,
+  workShowcase,
 } from "@/resources";
 
 export async function generateMetadata() {
@@ -38,29 +39,42 @@ export default function Work() {
       />
       <Column fillWidth horizontal="center" align="center" gap="20">
         <Heading variant="display-strong-l" align="center">
-          What I can build right now, even before a big public portfolio is in place.
+          What I do, explained simply.
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          Instead of filling the site with weak placeholder projects, this page shows the kinds of
-          websites and support services I can offer to clients today.
+          This page is the simple version: what kinds of websites I build, what extra help I can
+          provide, and where SEO, Google visibility, hosting, and marketing-related pages fit in.
         </Text>
-        <Row gap="8" wrap horizontal="center">
-          {supportOptions.map((item) => (
-            <Tag key={item} size="m">
-              {item}
-            </Tag>
-          ))}
-        </Row>
       </Column>
-      <Projects />
+      <Column fillWidth gap="24" horizontal="center">
+        <Column maxWidth="s" horizontal="center" align="center" gap="12">
+          <Heading as="h2" variant="display-strong-s" align="center">
+            {workShowcase.title}
+          </Heading>
+          <Text variant="body-default-l" onBackground="neutral-weak" align="center">
+            {workShowcase.description}
+          </Text>
+        </Column>
+        <img
+          alt={workShowcase.alt}
+          src={workShowcase.image}
+          style={{
+            width: "100%",
+            aspectRatio: "3 / 2",
+            objectFit: "cover",
+            display: "block",
+            borderRadius: "1.5rem",
+          }}
+        />
+      </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
-          How it usually goes
+          Types of websites I do
         </Heading>
         <Row fillWidth gap="16" wrap>
-          {processSteps.map((step, index) => (
+          {workWebsiteTypes.map((item) => (
             <Column
-              key={step.title}
+              key={item.title}
               flex={1}
               background="neutral-alpha-weak"
               border="neutral-alpha-medium"
@@ -69,25 +83,63 @@ export default function Work() {
               gap="12"
               style={{ minWidth: "16rem" }}
             >
-              <Text variant="label-default-s" onBackground="brand-weak">
-                Step {index + 1}
-              </Text>
               <Heading as="h3" variant="heading-strong-l">
-                {step.title}
+                {item.title}
               </Heading>
               <Text variant="body-default-m" onBackground="neutral-weak">
-                {step.description}
+                {item.description}
               </Text>
+              <Column gap="8">
+                {item.bullets.map((bullet) => (
+                  <Text key={bullet} variant="body-default-s" onBackground="neutral-weak">
+                    - {bullet}
+                  </Text>
+                ))}
+              </Column>
+            </Column>
+          ))}
+        </Row>
+      </Column>
+      <Column fillWidth gap="24">
+        <Heading as="h2" variant="display-strong-s" align="center">
+          Support around the website
+        </Heading>
+        <Row fillWidth gap="16" wrap>
+          {workSupportAreas.map((item) => (
+            <Column
+              key={item.title}
+              flex={1}
+              background="neutral-alpha-weak"
+              border="neutral-alpha-medium"
+              radius="xl"
+              padding="24"
+              gap="12"
+              style={{ minWidth: "16rem" }}
+            >
+              <Heading as="h3" variant="heading-strong-l">
+                {item.title}
+              </Heading>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {item.description}
+              </Text>
+              <Column gap="8">
+                {item.bullets.map((bullet) => (
+                  <Text key={bullet} variant="body-default-s" onBackground="neutral-weak">
+                    - {bullet}
+                  </Text>
+                ))}
+              </Column>
             </Column>
           ))}
         </Row>
       </Column>
       <Column fillWidth horizontal="center" align="center" gap="20" marginBottom="40">
         <Heading as="h2" variant="display-strong-s" align="center">
-          Want to test the fit first?
+          Want the simple process too?
         </Heading>
         <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          Start with a free call and a free demo direction before committing to a full build.
+          The How it works page explains the full flow from first contact and examples to free
+          demo, build, SEO, hosting, and launch help.
         </Text>
         <Row gap="12" wrap horizontal="center">
           <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
@@ -95,6 +147,9 @@ export default function Work() {
           </Button>
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}
+          </Button>
+          <Button href={howItWorks.path} variant="tertiary" size="m" arrowIcon>
+            {howItWorks.label}
           </Button>
         </Row>
       </Column>

@@ -22,7 +22,7 @@ const routes: RoutesConfig = {
   "/about": true,
   "/work": true,
   "/blog": false,
-  "/gallery": true,
+  "/how-it-works": true,
 };
 
 const display: DisplayConfig = {

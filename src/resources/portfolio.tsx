@@ -22,9 +22,37 @@ export type ProcessStep = {
   description: string;
 };
 
-export type GalleryDirection = {
+export type HowItWorksCoverage = {
   title: string;
-  subtitle: string;
+  description: string;
+  bullets: string[];
+};
+
+export type ImagePromptIdea = {
+  title: string;
+  description: string;
+  prompt: string;
+};
+
+export type MarketingShowcase = {
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+};
+
+export type MarketingShowcaseSlide = {
+  image: string;
+  alt: string;
+  variant: "landscape" | "portrait";
+  objectPosition?: string;
+  backgroundPosition?: string;
+};
+
+export type ServiceInfoBlock = {
+  title: string;
+  description: string;
+  bullets: string[];
 };
 
 export const contactDetails = {
@@ -48,6 +76,115 @@ export const heroOffer = {
     "Custom requests",
   ],
 } as const;
+
+export const homeShowcase: MarketingShowcase = {
+  title: "What I build for clients",
+  description:
+    "From portfolios and business websites to landing pages and cleaner brand presentations, this is the kind of modern visual direction I build for clients who need a strong first impression.",
+  image: "/images/landingMarketingImage4.png",
+  alt: "Homepage design concept using Melvin Mihaylov branding and colors",
+};
+
+export const homeShowcaseSlides: MarketingShowcaseSlide[] = [
+  {
+    image: "/images/landingMarketingImage4.png",
+    alt: "Homepage design concept using Melvin Mihaylov branding and colors",
+    variant: "landscape",
+    objectPosition: "center center",
+    backgroundPosition: "center center",
+  },
+  {
+    image: "/images/landingMarketingImage3.png",
+    alt: "Branded website concept using Melvin Mihaylov logo and cyan color palette",
+    variant: "portrait",
+    objectPosition: "center top",
+    backgroundPosition: "center center",
+  },
+];
+
+export const workShowcase: MarketingShowcase = {
+  title: "Simple overview of what I do",
+  description:
+    "This page is here to explain the kinds of websites I build and the extra help I can provide around SEO, Google visibility, hosting, launch, and marketing-focused pages.",
+  image: "/images/landingMarketingImage2.png",
+  alt: "Examples of marketplace, shop, and custom website design work",
+};
+
+export const workWebsiteTypes: ServiceInfoBlock[] = [
+  {
+    title: "Business websites and catalogues",
+    description:
+      "For local businesses, studios, products, restaurants, menus, and company presentation sites that need to look clear, modern, and trustworthy.",
+    bullets: [
+      "Service websites and business presentation pages",
+      "Catalogues, menus, and landing pages",
+      "Clear structure that makes the offer easy to understand",
+    ],
+  },
+  {
+    title: "Portfolio and visual websites",
+    description:
+      "For creators, photographers, architects, beauty brands, car projects, and businesses that need a stronger visual presentation.",
+    bullets: [
+      "Portfolio websites and personal brands",
+      "Gallery-style layouts and visual sections",
+      "Custom pages shaped around the style of the brand",
+    ],
+  },
+  {
+    title: "Online shops and sales pages",
+    description:
+      "For smaller stores, product launches, and pages that need cleaner product presentation and a more confident buying flow.",
+    bullets: [
+      "Smaller online shops and product pages",
+      "Sales pages and launch pages",
+      "Cleaner product structure and more trust-focused presentation",
+    ],
+  },
+  {
+    title: "AI-started projects and rebuilds",
+    description:
+      "If a website already started with ChatGPT, Claude, or another AI tool, I can clean it up, rebuild weak parts, and get it ready for real use.",
+    bullets: [
+      "Cleanup of AI-generated drafts",
+      "Fix unfinished sections and weak layout decisions",
+      "Prepare the project for hosting, launch, and later updates",
+    ],
+  },
+];
+
+export const workSupportAreas: ServiceInfoBlock[] = [
+  {
+    title: "SEO optimization",
+    description:
+      "I can help structure the site so it is easier for Google to understand, index, and present properly.",
+    bullets: [
+      "Clear headings, page structure, and metadata",
+      "Better internal page flow and content direction",
+      "Practical improvements for Google indexing readiness",
+    ],
+  },
+  {
+    title: "Google marketing pages and campaigns",
+    description:
+      "If you need campaign support, I can build landing pages and website sections that fit ads, offers, and lead generation better.",
+    bullets: [
+      "Landing pages for ads or campaigns",
+      "Clear offer sections and stronger calls to action",
+      "Website structure shaped around services and search intent",
+    ],
+  },
+  {
+    title: "Hosting, domains, and launch help",
+    description:
+      "The project does not have to stop at the design. I can help with the practical technical side too.",
+    bullets: [
+      "Hosting and domain setup help",
+      "Launch fixes, cleanup, and go-live support",
+      "Ongoing updates if the site needs changes after launch",
+    ],
+  },
+];
 
 export const homeHighlights: PortfolioHighlight[] = [
   {
@@ -191,44 +328,143 @@ export const aboutFacts: PortfolioFact[] = [
   },
 ];
 
-export const galleryDirections: GalleryDirection[] = [
+export const howItWorksIntro = {
+  label: "From first message to launch",
+  title: "I can help with the whole website flow, not just the final pages.",
+  description:
+    "That can include logo direction, website theme and design, a free demo, SEO and marketing-oriented structure, plus hosting and launch help when the site is ready.",
+  tags: [
+    "Logo direction",
+    "Website theme",
+    "Free demo",
+    "SEO setup",
+    "Marketing support",
+    "Hosting",
+  ],
+} as const;
+
+export const howItWorksCoverage: HowItWorksCoverage[] = [
   {
-    title: "Premium business website",
-    subtitle: "For services, catalogues, and strong first impressions",
+    title: "Visual direction and brand basics",
+    description:
+      "If the brand is still rough, I can help shape the logo direction, color palette, typography, and overall theme so the website feels consistent.",
+    bullets: [
+      "Logo refresh or first design direction",
+      "Color, typography, and section style choices",
+      "Reference-based visual mood and layout direction",
+    ],
   },
   {
-    title: "Visual portfolio",
-    subtitle: "For creators, personal brands, and studio pages",
+    title: "Website design and build",
+    description:
+      "Once the direction is clear, I can build the homepage and inner pages around your business, your content, and the actions you want people to take.",
+    bullets: [
+      "Custom homepage and supporting pages",
+      "Responsive layout for phone and desktop",
+      "Contact, inquiry, or presentation sections built around your goal",
+    ],
   },
   {
-    title: "Clean online shop",
-    subtitle: "For smaller stores and product launches",
+    title: "SEO and marketing support",
+    description:
+      "The structure can be prepared so Google can understand the site more easily, with on-page SEO basics and marketing-minded sections that support visibility.",
+    bullets: [
+      "Clear headings, metadata, and page structure",
+      "Service and landing sections shaped for search intent",
+      "Support for Google indexing readiness and visibility basics",
+    ],
   },
   {
-    title: "Gallery-first layout",
-    subtitle: "For cars, interiors, beauty, travel, or photography",
-  },
-  {
-    title: "Landing page demo",
-    subtitle: "A fast first concept to test an idea before paying",
+    title: "Hosting and launch help",
+    description:
+      "I can stay involved after the build too, so going live does not become your problem alone.",
+    bullets: [
+      "Hosting and domain setup help",
+      "Launch cleanup and final checks",
+      "Ongoing updates or support after the site goes live",
+    ],
   },
 ];
 
-export const galleryNotes: PortfolioHighlight[] = [
+export const howItWorksSteps: ProcessStep[] = [
   {
-    title: "Free demo direction available",
+    title: "Contact and goals",
     description:
-      "If you are not ready to commit yet, a simple first concept can help you decide if the style feels right.",
+      "You tell me what the business does, what kind of website you need, and what result you want from it.",
   },
   {
-    title: "Good on phones from the start",
+    title: "Examples and references",
     description:
-      "The layouts are planned to feel modern and polished on mobile, not just stretched down from desktop.",
+      "If you already know styles, layouts, competitors, or websites you like, send them. Even an AI-made outline or plan is useful.",
   },
   {
-    title: "Useful even after AI drafts",
+    title: "Free demo direction",
     description:
-      "These directions also work if you already have a project started with AI and need help making it real.",
+      "Before a full commitment, I can prepare a free first demo or visual direction so you can see whether the approach feels right.",
+  },
+  {
+    title: "Build and refine",
+    description:
+      "After the direction is approved, I build the pages, adjust the details, and shape the site around your feedback.",
+  },
+  {
+    title: "Launch and support",
+    description:
+      "I can handle hosting, SEO improvements, Google indexing support, and the practical launch tasks after the design work is done.",
+  },
+];
+
+export const howItWorksPreparationNotes: PortfolioHighlight[] = [
+  {
+    title: "Knowing the goal helps a lot",
+    description:
+      "Even a simple note about whether you want leads, bookings, product sales, or a cleaner brand presence makes the project easier to shape.",
+  },
+  {
+    title: "Examples save time",
+    description:
+      "If you can show sites, colors, layouts, or sections you like, it becomes much easier to match the style you have in mind.",
+  },
+  {
+    title: "AI plans are welcome",
+    description:
+      "If you used ChatGPT, Claude, or another AI tool to outline your pages or ideas, send it. That can speed up the whole process.",
+  },
+  {
+    title: "Basic content is a big help",
+    description:
+      "Services, short texts, contact details, and any existing logo or images make the first version much stronger.",
+  },
+];
+
+export const howItWorksImagePrompts: ImagePromptIdea[] = [
+  {
+    title: "Homepage hero image",
+    description:
+      "Use this for the home page hero or a main banner that should feel premium, modern, and clean.",
+    prompt:
+      "Modern premium business website hero image, elegant workspace with laptop showing a stylish website mockup, soft natural light, clean desk, subtle cyan and neutral tones, realistic photography, minimal composition, rounded visual framing, no text, lots of negative space, polished and trustworthy.",
+  },
+  {
+    title: "Branding and design section image",
+    description:
+      "Useful for sections about logo work, theme direction, colors, and overall design identity.",
+    prompt:
+      "Creative branding moodboard scene with logo sketches, typography samples, color swatches, wireframes, modern studio desk, premium minimal aesthetic, soft shadows, realistic photography, rounded objects and corners, neutral background, no text overlays.",
+  },
+  {
+    title: "SEO and launch support image",
+    description:
+      "Good for pages that talk about SEO, Google visibility, marketing support, hosting, or launch help.",
+    prompt:
+      "Modern SEO and website launch concept, laptop and phone showing clean analytics and search-style interface elements, professional business atmosphere, soft blue and gray palette, realistic photo illustration, rounded UI shapes, no text, modern and credible.",
+  },
+  {
+    title: "Process or contact section image",
+    description:
+      "Useful for process, contact, or support sections when you want the page to feel approachable instead of corporate.",
+    prompt:
+      "Warm modern collaboration scene between web designer and client, laptop with website wireframes, clean office interior, soft daylight, minimal premium styling, rounded furniture and shapes, realistic photography, approachable but professional, no text.",
   },
 ];
 
