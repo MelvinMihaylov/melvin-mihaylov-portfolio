@@ -130,7 +130,7 @@ export const Header = () => {
                 <>
                   <Row s={{ hide: true }}>
                     <ToggleButton
-                      prefixIcon="document"
+                      prefixIcon="card"
                       onClick={() => navigateTo("/pricing")}
                       label={pricing.label}
                       selected={pathname.startsWith("/pricing")}
@@ -139,7 +139,7 @@ export const Header = () => {
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
-                      prefixIcon="document"
+                      prefixIcon="card"
                       onClick={() => navigateTo("/pricing")}
                       selected={pathname.startsWith("/pricing")}
                       size={navButtonSize}

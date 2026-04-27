@@ -20,6 +20,7 @@ import {
   PiGridFourDuotone,
   PiBookBookmarkDuotone,
   PiImageDuotone,
+  PiCreditCardDuotone,
 } from "react-icons/pi";
 
 import {
@@ -39,6 +40,7 @@ export const iconLibrary: Record<string, IconType> = {
   person: PiUserCircleDuotone,
   grid: PiGridFourDuotone,
   book: PiBookBookmarkDuotone,
+  card: PiCreditCardDuotone,
   openLink: HiOutlineLink,
   calendar: HiCalendarDays,
   home: PiHouseDuotone,

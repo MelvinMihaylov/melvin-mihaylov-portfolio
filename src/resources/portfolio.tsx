@@ -57,6 +57,7 @@ export type ServiceInfoBlock = {
 };
 
 export type PricingEstimate = {
+  label: string;
   title: string;
   hours: string;
   discountedPrice: string;
@@ -198,15 +199,16 @@ export const workSupportAreas: ServiceInfoBlock[] = [
 ];
 
 export const pricingSummary = {
-  label: "50% off current rate",
-  title: "Simple pricing without agency-style guessing.",
+  label: "Current offer: 50% off",
+  title: "Clear pricing, practical estimates, and no agency-style guessing.",
   description:
-    "The standard rate is 100 EUR per hour. Right now I am offering 50% off, which means the working rate is 50 EUR per hour for current projects.",
-  tags: ["100 EUR / hour standard", "50 EUR / hour current rate", "50% off"],
+    "The standard rate is 100 EUR per hour, but current projects are priced at 50 EUR per hour. The goal is to keep the work modern, useful, and professionally done without making the starting budget feel heavier than it needs to be.",
+  tags: ["50 EUR / hour current rate", "100 EUR / hour standard rate", "Free demo direction"],
 } as const;
 
 export const pricingEstimates: PricingEstimate[] = [
   {
+    label: "Best for simpler websites",
     title: "Simple portfolio or catalogue",
     hours: "6-7 hours",
     discountedPrice: "300-350 EUR",
@@ -215,6 +217,7 @@ export const pricingEstimates: PricingEstimate[] = [
       "Good for a smaller site that introduces the business clearly, looks modern, and covers the main information without too many custom sections.",
   },
   {
+    label: "Most common business scope",
     title: "Business website up to 10 pages",
     hours: "8-10 hours",
     discountedPrice: "400-500 EUR",
@@ -223,6 +226,7 @@ export const pricingEstimates: PricingEstimate[] = [
       "Best for businesses that need more service pages, stronger structure, clearer presentation, and a more complete website from start to finish.",
   },
   {
+    label: "Fast launch option",
     title: "Landing page or campaign page",
     hours: "4-6 hours",
     discountedPrice: "200-300 EUR",
@@ -231,6 +235,7 @@ export const pricingEstimates: PricingEstimate[] = [
       "Useful for Google campaigns, offers, launches, or one focused page that needs a stronger message and better conversion flow.",
   },
   {
+    label: "Custom estimate",
     title: "Marketplace or more custom platform",
     hours: "Based on scope",
     discountedPrice: "Custom estimate",
@@ -242,17 +247,17 @@ export const pricingEstimates: PricingEstimate[] = [
 
 export const pricingNotes: PortfolioHighlight[] = [
   {
-    title: "What changes the hours",
+    title: "What changes the final estimate",
     description:
       "The time depends on how many pages are needed, whether the text and images are ready, how many revisions you want, and whether custom functionality is involved.",
   },
   {
-    title: "SEO and launch help can be included",
+    title: "SEO, hosting, and launch can be part of the same project",
     description:
       "SEO setup, Google indexing preparation, hosting help, domains, and launch support can be part of the same project instead of being handled separately.",
   },
   {
-    title: "Examples make pricing clearer",
+    title: "Examples make the estimate faster and clearer",
     description:
       "If you already know what style you want or have examples, the estimate becomes much easier to make and usually faster to deliver.",
   },
