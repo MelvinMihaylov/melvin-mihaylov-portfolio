@@ -16,8 +16,21 @@ import { Nunito } from "next/font/google";
 import { defaultLocale } from "./i18n";
 import { contactDetails, getSiteContent } from "./site-content";
 
-// IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://demo.magic-portfolio.com";
+const normalizeBaseURL = (value: string) => value.replace(/\/+$/, "");
+
+const resolveBaseURL = () => {
+  const configuredURL =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : undefined) ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+    "https://melvin-mihaylov-portfolio.vercel.app";
+
+  return normalizeBaseURL(configuredURL);
+};
+
+const baseURL: string = resolveBaseURL();
 
 const routes: RoutesConfig = {
   "/": true,

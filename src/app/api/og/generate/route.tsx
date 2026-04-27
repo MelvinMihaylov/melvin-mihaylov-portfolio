@@ -1,13 +1,14 @@
 import { ImageResponse } from "next/og";
-import { baseURL, defaultLocale, getSiteContent } from "@/resources";
+import { defaultLocale, getSiteContent } from "@/resources";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
   const { person } = getSiteContent(defaultLocale);
-  let url = new URL(request.url);
-  let title = url.searchParams.get("title") || person.name;
-  let role = url.searchParams.get("role") || person.role;
+  const url = new URL(request.url);
+  const title = url.searchParams.get("title") || person.name;
+  const role = url.searchParams.get("role") || person.role;
+  const assetOrigin = url.origin;
 
   async function loadGoogleFont(font: string) {
     const url = `https://fonts.googleapis.com/css2?family=${font}`;
@@ -65,7 +66,7 @@ export async function GET(request: Request) {
           }}
         >
           <img
-            src={baseURL + person.avatar}
+            src={`${assetOrigin}${person.avatar}`}
             style={{
               width: "12rem",
               height: "12rem",
@@ -90,18 +91,18 @@ export async function GET(request: Request) {
             >
               {person.name}
             </span>
-              <span
-                style={{
-                  fontSize: "2.5rem",
+            <span
+              style={{
+                fontSize: "2.5rem",
                 lineHeight: "2.5rem",
                 whiteSpace: "pre-wrap",
                 textWrap: "balance",
-                  opacity: "0.6",
-                }}
-              >
-                {role}
-              </span>
-            </div>
+                opacity: "0.6",
+              }}
+            >
+              {role}
+            </span>
+          </div>
           </div>
       </div>
     </div>,
