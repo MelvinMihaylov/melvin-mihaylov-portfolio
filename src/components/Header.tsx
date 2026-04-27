@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Fade, Line, Row, ToggleButton } from "@once-ui-system/core";
 
@@ -10,7 +10,32 @@ import styles from "./Header.module.scss";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
+  const router = useRouter();
   const navButtonSize = "m" as const;
+
+  const scrollToPageTop = () => {
+    const runScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.body.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    };
+
+    runScroll();
+
+    window.requestAnimationFrame(runScroll);
+    window.setTimeout(runScroll, 80);
+  };
+
+  const navigateTo = (target: string) => {
+    if (pathname === target) {
+      scrollToPageTop();
+      return;
+    }
+
+    router.push(target, { scroll: true });
+    scrollToPageTop();
+  };
 
   return (
     <>
@@ -53,7 +78,7 @@ export const Header = () => {
               {routes["/"] && (
                 <ToggleButton
                   prefixIcon="home"
-                  href="/"
+                  onClick={() => navigateTo("/")}
                   selected={pathname === "/"}
                   size={navButtonSize}
                 />
@@ -64,7 +89,7 @@ export const Header = () => {
                   <Row s={{ hide: true }}>
                     <ToggleButton
                       prefixIcon="person"
-                      href="/about"
+                      onClick={() => navigateTo("/about")}
                       label={about.label}
                       selected={pathname === "/about"}
                       size={navButtonSize}
@@ -73,7 +98,7 @@ export const Header = () => {
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="person"
-                      href="/about"
+                      onClick={() => navigateTo("/about")}
                       selected={pathname === "/about"}
                       size={navButtonSize}
                     />
@@ -85,7 +110,7 @@ export const Header = () => {
                   <Row s={{ hide: true }}>
                     <ToggleButton
                       prefixIcon="grid"
-                      href="/work"
+                      onClick={() => navigateTo("/work")}
                       label={work.label}
                       selected={pathname.startsWith("/work")}
                       size={navButtonSize}
@@ -94,7 +119,7 @@ export const Header = () => {
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="grid"
-                      href="/work"
+                      onClick={() => navigateTo("/work")}
                       selected={pathname.startsWith("/work")}
                       size={navButtonSize}
                     />
@@ -106,7 +131,7 @@ export const Header = () => {
                   <Row s={{ hide: true }}>
                     <ToggleButton
                       prefixIcon="rocket"
-                      href="/how-it-works"
+                      onClick={() => navigateTo("/how-it-works")}
                       label={howItWorks.label}
                       selected={pathname.startsWith("/how-it-works")}
                       size={navButtonSize}
@@ -115,7 +140,7 @@ export const Header = () => {
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="rocket"
-                      href="/how-it-works"
+                      onClick={() => navigateTo("/how-it-works")}
                       selected={pathname.startsWith("/how-it-works")}
                       size={navButtonSize}
                     />

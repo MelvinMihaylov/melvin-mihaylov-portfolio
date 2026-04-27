@@ -43,6 +43,7 @@ export type MarketingShowcase = {
 
 export type MarketingShowcaseSlide = {
   image: string;
+  darkImage?: string;
   alt: string;
   variant: "landscape" | "portrait";
   objectPosition?: string;
@@ -88,6 +89,7 @@ export const homeShowcase: MarketingShowcase = {
 export const homeShowcaseSlides: MarketingShowcaseSlide[] = [
   {
     image: "/images/landingMarketingImage4.png",
+    darkImage: "/images/landingMarketingImage4ForDarkTheme.png",
     alt: "Homepage design concept using Melvin Mihaylov branding and colors",
     variant: "landscape",
     objectPosition: "center center",
@@ -95,6 +97,7 @@ export const homeShowcaseSlides: MarketingShowcaseSlide[] = [
   },
   {
     image: "/images/landingMarketingImage3.png",
+    darkImage: "/images/landingMarketingImage3ForDarkTheme.png",
     alt: "Branded website concept using Melvin Mihaylov logo and cyan color palette",
     variant: "portrait",
     objectPosition: "center top",

@@ -1,10 +1,12 @@
 "use client";
 
+import { useTheme } from "@once-ui-system/core";
 import { useEffect, useState } from "react";
 import styles from "./HomeShowcaseCarousel.module.scss";
 
 type HomeShowcaseSlide = {
   image: string;
+  darkImage?: string;
   alt: string;
   variant: "landscape" | "portrait";
   objectPosition?: string;
@@ -18,7 +20,13 @@ interface HomeShowcaseCarouselProps {
 const rotationDelay = 5200;
 
 export function HomeShowcaseCarousel({ slides }: HomeShowcaseCarouselProps) {
+  const { theme } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [currentTheme, setCurrentTheme] = useState("light");
+
+  useEffect(() => {
+    setCurrentTheme(document.documentElement.getAttribute("data-theme") || "light");
+  }, [theme]);
 
   useEffect(() => {
     if (slides.length < 2) {
@@ -42,6 +50,8 @@ export function HomeShowcaseCarousel({ slides }: HomeShowcaseCarouselProps) {
     <div className={styles.frame}>
       {slides.map((slide, index) => {
         const isActive = index === activeIndex;
+        const slideImage =
+          currentTheme === "dark" && slide.darkImage ? slide.darkImage : slide.image;
 
         return (
           <div
@@ -57,7 +67,7 @@ export function HomeShowcaseCarousel({ slides }: HomeShowcaseCarouselProps) {
               className={styles.background}
               alt=""
               aria-hidden="true"
-              src={slide.image}
+              src={slideImage}
               style={{ objectPosition: slide.backgroundPosition ?? slide.objectPosition }}
             />
             <div className={styles.overlay} />
@@ -66,7 +76,7 @@ export function HomeShowcaseCarousel({ slides }: HomeShowcaseCarouselProps) {
                 <img
                   className={styles.image}
                   alt={isActive ? slide.alt : ""}
-                  src={slide.image}
+                  src={slideImage}
                   style={{ objectPosition: slide.objectPosition }}
                 />
               </div>
