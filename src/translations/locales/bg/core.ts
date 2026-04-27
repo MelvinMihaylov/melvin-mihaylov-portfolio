@@ -96,7 +96,7 @@ const bgCoreSection = {
     lastName: "Mihaylov",
     name: "Melvin Mihaylov",
     role: "Уеб разработчик",
-    avatar: "/images/mmlogo.png",
+    avatar: "/images/me.png",
     email: contactDetails.email,
     location: "Europe/Sofia",
     languages: ["Български", "English"],

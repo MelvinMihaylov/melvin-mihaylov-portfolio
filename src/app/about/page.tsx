@@ -4,13 +4,12 @@ import {
   Column,
   Heading,
   IconButton,
-  Meta,
   Row,
   Schema,
   Tag,
   Text,
 } from "@once-ui-system/core";
-import { baseURL, contactDetails, getSiteContent } from "@/resources";
+import { baseURL, buildPageMetadata, contactDetails, getOgImagePath, getSiteContent } from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 import React from "react";
 
@@ -18,12 +17,11 @@ export async function generateMetadata() {
   const locale = await getRequestLocale();
   const { about, person } = getSiteContent(locale);
 
-  return Meta.generate({
+  return buildPageMetadata({
     title: about.title,
     description: about.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(about.title)}&role=${encodeURIComponent(person.role)}`,
     path: about.path,
+    image: getOgImagePath(about.title, person.role),
   });
 }
 
@@ -40,7 +38,7 @@ export default async function About() {
         title={about.title}
         description={about.description}
         path={about.path}
-        image={`/api/og/generate?title=${encodeURIComponent(about.title)}&role=${encodeURIComponent(person.role)}`}
+        image={getOgImagePath(about.title, person.role)}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,

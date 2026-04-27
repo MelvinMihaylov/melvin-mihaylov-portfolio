@@ -3,7 +3,6 @@ import {
   Column,
   Heading,
   Line,
-  Meta,
   RevealFx,
   Row,
   Schema,
@@ -12,19 +11,18 @@ import {
 } from "@once-ui-system/core";
 import { BrandLogo } from "@/components";
 import { HomeShowcaseCarousel } from "@/components/home/HomeShowcaseCarousel";
-import { baseURL, contactDetails, getSiteContent } from "@/resources";
+import { baseURL, buildPageMetadata, contactDetails, getOgImagePath, getSiteContent } from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
   const locale = await getRequestLocale();
   const { home, person } = getSiteContent(locale);
 
-  return Meta.generate({
+  return buildPageMetadata({
     title: home.title,
     description: home.description,
-    baseURL: baseURL,
     path: home.path,
-    image: `/api/og/generate?title=${encodeURIComponent(home.title)}&role=${encodeURIComponent(person.role)}`,
+    image: getOgImagePath(home.title, person.role),
   });
 }
 
@@ -41,7 +39,7 @@ export default async function Home() {
         path={home.path}
         title={home.title}
         description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}&role=${encodeURIComponent(person.role)}`}
+        image={getOgImagePath(home.title, person.role)}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -51,7 +49,12 @@ export default async function Home() {
       <Column fillWidth horizontal="center" gap="xl">
         <Column maxWidth="s" horizontal="center" align="center" gap="20">
           <RevealFx translateY="4" horizontal="center" paddingTop="0">
-            <BrandLogo maxWidth={220} alt={ui.brandLogoAlt} />
+            <BrandLogo
+              maxWidth={360}
+              alt={ui.brandLogoAlt}
+              src="/images/EnglishLogoWithDescriptionStretched.png"
+              radius="1.5rem"
+            />
           </RevealFx>
           {home.featured.display && (
             <RevealFx fillWidth horizontal="center">

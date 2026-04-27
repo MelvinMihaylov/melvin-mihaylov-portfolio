@@ -8,25 +8,23 @@ import {
   Background,
   Column,
   Flex,
-  Meta,
   opacity,
   RevealFx,
   SpacingToken,
 } from "@once-ui-system/core";
 import { Footer, Header, RouteGuard, Providers } from "@/components";
-import { baseURL, dataStyle, effects, fonts, getSiteContent, style } from "@/resources";
+import { buildPageMetadata, dataStyle, effects, fonts, getGlobalStructuredData, getOgImagePath, getSiteContent, style } from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
   const locale = await getRequestLocale();
   const { home, person } = getSiteContent(locale);
 
-  return Meta.generate({
+  return buildPageMetadata({
     title: home.title,
     description: home.description,
-    baseURL: baseURL,
     path: home.path,
-    image: `/api/og/generate?title=${encodeURIComponent(home.title)}&role=${encodeURIComponent(person.role)}`,
+    image: getOgImagePath(home.title, person.role),
   });
 }
 
@@ -37,6 +35,7 @@ export default async function RootLayout({
 }>) {
   const locale = await getRequestLocale();
   const { about, howItWorks, pricing, ui, work } = getSiteContent(locale);
+  const structuredData = getGlobalStructuredData(locale);
 
   return (
     <Flex
@@ -52,6 +51,13 @@ export default async function RootLayout({
       )}
     >
       <head>
+        {structuredData.map((entry, index) => (
+          <script
+            key={`structured-data-${index}`}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(entry) }}
+          />
+        ))}
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{

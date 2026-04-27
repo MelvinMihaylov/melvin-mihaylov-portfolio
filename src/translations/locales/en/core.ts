@@ -89,7 +89,7 @@ const enCoreSection = {
     lastName: "Mihaylov",
     name: "Melvin Mihaylov",
     role: "Web developer",
-    avatar: "/images/mmlogo.png",
+    avatar: "/images/me.png",
     email: contactDetails.email,
     location: "Europe/Sofia",
     languages: ["English", "Bulgarian"],

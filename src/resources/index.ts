@@ -30,3 +30,6 @@ export {
   effects,
   dataStyle,
 } from "./once-ui.config";
+
+export { buildPageMetadata, getCanonicalUrl, getOgImagePath, searchRobotsDirectives } from "./seo";
+export { getGlobalStructuredData } from "./structured-data";

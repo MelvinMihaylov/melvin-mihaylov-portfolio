@@ -1,17 +1,16 @@
-import { Button, Column, Heading, Line, Meta, RevealFx, Row, Schema, Tag, Text } from "@once-ui-system/core";
-import { baseURL, contactDetails, getSiteContent } from "@/resources";
+import { Button, Column, Heading, Line, RevealFx, Row, Schema, Tag, Text } from "@once-ui-system/core";
+import { baseURL, buildPageMetadata, contactDetails, getOgImagePath, getSiteContent } from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
   const locale = await getRequestLocale();
   const { person, pricing } = getSiteContent(locale);
 
-  return Meta.generate({
+  return buildPageMetadata({
     title: pricing.title,
     description: pricing.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(pricing.title)}&role=${encodeURIComponent(person.role)}`,
     path: pricing.path,
+    image: getOgImagePath(pricing.title, person.role),
   });
 }
 
@@ -34,7 +33,7 @@ export default async function PricingPage() {
         path={pricing.path}
         title={pricing.title}
         description={pricing.description}
-        image={`/api/og/generate?title=${encodeURIComponent(pricing.title)}&role=${encodeURIComponent(person.role)}`}
+        image={getOgImagePath(pricing.title, person.role)}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,

@@ -5,7 +5,6 @@ import {
   Flex,
   Heading,
   Line,
-  Meta,
   Row,
   Schema,
   SmartLink,
@@ -13,7 +12,7 @@ import {
 } from "@once-ui-system/core";
 import { BrandLogo, ScrollToHash } from "@/components";
 import { Projects } from "@/components/work/Projects";
-import { baseURL, defaultLocale, getSiteContent } from "@/resources";
+import { baseURL, buildPageMetadata, defaultLocale, getOgImagePath, getSiteContent } from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
@@ -36,12 +35,11 @@ export async function generateMetadata({
 
   if (!service) return {};
 
-  return Meta.generate({
+  return buildPageMetadata({
     title: service.title,
     description: service.summary,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(service.title)}&role=${encodeURIComponent(person.role)}`,
     path: `${work.path}/${service.slug}`,
+    image: getOgImagePath(service.title, person.role),
   });
 }
 
@@ -73,7 +71,7 @@ export default async function Project({
         description={service.summary}
         datePublished={service.publishedAt}
         dateModified={service.publishedAt}
-        image={`/api/og/generate?title=${encodeURIComponent(service.title)}&role=${encodeURIComponent(person.role)}`}
+        image={getOgImagePath(service.title, person.role)}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
