@@ -56,6 +56,14 @@ export type ServiceInfoBlock = {
   bullets: string[];
 };
 
+export type PricingEstimate = {
+  title: string;
+  hours: string;
+  discountedPrice: string;
+  standardPrice: string;
+  description: string;
+};
+
 export const contactDetails = {
   email: "melvinmihaylov@gmail.com",
   phone: "+359898361347",
@@ -186,6 +194,67 @@ export const workSupportAreas: ServiceInfoBlock[] = [
       "Launch fixes, cleanup, and go-live support",
       "Ongoing updates if the site needs changes after launch",
     ],
+  },
+];
+
+export const pricingSummary = {
+  label: "50% off current rate",
+  title: "Simple pricing without agency-style guessing.",
+  description:
+    "The standard rate is 100 EUR per hour. Right now I am offering 50% off, which means the working rate is 50 EUR per hour for current projects.",
+  tags: ["100 EUR / hour standard", "50 EUR / hour current rate", "50% off"],
+} as const;
+
+export const pricingEstimates: PricingEstimate[] = [
+  {
+    title: "Simple portfolio or catalogue",
+    hours: "6-7 hours",
+    discountedPrice: "300-350 EUR",
+    standardPrice: "600-700 EUR",
+    description:
+      "Good for a smaller site that introduces the business clearly, looks modern, and covers the main information without too many custom sections.",
+  },
+  {
+    title: "Business website up to 10 pages",
+    hours: "8-10 hours",
+    discountedPrice: "400-500 EUR",
+    standardPrice: "800-1000 EUR",
+    description:
+      "Best for businesses that need more service pages, stronger structure, clearer presentation, and a more complete website from start to finish.",
+  },
+  {
+    title: "Landing page or campaign page",
+    hours: "4-6 hours",
+    discountedPrice: "200-300 EUR",
+    standardPrice: "400-600 EUR",
+    description:
+      "Useful for Google campaigns, offers, launches, or one focused page that needs a stronger message and better conversion flow.",
+  },
+  {
+    title: "Marketplace or more custom platform",
+    hours: "Based on scope",
+    discountedPrice: "Custom estimate",
+    standardPrice: "Depends on what you need",
+    description:
+      "Marketplace work depends on the features involved, like listings, filters, accounts, admin panels, payments, and custom flows, so this is estimated after a short conversation.",
+  },
+];
+
+export const pricingNotes: PortfolioHighlight[] = [
+  {
+    title: "What changes the hours",
+    description:
+      "The time depends on how many pages are needed, whether the text and images are ready, how many revisions you want, and whether custom functionality is involved.",
+  },
+  {
+    title: "SEO and launch help can be included",
+    description:
+      "SEO setup, Google indexing preparation, hosting help, domains, and launch support can be part of the same project instead of being handled separately.",
+  },
+  {
+    title: "Examples make pricing clearer",
+    description:
+      "If you already know what style you want or have examples, the estimate becomes much easier to make and usually faster to deliver.",
   },
 ];
 

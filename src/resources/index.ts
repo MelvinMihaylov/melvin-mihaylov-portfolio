@@ -7,6 +7,7 @@ export {
   about,
   blog,
   work,
+  pricing,
   howItWorks,
 } from "./content";
 
@@ -18,6 +19,9 @@ export {
   homeHighlights,
   homeShowcase,
   homeShowcaseSlides,
+  pricingEstimates,
+  pricingNotes,
+  pricingSummary,
   workSupportAreas,
   workWebsiteTypes,
   workShowcase,

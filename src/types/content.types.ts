@@ -119,6 +119,8 @@ export interface About extends BasePageConfig {
   avatar: {
     /** Whether to display the avatar */
     display: boolean;
+    /** Optional image source for the about avatar */
+    image?: string;
   };
   /** Calendar section configuration */
   calendar: {
@@ -222,6 +224,12 @@ export interface Blog extends BasePageConfig {}
  * @description Configuration for the Work/Projects page, including metadata and navigation label.
  */
 export interface Work extends BasePageConfig {}
+
+/**
+ * Pricing page configuration.
+ * @description Configuration for the pricing page, including metadata and navigation label.
+ */
+export interface Pricing extends BasePageConfig {}
 
 /**
  * How it works page configuration.

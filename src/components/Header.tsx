@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { Fade, Line, Row, ToggleButton } from "@once-ui-system/core";
 
-import { routes, about, display, howItWorks, work } from "@/resources";
+import { routes, about, display, howItWorks, pricing, work } from "@/resources";
 import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Header.module.scss";
 
@@ -121,6 +121,27 @@ export const Header = () => {
                       prefixIcon="grid"
                       onClick={() => navigateTo("/work")}
                       selected={pathname.startsWith("/work")}
+                      size={navButtonSize}
+                    />
+                  </Row>
+                </>
+              )}
+              {routes["/pricing"] && (
+                <>
+                  <Row s={{ hide: true }}>
+                    <ToggleButton
+                      prefixIcon="document"
+                      onClick={() => navigateTo("/pricing")}
+                      label={pricing.label}
+                      selected={pathname.startsWith("/pricing")}
+                      size={navButtonSize}
+                    />
+                  </Row>
+                  <Row hide s={{ hide: false }}>
+                    <ToggleButton
+                      prefixIcon="document"
+                      onClick={() => navigateTo("/pricing")}
+                      selected={pathname.startsWith("/pricing")}
                       size={navButtonSize}
                     />
                   </Row>

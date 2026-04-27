@@ -46,11 +46,11 @@ export default function About() {
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          image: `${baseURL}${about.avatar.image ?? person.avatar}`,
         }}
       />
       <Column fillWidth horizontal="center" align="center" gap="20">
-        <Avatar src={person.avatar} size="xl" />
+        <Avatar src={about.avatar.image ?? person.avatar} size={14} />
         <Heading variant="display-strong-xl">{person.name}</Heading>
         <Text variant="display-default-xs" onBackground="neutral-weak">
           {person.role}

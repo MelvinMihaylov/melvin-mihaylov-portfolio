@@ -1,4 +1,4 @@
-import { About, Blog, Home, HowItWorks, Newsletter, Person, Social, Work } from "@/types";
+import { About, Blog, Home, HowItWorks, Newsletter, Person, Pricing, Social, Work } from "@/types";
 import { aboutFacts, contactDetails, heroOffer, serviceOffers } from "./portfolio";
 
 const person: Person = {
@@ -19,12 +19,6 @@ const newsletter: Newsletter = {
 };
 
 const social: Social = [
-  {
-    name: "GitHub",
-    icon: "github",
-    link: contactDetails.github,
-    essential: true,
-  },
   {
     name: "Email",
     icon: "email",
@@ -59,6 +53,7 @@ const about: About = {
   },
   avatar: {
     display: true,
+    image: "/images/me.png",
   },
   calendar: {
     display: false,
@@ -115,6 +110,13 @@ const work: Work = {
   description: `Simple overview of the website types, SEO help, Google visibility support, hosting, and launch work offered by ${person.name}.`,
 };
 
+const pricing: Pricing = {
+  path: "/pricing",
+  label: "Pricing",
+  title: `Pricing – ${person.name}`,
+  description: `Simple website pricing, current discounted hourly rate, and realistic project estimates by ${person.name}.`,
+};
+
 const howItWorks: HowItWorks = {
   path: "/how-it-works",
   label: "How it works",
@@ -122,4 +124,4 @@ const howItWorks: HowItWorks = {
   description: `See the full website process: contact, examples, free demo, build, hosting, SEO, and launch support.`,
 };
 
-export { person, social, newsletter, home, about, blog, work, howItWorks };
+export { person, social, newsletter, home, about, blog, work, pricing, howItWorks };
