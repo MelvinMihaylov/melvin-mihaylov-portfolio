@@ -17,15 +17,15 @@ import { defaultLocale } from "./i18n";
 import { contactDetails, getSiteContent } from "./site-content";
 
 const normalizeBaseURL = (value: string) => value.replace(/\/+$/, "");
+const productionBaseURL = "https://melvinmihaylov.com";
 
 const resolveBaseURL = () => {
   const configuredURL =
     process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : undefined) ||
+    (process.env.VERCEL_ENV === "production" ? productionBaseURL : undefined) ||
+    (process.env.VERCEL_BRANCH_URL ? `https://${process.env.VERCEL_BRANCH_URL}` : undefined) ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
-    "https://melvin-mihaylov-portfolio.vercel.app";
+    productionBaseURL;
 
   return normalizeBaseURL(configuredURL);
 };
