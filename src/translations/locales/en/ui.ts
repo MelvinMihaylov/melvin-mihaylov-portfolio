@@ -75,7 +75,6 @@ const enUiSection = {
     },
     projectCard: {
       readDetails: "Read details",
-      viewProject: "View project",
     },
     serviceDetails: {
       moreServices: "More services",

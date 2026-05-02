@@ -4,7 +4,6 @@ import { enHeroOffer } from "./core";
 const enHomeSection = {
   home: {
     path: "/",
-    image: "/images/og/home.jpg",
     label: "Home",
     title: "Melvin Mihaylov - Modern websites with practical pricing",
     description: enHeroOffer.description,

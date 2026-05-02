@@ -26,17 +26,13 @@ export function Projects({ range, exclude, locale }: ProjectsProps) {
 
   return (
     <Column fillWidth gap="xl" marginBottom="40" paddingX="l">
-      {displayedProjects.map((post, index) => (
+      {displayedProjects.map((post) => (
         <ProjectCard
-          priority={index < 2}
           key={post.slug}
           href={`/work/${post.slug}`}
-          images={[]}
           title={post.title}
           description={post.summary}
-          link=""
           readDetailsLabel={ui.projectCard.readDetails}
-          viewProjectLabel={ui.projectCard.viewProject}
         />
       ))}
     </Column>

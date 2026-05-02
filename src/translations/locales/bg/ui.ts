@@ -75,7 +75,6 @@ const bgUiSection = {
     },
     projectCard: {
       readDetails: "Виж детайли",
-      viewProject: "Виж проекта",
     },
     serviceDetails: {
       moreServices: "Още услуги",

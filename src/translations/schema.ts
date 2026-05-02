@@ -148,7 +148,6 @@ type SiteUI = {
   };
   projectCard: {
     readDetails: string;
-    viewProject: string;
   };
   serviceDetails: {
     moreServices: string;

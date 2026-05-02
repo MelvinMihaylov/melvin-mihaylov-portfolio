@@ -78,19 +78,12 @@ export interface BasePageConfig {
   title: string;
   /** Description for SEO and metadata */
   description: string;
-  /** OG Image should be put inside `public/images` folder */
-  image?: `/images/${string}` | string;
 }
 
 /**
  * Home page configuration.
  */
 export interface Home extends BasePageConfig {
-  /** The image to be displayed in metadata
-   *
-   * The image needs to be put inside `/public/images/` directory
-   */
-  image: `/images/${string}` | string;
   /** The headline of the home page */
   headline: React.ReactNode;
   /** Featured badge, which appears above the headline */

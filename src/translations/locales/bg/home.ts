@@ -4,7 +4,6 @@ import { bgHeroOffer } from "./core";
 const bgHomeSection = {
   home: {
     path: "/",
-    image: "/images/og/home.jpg",
     label: "Начало",
     title: "Melvin Mihaylov - Модерни уебсайтове с практичен бюджет",
     description: bgHeroOffer.description,
