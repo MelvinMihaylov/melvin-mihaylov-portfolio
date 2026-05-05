@@ -17,7 +17,7 @@ const bgUiSection = {
     home: {
       primaryCta: "Виж какво правя",
       secondaryCta: "За мен",
-      tertiaryCta: "Поискай безплатно демо",
+      tertiaryCta: "Изпрати запитване",
       processTitle: "Как обикновено протича",
       stepLabel: "Стъпка",
     },

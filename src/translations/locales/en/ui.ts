@@ -17,7 +17,7 @@ const enUiSection = {
     home: {
       primaryCta: "See what I do",
       secondaryCta: "About me",
-      tertiaryCta: "Request a free demo",
+      tertiaryCta: "Send inquiry",
       processTitle: "How it usually goes",
       stepLabel: "Step",
     },

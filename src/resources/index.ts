@@ -31,5 +31,6 @@ export {
   dataStyle,
 } from "./once-ui.config";
 
+export { formspreeEndpoint, hasConfiguredFormspree } from "./formspree";
 export { buildPageMetadata, getCanonicalUrl, getOgImagePath, searchRobotsDirectives } from "./seo";
 export { getGlobalStructuredData } from "./structured-data";

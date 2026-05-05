@@ -18,6 +18,40 @@ export type PortfolioFact = {
   value: string;
 };
 
+export type HomeInquiry = {
+  tag: string;
+  title: string;
+  description: string;
+  benefits: string[];
+  emailLabel: string;
+  emailPlaceholder: string;
+  phoneLabel: string;
+  phonePlaceholder: string;
+  phoneDescription: string;
+  projectTypeLabel: string;
+  projectTypePlaceholder: string;
+  otherOptionLabel: string;
+  otherProjectLabel: string;
+  otherProjectPlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  submitLabel: string;
+  submitHint: string;
+  directContactTitle: string;
+  directContactDescription: string;
+  submission: {
+    sendingLabel: string;
+    successMessage: string;
+    errorMessage: string;
+  };
+  validation: {
+    emailRequired: string;
+    emailInvalid: string;
+    projectTypeRequired: string;
+    otherProjectRequired: string;
+  };
+};
+
 export type ProcessStep = {
   title: string;
   description: string;
@@ -182,6 +216,7 @@ export type SiteContent = {
   };
   homeShowcase: MarketingShowcase;
   homeShowcaseSlides: MarketingShowcaseSlide[];
+  homeInquiry: HomeInquiry;
   workShowcase: MarketingShowcase;
   workWebsiteTypes: ServiceInfoBlock[];
   workSupportAreas: ServiceInfoBlock[];

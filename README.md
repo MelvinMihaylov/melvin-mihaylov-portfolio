@@ -23,6 +23,11 @@ npm install
 npm run dev
 ```
 
+**Inquiry form with Formspree**
+1. Create a free form in the Formspree dashboard
+2. Replace the placeholder in `src/resources/formspree.ts` with your real endpoint (`https://formspree.io/f/xxxxxxx`)
+3. Deploy the site
+
 **4. Edit config**
 ```
 src/resources/once-ui.config.js

@@ -10,8 +10,9 @@ import {
   Text,
 } from "@once-ui-system/core";
 import { BrandLogo } from "@/components";
+import { HomeInquirySection } from "@/components/home/HomeInquirySection";
 import { HomeShowcaseCarousel } from "@/components/home/HomeShowcaseCarousel";
-import { baseURL, buildPageMetadata, contactDetails, getOgImagePath, getSiteContent } from "@/resources";
+import { baseURL, buildPageMetadata, getOgImagePath, getSiteContent } from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
@@ -28,8 +29,20 @@ export async function generateMetadata() {
 
 export default async function Home() {
   const locale = await getRequestLocale();
-  const { about, heroOffer, home, homeHighlights, homeShowcase, homeShowcaseSlides, person, processSteps, ui, work } =
-    getSiteContent(locale);
+  const {
+    about,
+    heroOffer,
+    home,
+    homeHighlights,
+    homeInquiry,
+    homeShowcase,
+    homeShowcaseSlides,
+    person,
+    processSteps,
+    serviceOffers,
+    ui,
+    work,
+  } = getSiteContent(locale);
 
   return (
     <Column maxWidth="m" gap="xl" paddingTop="0" paddingBottom="12" horizontal="center">
@@ -97,7 +110,7 @@ export default async function Home() {
               </Button>
               <Button
                 data-border="rounded"
-                href={`mailto:${contactDetails.email}`}
+                href="#home-inquiry"
                 variant="tertiary"
                 size="m"
                 weight="default"
@@ -189,6 +202,7 @@ export default async function Home() {
           ))}
         </Row>
       </Column>
+      <HomeInquirySection content={homeInquiry} serviceOffers={serviceOffers} />
     </Column>
   );
 }

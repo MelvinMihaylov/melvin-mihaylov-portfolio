@@ -82,6 +82,40 @@ const enHomeSection = {
       description: "I can help with hosting, domain setup, Google SEO, AI SEO, and the practical launch tasks.",
     },
   ],
-} satisfies Pick<SiteContent, "home" | "homeShowcase" | "homeShowcaseSlides" | "homeHighlights" | "processSteps">;
+  homeInquiry: {
+    tag: "Send inquiry",
+    title: "Tell me what kind of website or idea you want and I can reply with a clear direction.",
+    description:
+      "Leave your email, phone, and project type. When you send the form, I receive the inquiry directly by email so I can reply with the next step.",
+    benefits: ["Free first direction", "Works for custom ideas too", "Fine even with a short brief"],
+    emailLabel: "Email",
+    emailPlaceholder: "ivan@example.com",
+    phoneLabel: "Phone",
+    phonePlaceholder: "+359 88 123 4567",
+    phoneDescription: "Optional - useful if you would prefer a quick call back.",
+    projectTypeLabel: "What kind of project do you need",
+    projectTypePlaceholder: "Choose a project type",
+    otherOptionLabel: "Other",
+    otherProjectLabel: "If other, describe it shortly",
+    otherProjectPlaceholder: "For example booking flow, redesign, or a more custom idea...",
+    messageLabel: "Short description",
+    messagePlaceholder: "You can add what you want, examples you like, timing, or the style you prefer.",
+    submitLabel: "Send inquiry",
+    submitHint: "The inquiry is sent directly to my email.",
+    directContactTitle: "Prefer direct contact?",
+    directContactDescription: "You can also email me directly or call if that feels easier.",
+    submission: {
+      sendingLabel: "Sending...",
+      successMessage: "Your inquiry was sent successfully. I will get back to you as soon as I can.",
+      errorMessage: "I could not send the inquiry right now. Please try again shortly or email me directly.",
+    },
+    validation: {
+      emailRequired: "Add an email so I know where to reply.",
+      emailInvalid: "Add a valid email address.",
+      projectTypeRequired: "Choose a project type.",
+      otherProjectRequired: "Add a short note about the custom request.",
+    },
+  },
+} satisfies Pick<SiteContent, "home" | "homeShowcase" | "homeShowcaseSlides" | "homeHighlights" | "processSteps" | "homeInquiry">;
 
 export { enHomeSection };

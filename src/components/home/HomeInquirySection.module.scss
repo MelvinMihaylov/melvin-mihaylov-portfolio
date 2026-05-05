@@ -1,0 +1,107 @@
+@use "../breakpoints.scss" as breakpoints;
+
+.section {
+    width: 100%;
+    position: relative;
+    isolation: isolate;
+    scroll-margin-top: 7rem;
+}
+
+.shell {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--neutral-alpha-medium);
+    border-radius: 2rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--brand-background-strong) 12%, transparent), transparent 38%),
+        radial-gradient(circle at bottom right, color-mix(in srgb, var(--accent-background-strong) 10%, transparent), transparent 42%),
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--surface-background) 84%, var(--page-background)),
+            color-mix(in srgb, var(--page-background) 92%, var(--surface-background))
+        );
+    box-shadow:
+        0 1.5rem 4rem rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 color-mix(in srgb, var(--neutral-on-background-strong) 8%, transparent);
+}
+
+.shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--brand-background-strong) 14%, transparent), transparent 45%),
+        radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--accent-background-strong) 16%, transparent), transparent 32%);
+    opacity: 0.9;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    align-items: stretch;
+}
+
+.infoPanel,
+.formPanel {
+    min-width: min(100%, 20rem);
+}
+
+.infoPanel {
+    flex: 1 1 20rem;
+}
+
+.formPanel {
+    flex: 1 1 24rem;
+    backdrop-filter: blur(1rem);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--neutral-on-background-strong) 10%, transparent),
+        0 1rem 2.5rem rgba(0, 0, 0, 0.08);
+}
+
+.contactCard {
+    width: 100%;
+    border: 1px solid var(--neutral-alpha-medium);
+    border-radius: 1.5rem;
+    padding: clamp(1rem, 2vw, 1.25rem);
+    background: color-mix(in srgb, var(--surface-background) 72%, transparent);
+    backdrop-filter: blur(0.75rem);
+}
+
+.contactActions {
+    width: 100%;
+}
+
+.contactActions > * {
+    flex: 1 1 14rem;
+    min-width: 0;
+}
+
+.form {
+    width: 100%;
+}
+
+.submitHint {
+    max-width: 36rem;
+}
+
+.feedback {
+    max-width: 36rem;
+}
+
+@media (max-width: breakpoints.$s) {
+    .section {
+        scroll-margin-top: 5rem;
+    }
+
+    .shell {
+        border-radius: 1.5rem;
+        padding: 1rem;
+    }
+
+    .contactCard {
+        border-radius: 1.25rem;
+    }
+}

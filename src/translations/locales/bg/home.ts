@@ -82,6 +82,40 @@ const bgHomeSection = {
       description: "Мога да помогна с хостинг, домейн, Google SEO, AI SEO и практичните launch задачи.",
     },
   ],
-} satisfies Pick<SiteContent, "home" | "homeShowcase" | "homeShowcaseSlides" | "homeHighlights" | "processSteps">;
+  homeInquiry: {
+    tag: "Изпрати запитване",
+    title: "Разкажи ми какъв сайт или идея искаш и ще върна ясна посока.",
+    description:
+      "Остави имейл, телефон и тип проект. Когато изпратиш формата, получавам запитването директно по имейл и мога да ти пиша обратно с следващата стъпка.",
+    benefits: ["Безплатна първа насока", "Подходящо и за custom идеи", "Може и само с кратко описание"],
+    emailLabel: "Имейл",
+    emailPlaceholder: "ivan@example.com",
+    phoneLabel: "Телефон",
+    phonePlaceholder: "+359 88 123 4567",
+    phoneDescription: "По желание - полезно е, ако предпочиташ бързо обаждане.",
+    projectTypeLabel: "Какъв проект търсиш",
+    projectTypePlaceholder: "Избери тип проект",
+    otherOptionLabel: "Друго",
+    otherProjectLabel: "Ако е друго, опиши накратко",
+    otherProjectPlaceholder: "Например booking система, redesign, по-custom идея...",
+    messageLabel: "Кратко описание",
+    messagePlaceholder: "Можеш да добавиш какво искаш, примери, срок или какъв стил харесваш.",
+    submitLabel: "Изпрати запитване",
+    submitHint: "Запитването се изпраща директно на имейла ми.",
+    directContactTitle: "Предпочиташ директно?",
+    directContactDescription: "Можеш да пишеш и направо на имейл или да се обадиш, ако така ти е по-удобно.",
+    submission: {
+      sendingLabel: "Изпращане...",
+      successMessage: "Запитването е изпратено успешно. Ще ти върна отговор възможно най-скоро.",
+      errorMessage: "Не успях да изпратя запитването. Опитай отново след малко или ми пиши директно.",
+    },
+    validation: {
+      emailRequired: "Добави имейл, за да мога да ти върна отговор.",
+      emailInvalid: "Добави валиден имейл адрес.",
+      projectTypeRequired: "Избери тип проект.",
+      otherProjectRequired: "Опиши накратко какво имаш предвид.",
+    },
+  },
+} satisfies Pick<SiteContent, "home" | "homeShowcase" | "homeShowcaseSlides" | "homeHighlights" | "processSteps" | "homeInquiry">;
 
 export { bgHomeSection };
