@@ -13,7 +13,7 @@ import {
   RevealFx,
   SpacingToken,
 } from "@once-ui-system/core";
-import { Footer, Header, RouteGuard, Providers } from "@/components";
+import { Footer, Header, Providers } from "@/components";
 import { buildPageMetadata, dataStyle, effects, fonts, getGlobalStructuredData, getOgImagePath, getSiteContent, style } from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 
@@ -191,13 +191,7 @@ export default async function RootLayout({
             flex={1}
           >
             <Flex horizontal="center" fillWidth minHeight="0">
-              <RouteGuard
-                notFoundTitle={ui.notFound.title}
-                notFoundDescription={ui.notFound.description}
-                strings={ui.routeGuard}
-              >
-                {children}
-              </RouteGuard>
+              {children}
             </Flex>
           </Flex>
           <Footer />

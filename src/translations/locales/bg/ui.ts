@@ -73,21 +73,9 @@ const bgUiSection = {
         "Ако вече имаш rough идея, референции или AI направен план, изпрати ги и ще ги оформя в реален сайт.",
       emailCta: "Изпрати имейл",
     },
-    projectCard: {
-      readDetails: "Виж детайли",
-    },
-    serviceDetails: {
-      moreServices: "Още услуги",
-    },
     notFound: {
       title: "Страницата не е намерена",
       description: "Страницата, която търсиш, не съществува.",
-    },
-    routeGuard: {
-      protectedTitle: "Тази страница е защитена с парола",
-      passwordLabel: "Парола",
-      submit: "Вход",
-      incorrectPassword: "Невалидна парола",
     },
   },
 } satisfies Pick<SiteContent, "ui">;

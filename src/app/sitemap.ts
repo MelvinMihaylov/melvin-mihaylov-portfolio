@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { baseURL, defaultLocale, getSiteContent, routes as routesConfig } from "@/resources";
+import { baseURL, routes as routesConfig } from "@/resources";
 
 const getRoutePriority = (route: string) => {
   switch (route) {
@@ -14,14 +14,7 @@ const getRoutePriority = (route: string) => {
   }
 };
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const works = getSiteContent(defaultLocale).serviceDetails.map((service) => ({
-    url: `${baseURL}/work/${service.slug}`,
-    lastModified: new Date(service.publishedAt),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
+export default function sitemap(): MetadataRoute.Sitemap {
   const activeRoutes = Object.keys(routesConfig).filter(
     (route) => routesConfig[route as keyof typeof routesConfig],
   );
@@ -33,5 +26,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: getRoutePriority(route),
   }));
 
-  return [...routes, ...works];
+  return routes;
 }

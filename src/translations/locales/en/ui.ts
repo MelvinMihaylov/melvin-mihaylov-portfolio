@@ -73,21 +73,9 @@ const enUiSection = {
         "If you already have a rough idea, references, or an AI-made plan, send it over and I can shape it into a real website.",
       emailCta: "Email me",
     },
-    projectCard: {
-      readDetails: "Read details",
-    },
-    serviceDetails: {
-      moreServices: "More services",
-    },
     notFound: {
       title: "Page not found",
       description: "The page you are looking for does not exist.",
-    },
-    routeGuard: {
-      protectedTitle: "This page is password protected",
-      passwordLabel: "Password",
-      submit: "Submit",
-      incorrectPassword: "Incorrect password",
     },
   },
 } satisfies Pick<SiteContent, "ui">;

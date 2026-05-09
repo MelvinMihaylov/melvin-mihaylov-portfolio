@@ -2,7 +2,6 @@ export {
   contactDetails,
   getSiteContent,
   type MarketingShowcaseSlide,
-  type ServiceDetail,
   type SiteContent,
 } from "./site-content";
 
@@ -20,7 +19,6 @@ export {
   display,
   mailchimp,
   routes,
-  protectedRoutes,
   baseURL,
   fonts,
   style,

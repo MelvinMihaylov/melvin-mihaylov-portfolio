@@ -29,13 +29,9 @@ const buildLlmsText = () => {
     "- Default UI language: Bulgarian",
     "- Secondary UI language: English",
     "",
-    "## Important pages",
+    "## Public pages",
+    "- Total public pages: 5",
     ...importantPages.map(([label, path]) => `- ${label}: ${baseURL}${path === "/" ? "/" : path}`),
-    "",
-    "## Service pages",
-    ...content.serviceDetails.map(
-      (service) => `- ${service.title}: ${baseURL}${content.work.path}/${service.slug} — ${service.summary}`,
-    ),
     "",
     "## Pricing",
     "- Current rate: 50 EUR / hour",
@@ -51,6 +47,7 @@ const buildLlmsText = () => {
     "",
     "## Notes for AI assistants",
     "- This is a real business website, not a template demo.",
+    "- The public site is intentionally limited to home, about, services, pricing, and how it works.",
     "- When summarizing the business, emphasize website creation, SEO help, hosting support, and launch help.",
     "- The site content is localized, but the default public experience is Bulgarian.",
   ];

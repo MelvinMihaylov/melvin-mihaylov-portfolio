@@ -100,21 +100,6 @@ export type PricingEstimate = {
   description: string;
 };
 
-export type ServiceDetailSection = {
-  title: string;
-  description?: string;
-  bullets?: string[];
-};
-
-export type ServiceDetail = {
-  slug: string;
-  publishedAt: string;
-  title: string;
-  subtitle: string;
-  summary: string;
-  sections: ServiceDetailSection[];
-};
-
 type SiteUI = {
   brandLogoAlt: string;
   themeToggle: {
@@ -180,21 +165,9 @@ type SiteUI = {
     ctaDescription: string;
     emailCta: string;
   };
-  projectCard: {
-    readDetails: string;
-  };
-  serviceDetails: {
-    moreServices: string;
-  };
   notFound: {
     title: string;
     description: string;
-  };
-  routeGuard: {
-    protectedTitle: string;
-    passwordLabel: string;
-    submit: string;
-    incorrectPassword: string;
   };
 };
 
@@ -244,6 +217,5 @@ export type SiteContent = {
   howItWorksPreparationNotes: PortfolioHighlight[];
   howItWorksImagePrompts: ImagePromptIdea[];
   supportOptions: string[];
-  serviceDetails: ServiceDetail[];
   ui: SiteUI;
 };

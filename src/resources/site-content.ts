@@ -8,8 +8,6 @@ export type {
   PortfolioHighlight,
   PricingEstimate,
   ProcessStep,
-  ServiceDetail,
-  ServiceDetailSection,
   ServiceInfoBlock,
   ServiceOffer,
   SiteContent,
