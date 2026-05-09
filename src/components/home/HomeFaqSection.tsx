@@ -1,6 +1,7 @@
 "use client";
 
-import { AccordionGroup, Column, Heading, Row, Text } from "@once-ui-system/core";
+import { Accordion, Column, Heading, Line, Row, Text } from "@once-ui-system/core";
+import { Fragment, useCallback, useState } from "react";
 
 type FaqEntry = {
   question: string;
@@ -47,22 +48,49 @@ const indexStyle = {
   textAlign: "center" as const,
 } as const;
 
+const itemRadius = "var(--radius-xl)";
+
+const getAccordionHeaderStyle = (index: number, total: number, isOpen: boolean) => {
+  if (total === 1) {
+    return isOpen
+      ? {
+          borderTopLeftRadius: itemRadius,
+          borderTopRightRadius: itemRadius,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+        }
+      : { borderRadius: itemRadius };
+  }
+
+  if (index === 0) {
+    return {
+      borderTopLeftRadius: itemRadius,
+      borderTopRightRadius: itemRadius,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    };
+  }
+
+  if (index === total - 1 && !isOpen) {
+    return {
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      borderBottomLeftRadius: itemRadius,
+      borderBottomRightRadius: itemRadius,
+    };
+  }
+
+  return {
+    borderRadius: 0,
+  };
+};
+
 export function HomeFaqSection({ title, description, entries }: HomeFaqSectionProps) {
-  const items = entries.map((entry, index) => ({
-    title: (
-      <Row fillWidth gap="12" vertical="center">
-        <Text variant="label-default-s" onBackground="brand-weak" style={indexStyle}>
-          {String(index + 1).padStart(2, "0")}
-        </Text>
-        <Text variant="heading-strong-s">{entry.question}</Text>
-      </Row>
-    ),
-    content: (
-      <Text variant="body-default-m" onBackground="neutral-weak">
-        {entry.answer}
-      </Text>
-    ),
-  }));
+  const [openAccordion, setOpenAccordion] = useState<number | null>(null);
+
+  const handleAccordionToggle = useCallback((index: number) => {
+    setOpenAccordion((currentIndex) => (currentIndex === index ? null : index));
+  }, []);
 
   return (
     <Column
@@ -84,15 +112,44 @@ export function HomeFaqSection({ title, description, entries }: HomeFaqSectionPr
           </Text>
         </Column>
 
-        <AccordionGroup
-          items={items}
-          autoCollapse
-          size="l"
+        <Column
           fillWidth
+          border="neutral-alpha-medium"
           radius="xl"
           overflow="hidden"
           style={panelStyle}
-        />
+        >
+          {entries.map((entry, index) => {
+            const isOpen = openAccordion === index;
+
+            return (
+              <Fragment key={entry.question}>
+                <Accordion
+                  size="l"
+                  open={isOpen}
+                  onToggle={() => handleAccordionToggle(index)}
+                  style={{
+                    ...getAccordionHeaderStyle(index, entries.length, isOpen),
+                    cursor: "pointer",
+                  }}
+                  title={
+                    <Row fillWidth gap="12" vertical="center">
+                      <Text variant="label-default-s" onBackground="brand-weak" style={indexStyle}>
+                        {String(index + 1).padStart(2, "0")}
+                      </Text>
+                      <Text variant="heading-strong-s">{entry.question}</Text>
+                    </Row>
+                  }
+                >
+                  <Text variant="body-default-m" onBackground="neutral-weak">
+                    {entry.answer}
+                  </Text>
+                </Accordion>
+                {index < entries.length - 1 && <Line background="neutral-alpha-medium" />}
+              </Fragment>
+            );
+          })}
+        </Column>
       </Row>
     </Column>
   );
