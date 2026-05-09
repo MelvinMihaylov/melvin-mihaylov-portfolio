@@ -22,7 +22,7 @@ export default async function PricingPage() {
   const standardRate = locale === "bg" ? "100 EUR / час" : "100 EUR / hour";
   const pricingTags =
     locale === "bg"
-      ? ["Уебсайтове", "SEO помощ", "Хостинг помощ", "Google-ready страници"]
+      ? ["Изработка на уебсайт", "Модерен сайт на разумен бюджет", "SEO и хостинг помощ"]
       : ["Websites", "SEO support", "Hosting help", "Google-ready pages"];
 
   return (

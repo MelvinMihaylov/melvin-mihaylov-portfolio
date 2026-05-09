@@ -6,7 +6,6 @@ import type { SiteContent } from "./schema";
 export { contactDetails } from "./shared";
 export type {
   HowItWorksCoverage,
-  ImagePromptIdea,
   MarketingShowcase,
   MarketingShowcaseSlide,
   PortfolioFact,

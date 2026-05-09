@@ -20,6 +20,9 @@ const enUiSection = {
       tertiaryCta: "Send inquiry",
       processTitle: "How it usually goes",
       stepLabel: "Step",
+      faqTitle: "Frequently asked questions before starting a website",
+      faqDescription:
+        "Short answers about pricing, process, larger projects, automations, and support after launch.",
     },
     about: {
       processTitle: "How we can work together",
@@ -64,10 +67,6 @@ const enUiSection = {
       stepsTitle: "How the process usually works",
       stepLabel: "Step",
       preparationTitle: "What helps the project move faster",
-      promptsTitle: "Ready-to-use image prompt ideas",
-      promptsDescription:
-        "If you want modern visuals for the homepage or other sections, these prompt ideas are ready to paste into an AI image tool.",
-      promptLabel: "Prompt for AI tool",
       ctaTitle: "Start with a short message, a few examples, and I can build the first direction from there.",
       ctaDescription:
         "If you already have a rough idea, references, or an AI-made plan, send it over and I can shape it into a real website.",

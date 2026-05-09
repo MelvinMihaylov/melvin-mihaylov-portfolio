@@ -11,7 +11,6 @@ type HowItWorksViewProps = {
 export default function HowItWorksView({ locale }: HowItWorksViewProps) {
   const {
     howItWorksCoverage,
-    howItWorksImagePrompts,
     howItWorksIntro,
     howItWorksPreparationNotes,
     howItWorksSteps,
@@ -140,41 +139,6 @@ export default function HowItWorksView({ locale }: HowItWorksViewProps) {
               </Heading>
               <Text variant="body-default-m" onBackground="neutral-weak">
                 {note.description}
-              </Text>
-            </Column>
-          ))}
-        </Row>
-      </Column>
-      <Column fillWidth gap="24">
-        <Heading as="h2" variant="display-strong-s" align="center">
-          {ui.howItWorks.promptsTitle}
-        </Heading>
-        <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          {ui.howItWorks.promptsDescription}
-        </Text>
-        <Row fillWidth gap="16" wrap>
-          {howItWorksImagePrompts.map((idea) => (
-            <Column
-              key={idea.title}
-              flex={1}
-              background="neutral-alpha-weak"
-              border="neutral-alpha-medium"
-              radius="xl"
-              padding="24"
-              gap="12"
-              style={cardStyle}
-            >
-              <Heading as="h3" variant="heading-strong-l">
-                {idea.title}
-              </Heading>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {idea.description}
-              </Text>
-              <Text variant="label-default-s" onBackground="brand-weak">
-                {ui.howItWorks.promptLabel}
-              </Text>
-              <Text variant="body-default-s" onBackground="neutral-weak">
-                {idea.prompt}
               </Text>
             </Column>
           ))}

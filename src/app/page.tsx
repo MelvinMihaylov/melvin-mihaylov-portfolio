@@ -10,9 +10,17 @@ import {
   Text,
 } from "@once-ui-system/core";
 import { BrandLogo } from "@/components";
+import { HomeFaqSection } from "@/components/home/HomeFaqSection";
 import { HomeInquirySection } from "@/components/home/HomeInquirySection";
 import { HomeShowcaseCarousel } from "@/components/home/HomeShowcaseCarousel";
-import { baseURL, buildPageMetadata, getOgImagePath, getSiteContent } from "@/resources";
+import {
+  baseURL,
+  buildPageMetadata,
+  getFaqStructuredData,
+  getFrequentlyAskedQuestions,
+  getOgImagePath,
+  getSiteContent,
+} from "@/resources";
 import { getRequestLocale } from "@/resources/get-request-locale";
 
 export async function generateMetadata() {
@@ -31,18 +39,20 @@ export default async function Home() {
   const locale = await getRequestLocale();
   const {
     about,
-    heroOffer,
-    home,
-    homeHighlights,
     homeInquiry,
     homeShowcase,
     homeShowcaseSlides,
+    heroOffer,
+    home,
+    homeHighlights,
     person,
     processSteps,
     serviceOffers,
     ui,
     work,
   } = getSiteContent(locale);
+  const faqEntries = getFrequentlyAskedQuestions(locale);
+  const faqStructuredData = getFaqStructuredData(locale);
 
   return (
     <Column maxWidth="m" gap="xl" paddingTop="0" paddingBottom="12" horizontal="center">
@@ -58,6 +68,10 @@ export default async function Home() {
           url: `${baseURL}${about.path}`,
           image: `${baseURL}${person.avatar}`,
         }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
       <Column fillWidth horizontal="center" gap="xl">
         <Column maxWidth="s" horizontal="center" align="center" gap="20">
@@ -202,6 +216,11 @@ export default async function Home() {
           ))}
         </Row>
       </Column>
+      <HomeFaqSection
+        title={ui.home.faqTitle}
+        description={ui.home.faqDescription}
+        entries={faqEntries}
+      />
       <HomeInquirySection content={homeInquiry} serviceOffers={serviceOffers} />
     </Column>
   );

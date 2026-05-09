@@ -63,12 +63,6 @@ export type HowItWorksCoverage = {
   bullets: string[];
 };
 
-export type ImagePromptIdea = {
-  title: string;
-  description: string;
-  prompt: string;
-};
-
 export type MarketingShowcase = {
   title: string;
   description: string;
@@ -119,6 +113,8 @@ type SiteUI = {
     tertiaryCta: string;
     processTitle: string;
     stepLabel: string;
+    faqTitle: string;
+    faqDescription: string;
   };
   about: {
     processTitle: string;
@@ -158,9 +154,6 @@ type SiteUI = {
     stepsTitle: string;
     stepLabel: string;
     preparationTitle: string;
-    promptsTitle: string;
-    promptsDescription: string;
-    promptLabel: string;
     ctaTitle: string;
     ctaDescription: string;
     emailCta: string;
@@ -215,7 +208,6 @@ export type SiteContent = {
   howItWorksCoverage: HowItWorksCoverage[];
   howItWorksSteps: ProcessStep[];
   howItWorksPreparationNotes: PortfolioHighlight[];
-  howItWorksImagePrompts: ImagePromptIdea[];
   supportOptions: string[];
   ui: SiteUI;
 };

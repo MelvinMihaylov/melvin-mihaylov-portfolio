@@ -1,7 +1,6 @@
 export { contactDetails, getSiteContent, siteContentByLocale } from "@/translations";
 export type {
   HowItWorksCoverage,
-  ImagePromptIdea,
   MarketingShowcase,
   MarketingShowcaseSlide,
   PortfolioFact,

@@ -105,36 +105,6 @@ const enHowItWorksSection = {
         "Services, short texts, contact details, and any existing logo or images make the first version much stronger.",
     },
   ],
-  howItWorksImagePrompts: [
-    {
-      title: "Homepage hero image",
-      description:
-        "Useful for the homepage hero or a main banner that should feel premium, modern, and clean.",
-      prompt:
-        "Modern premium business website hero image, elegant workspace with laptop showing a stylish website mockup, soft natural light, clean desk, subtle cyan and neutral tones, realistic photography, minimal composition, rounded visual framing, no text, lots of negative space, polished and trustworthy.",
-    },
-    {
-      title: "Branding and design section image",
-      description:
-        "Useful for sections about logo work, visual direction, colors, and overall design identity.",
-      prompt:
-        "Creative branding moodboard scene with logo sketches, typography samples, color swatches, wireframes, modern studio desk, premium minimal aesthetic, soft shadows, realistic photography, rounded objects and corners, neutral background, no text overlays.",
-    },
-    {
-      title: "SEO and launch support image",
-      description:
-        "Useful for pages that talk about SEO, Google visibility, marketing support, hosting, or launch help.",
-      prompt:
-        "Modern SEO and website launch concept, laptop and phone showing clean analytics and search-style interface elements, professional business atmosphere, soft blue and gray palette, realistic photo illustration, rounded UI shapes, no text, modern and credible.",
-    },
-    {
-      title: "Process or contact section image",
-      description:
-        "Useful for process, contact, or support sections when you want the page to feel approachable instead of overly corporate.",
-      prompt:
-        "Warm modern collaboration scene between web designer and client, laptop with website wireframes, clean office interior, soft daylight, minimal premium styling, rounded furniture and shapes, realistic photography, approachable but professional, no text.",
-    },
-  ],
-} satisfies Pick<SiteContent, "howItWorks" | "howItWorksIntro" | "howItWorksCoverage" | "howItWorksSteps" | "howItWorksPreparationNotes" | "howItWorksImagePrompts">;
+} satisfies Pick<SiteContent, "howItWorks" | "howItWorksIntro" | "howItWorksCoverage" | "howItWorksSteps" | "howItWorksPreparationNotes">;
 
 export { enHowItWorksSection };

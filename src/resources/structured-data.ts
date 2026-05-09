@@ -15,67 +15,125 @@ const joinText = (parts: Array<string | undefined>) => parts.filter((part): part
 const getFrequentlyAskedQuestions = (locale: Locale) => {
   const { heroOffer, howItWorksCoverage, pricingSummary, processSteps, serviceOffers } = getSiteContent(locale);
   const listedServices = serviceOffers.map((offer) => offer.title).join(", ");
-  const seoSupport = howItWorksCoverage.map((item) => item.description).join(" ");
+  const supportAfterBuild = joinText([howItWorksCoverage[2]?.description, howItWorksCoverage[3]?.description]);
 
   if (locale === "bg") {
     return [
       {
-        question: "Какви уебсайтове изработва Melvin Mihaylov?",
-        answer: `${heroOffer.description} Основните услуги включват ${listedServices}.`,
+        question: "Какви сайтове изработваш?",
+        answer: `Изработвам сайтове за бизнес, каталози, портфолиа, лендинг страници и по-малки онлайн магазини. Основните направления са ${listedServices}.`,
       },
       {
-        question: "Как започва един проект?",
+        question: "Можеш ли да поемеш по-голям проект?",
+        answer:
+          "Да. Ако проектът включва повече страници, по-сложна структура, клиентска зона, каталог, резервации или друга по-голяма функционалност, подготвям индивидуална оферта според обхвата, сроковете и нужните интеграции.",
+      },
+      {
+        question: "Правиш ли автоматизации и връзки с други системи?",
+        answer:
+          "Да. Мога да поема автоматизации за запитвания, известия, календар, CRM, форми, имейл потоци и други работни процеси. При по-сложни автоматизации подготвям индивидуална оферта според конкретната задача.",
+      },
+      {
+        question: "Може ли сайтът да има абонаменти, онлайн плащания и профили за клиенти?",
+        answer:
+          "Да. Мога да изградя решение с абонаменти, плащания, профили за клиенти и ограничено съдържание. Това вече е по-голям проект и офертата се определя според точната функционалност.",
+      },
+      {
+        question: "Как започва работата по сайта?",
         answer: joinText([
-          "Проектът започва с контакт, примери или дори AI подготвен план.",
+          "Започваме с кратък разговор, примери или предварително нахвърлен план.",
           processSteps[0]?.description,
           processSteps[1]?.description,
         ]),
       },
       {
-        question: "Помага ли със SEO, Google индексиране и хостинг?",
-        answer: `Да. ${seoSupport}`,
+        question: "Можеш ли да обновиш стар сайт?",
+        answer:
+          "Да. Мога да обновя стар сайт с по-добър дизайн, по-ясна структура, по-бърза работа и по-добра видимост в Google. Когато е нужно, предлагам и изцяло нова изработка върху чиста основа.",
       },
       {
-        question: "Какви са цените?",
-        answer: `Текущата ставка е 50 EUR на час вместо 100 EUR. ${pricingSummary.description}`,
+        question: "Помагаш ли и след изработката?",
+        answer: `Да. ${supportAfterBuild}`,
+      },
+      {
+        question: "Колко струва един сайт?",
+        answer: `По-малките проекти обикновено започват от 300 EUR, а текущата ставка е 50 EUR на час. ${pricingSummary.description}`,
       },
     ];
   }
 
   return [
     {
-      question: "What kind of websites does Melvin Mihaylov build?",
+      question: "What kind of websites do you build?",
       answer: `${heroOffer.description} Core services include ${listedServices}.`,
+    },
+    {
+      question: "Can you take on larger custom projects?",
+      answer:
+        "Yes. If the project includes more pages, more complex structure, a client area, catalog, bookings, or broader functionality, I prepare a custom offer based on scope, timeline, and required integrations.",
+    },
+    {
+      question: "Do you build automations and system integrations?",
+      answer:
+        "Yes. I can handle automations for enquiries, notifications, calendars, CRM, forms, email flows, and other workflows. For more advanced automation work, I prepare a custom offer based on the exact requirements.",
+    },
+    {
+      question: "Can the website include subscriptions, online payments, or customer accounts?",
+      answer:
+        "Yes. I can build a solution with subscriptions, payments, customer accounts, and gated content. That is usually a larger project, so the offer depends on the exact functionality.",
     },
     {
       question: "How does a project start?",
       answer: joinText([
-        "Projects usually start with a message, examples, or even an AI-made plan from the client.",
+        "Projects usually start with a short message, examples, or a rough plan.",
         processSteps[0]?.description,
         processSteps[1]?.description,
       ]),
     },
     {
-      question: "Do you help with SEO, Google indexing, and hosting?",
-      answer: `Yes. ${seoSupport}`,
+      question: "Can you redesign an existing website?",
+      answer:
+        "Yes. I can improve an older website with better design, clearer structure, faster performance, and stronger Google visibility. When it makes more sense, I may recommend rebuilding it cleanly from scratch.",
     },
     {
-      question: "What are the prices?",
-      answer: `The current working rate is 50 EUR per hour instead of 100 EUR per hour. ${pricingSummary.description}`,
+      question: "Do you also help after the build?",
+      answer: `Yes. ${supportAfterBuild}`,
+    },
+    {
+      question: "How much does a website cost?",
+      answer: `Smaller projects usually start around 300 EUR, and the current working rate is 50 EUR per hour. ${pricingSummary.description}`,
     },
   ];
 };
 
+const getFaqStructuredData = (locale: Locale): JsonLd => {
+  const faqEntries = getFrequentlyAskedQuestions(locale);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": faqId,
+    mainEntity: faqEntries.map((entry) => ({
+      "@type": "Question",
+      name: entry.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: entry.answer,
+      },
+    })),
+  };
+};
+
 const getGlobalStructuredData = (locale: Locale): JsonLd[] => {
-  const { heroOffer, home, person, serviceOffers } = getSiteContent(locale);
+  const { heroOffer, home, person, pricingSummary, serviceOffers } = getSiteContent(locale);
   const keywords = Array.from(
     new Set([
       ...heroOffer.tags,
+      ...pricingSummary.tags,
       ...serviceOffers.map((offer) => offer.title),
       ...serviceOffers.flatMap((offer) => offer.tags),
     ]),
   ).join(", ");
-  const faqEntries = getFrequentlyAskedQuestions(locale);
 
   return [
     {
@@ -151,20 +209,7 @@ const getGlobalStructuredData = (locale: Locale): JsonLd[] => {
         "@id": personId,
       },
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "@id": faqId,
-      mainEntity: faqEntries.map((entry) => ({
-        "@type": "Question",
-        name: entry.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: entry.answer,
-        },
-      })),
-    },
   ];
 };
 
-export { getGlobalStructuredData };
+export { getFaqStructuredData, getFrequentlyAskedQuestions, getGlobalStructuredData };
