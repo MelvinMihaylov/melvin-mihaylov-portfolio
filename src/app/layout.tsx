@@ -52,6 +52,13 @@ export default async function RootLayout({
       )}
     >
       <head>
+        <meta name="application-name" content="Melvin Mihaylov" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Melvin Mihaylov" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#151515" />
+        <meta name="msapplication-TileColor" content="#151515" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
         {structuredData.map((entry, index) => (
           <script
             key={`structured-data-${index}`}
