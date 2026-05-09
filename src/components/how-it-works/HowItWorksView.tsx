@@ -22,7 +22,12 @@ export default function HowItWorksView({ locale }: HowItWorksViewProps) {
   return (
     <Column maxWidth="m" gap="xl" paddingTop="24" paddingBottom="40">
       <Column fillWidth horizontal="center" align="center" gap="20">
-        <BrandLogo maxWidth={96} alt={ui.brandLogoAlt} />
+        <BrandLogo
+          maxWidth={360}
+          alt={ui.brandLogoAlt}
+          src="/images/EnglishLogoWithDescriptionStretched.png"
+          radius="1.5rem"
+        />
         <Tag size="l">{howItWorksIntro.label}</Tag>
         <Heading variant="display-strong-l" align="center">
           {howItWorksIntro.title}
