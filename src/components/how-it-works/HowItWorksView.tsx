@@ -24,7 +24,6 @@ export default function HowItWorksView({ locale }: HowItWorksViewProps) {
         <BrandLogo
           maxWidth={360}
           alt={ui.brandLogoAlt}
-          src="/images/EnglishLogoWithDescriptionStretched.png"
           radius="1.5rem"
         />
         <Tag size="l">{howItWorksIntro.label}</Tag>

@@ -157,7 +157,7 @@ const getGlobalStructuredData = (locale: Locale): JsonLd[] => {
       url: baseURL,
       description: home.description,
       image: `${baseURL}${person.avatar}`,
-      logo: `${baseURL}/images/mmlogo.png`,
+      logo: `${baseURL}/icon.png`,
       areaServed: serviceArea,
       availableLanguage: person.languages,
       email: contactDetails.email,

@@ -1,6 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: false,
+  async redirects() {
+    return [
+      {
+        source: "/images/EnglishLogoWithDescription.png",
+        destination: "/icon.png",
+        permanent: true,
+      },
+      {
+        source: "/images/EnglishLogoWithDescriptionStretched.png",
+        destination: "/images/mmlogo.png",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

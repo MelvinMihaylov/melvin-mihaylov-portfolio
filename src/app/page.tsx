@@ -79,7 +79,6 @@ export default async function Home() {
             <BrandLogo
               maxWidth={360}
               alt={ui.brandLogoAlt}
-              src="/images/EnglishLogoWithDescriptionStretched.png"
               radius="1.5rem"
             />
           </RevealFx>
