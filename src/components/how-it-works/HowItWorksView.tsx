@@ -26,6 +26,7 @@ export default function HowItWorksView({ locale }: HowItWorksViewProps) {
           maxWidth={360}
           alt={ui.brandLogoAlt}
           radius="1.5rem"
+          priority
         />
         <Tag size="l">{howItWorksIntro.label}</Tag>
         <Heading variant="display-strong-l" align="center">

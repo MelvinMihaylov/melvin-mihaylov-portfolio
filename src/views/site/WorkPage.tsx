@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Button, Column, Heading, Row, Schema, Tag, Text } from "@once-ui-system/core";
 import {
   baseURL,
@@ -64,17 +65,27 @@ export function WorkPage({ locale }: WorkPageProps) {
             {workShowcase.description}
           </Text>
         </Column>
-        <img
-          alt={workShowcase.alt}
-          src={workShowcase.image}
+        <div
           style={{
+            position: "relative",
             width: "100%",
             aspectRatio: "3 / 2",
-            objectFit: "cover",
             display: "block",
             borderRadius: "1.5rem",
+            overflow: "hidden",
           }}
-        />
+        >
+          <Image
+            alt={workShowcase.alt}
+            src={workShowcase.image}
+            fill
+            quality={80}
+            sizes="(max-width: 768px) 100vw, 768px"
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </div>
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">

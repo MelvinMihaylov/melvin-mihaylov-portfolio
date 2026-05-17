@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTheme } from "@once-ui-system/core";
 import { useEffect, useState } from "react";
 import styles from "./HomeShowcaseCarousel.module.scss";
@@ -63,21 +64,35 @@ export function HomeShowcaseCarousel({ slides }: HomeShowcaseCarouselProps) {
             }
             aria-hidden={!isActive}
           >
-            <img
+            <Image
               className={styles.background}
               alt=""
               aria-hidden="true"
               src={slideImage}
-              style={{ objectPosition: slide.backgroundPosition ?? slide.objectPosition }}
+              fill
+              quality={35}
+              sizes="100vw"
+              priority={index === 0}
+              style={{
+                objectFit: "cover",
+                objectPosition: slide.backgroundPosition ?? slide.objectPosition,
+              }}
             />
             <div className={styles.overlay} />
             <div className={styles.content}>
               <div className={styles.media}>
-                <img
+                <Image
                   className={styles.image}
                   alt={isActive ? slide.alt : ""}
                   src={slideImage}
-                  style={{ objectPosition: slide.objectPosition }}
+                  fill
+                  quality={80}
+                  sizes={slide.variant === "portrait" ? "(max-width: 768px) 88vw, 31rem" : "(max-width: 768px) 100vw, 70vw"}
+                  priority={index === 0}
+                  style={{
+                    objectFit: "contain",
+                    objectPosition: slide.objectPosition,
+                  }}
                 />
               </div>
             </div>

@@ -4,7 +4,6 @@ import "@/resources/custom.css";
 
 import classNames from "classnames";
 import { Analytics } from "@vercel/analytics/next";
-
 import {
   Background,
   Column,
@@ -14,7 +13,19 @@ import {
   SpacingToken,
 } from "@once-ui-system/core";
 import { Providers } from "@/components";
-import { baseURL, dataStyle, defaultLocale, effects, fonts, style } from "@/resources";
+import { LocaleShell } from "@/components/LocaleShell";
+import { baseURL, dataStyle, effects, fonts, locales, style } from "@/resources";
+import { getRouteLocale, type LocaleRouteProps } from "./locale-params";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+type LocalizedLayoutProps = LocaleRouteProps & {
+  children: React.ReactNode;
+};
 
 export async function generateMetadata() {
   return {
@@ -32,16 +43,14 @@ export async function generateMetadata() {
   };
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function LocalizedLayout({ children, params }: LocalizedLayoutProps) {
+  const locale = await getRouteLocale(params);
+
   return (
     <Flex
       suppressHydrationWarning
       as="html"
-      lang={defaultLocale}
+      lang={locale}
       fillWidth
       className={classNames(
         fonts.heading.variable,
@@ -65,9 +74,6 @@ export default function RootLayout({
               (function() {
                 try {
                   const root = document.documentElement;
-                  const defaultTheme = 'system';
-                  
-                  // Set defaults from config
                   const config = ${JSON.stringify({
                     brand: style.brand,
                     accent: style.accent,
@@ -80,35 +86,29 @@ export default function RootLayout({
                     scaling: style.scaling,
                     "viz-style": dataStyle.variant,
                   })};
-                  
-                  // Apply default values
+
                   Object.entries(config).forEach(([key, value]) => {
                     root.setAttribute('data-' + key, value);
                   });
-                  
-                  // Resolve theme
+
                   const resolveTheme = (themeValue) => {
                     if (!themeValue || themeValue === 'system') {
                       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
                     }
+
                     return themeValue;
                   };
-                  
-                  // Apply saved theme
+
                   const savedTheme = localStorage.getItem('data-theme');
-                  const resolvedTheme = resolveTheme(savedTheme);
-                  root.setAttribute('data-theme', resolvedTheme);
-                  
-                  // Apply any saved style overrides
-                  const styleKeys = Object.keys(config);
-                  styleKeys.forEach(key => {
+                  root.setAttribute('data-theme', resolveTheme(savedTheme));
+
+                  Object.keys(config).forEach((key) => {
                     const value = localStorage.getItem('data-' + key);
                     if (value) {
                       root.setAttribute('data-' + key, value);
                     }
                   });
                 } catch (e) {
-                  console.error('Failed to initialize theme:', e);
                   document.documentElement.setAttribute('data-theme', 'dark');
                 }
               })();
@@ -168,7 +168,7 @@ export default function RootLayout({
               }}
             />
           </RevealFx>
-          {children}
+          <LocaleShell locale={locale}>{children}</LocaleShell>
           <Analytics />
         </Column>
       </Providers>

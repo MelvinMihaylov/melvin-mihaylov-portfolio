@@ -87,6 +87,7 @@ export function HomePage({ locale }: HomePageProps) {
               maxWidth={360}
               alt={ui.brandLogoAlt}
               radius="1.5rem"
+              priority
             />
           </RevealFx>
           {home.featured.display && (
