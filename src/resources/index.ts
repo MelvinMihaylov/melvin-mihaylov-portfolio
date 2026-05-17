@@ -39,4 +39,11 @@ export {
 
 export { formspreeEndpoint, hasConfiguredFormspree } from "./formspree";
 export { buildPageMetadata, getCanonicalUrl, getOgImagePath, searchRobotsDirectives } from "./seo";
-export { buildFaqStructuredData, getFaqStructuredData, getFrequentlyAskedQuestions, getGlobalStructuredData } from "./structured-data";
+export {
+  buildBreadcrumbStructuredData,
+  buildFaqStructuredData,
+  buildServiceStructuredData,
+  getFaqStructuredData,
+  getFrequentlyAskedQuestions,
+  getGlobalStructuredData,
+} from "./structured-data";

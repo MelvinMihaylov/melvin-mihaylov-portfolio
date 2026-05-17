@@ -4,9 +4,9 @@ const enWorkSection = {
   work: {
     path: "/work",
     label: "Services",
-    title: "Business website development, landing pages, portfolios and online shops | Melvin Mihaylov",
+    title: "Business website and landing page services | Melvin Mihaylov",
     description:
-      "A clear overview of the business websites, landing pages, portfolio websites, online shops, redesign help, SEO support, hosting, launch work, and larger custom projects I offer.",
+      "Overview of the business websites, landing pages, portfolios, online shops, redesign help, and launch support I offer.",
   },
   workShowcase: {
     title: "A simple overview of what I can do for you",

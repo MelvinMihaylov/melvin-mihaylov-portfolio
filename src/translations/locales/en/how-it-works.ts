@@ -4,7 +4,7 @@ const enHowItWorksSection = {
   howItWorks: {
     path: "/how-it-works",
     label: "How it works",
-    title: "How website projects work, from pricing direction to launch support | Melvin Mihaylov",
+    title: "How website projects work | Melvin Mihaylov",
     description:
       "See the full website process: contact, references, free demo, build, hosting, SEO, launch support, and how the scope stays practical.",
   },

@@ -5,8 +5,9 @@ const enHomeSection = {
   home: {
     path: "/",
     label: "Home",
-    title: "Affordable business websites, landing pages, portfolios, and online shops | Melvin Mihaylov",
-    description: enHeroOffer.description,
+    title: "Business websites, landing pages and online shops | Melvin Mihaylov",
+    description:
+      "I build modern business websites, landing pages, portfolios, and smaller online shops with clear pricing, launch support, and help with SEO and hosting.",
     headline: enHeroOffer.title,
     featured: {
       display: true,

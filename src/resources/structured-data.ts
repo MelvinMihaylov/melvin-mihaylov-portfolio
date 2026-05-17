@@ -1,9 +1,13 @@
 import type { Locale } from "./i18n";
 import { baseURL } from "./once-ui.config";
 import { contactDetails, getSiteContent } from "./site-content";
-import type { FaqEntry } from "@/translations/schema";
+import type { FaqEntry, ServiceOffer } from "@/translations/schema";
 
 type JsonLd = Record<string, unknown>;
+type BreadcrumbItem = {
+  name: string;
+  path: string;
+};
 
 const businessId = `${baseURL}#business`;
 const personId = `${baseURL}#person`;
@@ -133,6 +137,50 @@ const buildFaqStructuredData = (faqEntries: FaqEntry[], id: string): JsonLd => {
   };
 };
 
+const buildBreadcrumbStructuredData = (items: BreadcrumbItem[], id?: string): JsonLd => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    ...(id ? { "@id": id } : {}),
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${baseURL}${item.path}`,
+    })),
+  };
+};
+
+const buildServiceStructuredData = ({
+  locale,
+  offer,
+  path,
+}: {
+  locale: Locale;
+  offer: ServiceOffer;
+  path: string;
+}): JsonLd => {
+  const { person } = getSiteContent(locale);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${baseURL}${path}#service`,
+    name: offer.title,
+    serviceType: offer.title,
+    description: offer.seoDescription,
+    url: `${baseURL}${path}`,
+    mainEntityOfPage: `${baseURL}${path}`,
+    category: locale === "bg" ? "Уеб услуги" : "Web services",
+    areaServed: serviceArea,
+    availableLanguage: person.languages,
+    keywords: offer.tags.join(", "),
+    provider: {
+      "@id": businessId,
+    },
+  };
+};
+
 const getFaqStructuredData = (locale: Locale): JsonLd => buildFaqStructuredData(
   getFrequentlyAskedQuestions(locale),
   faqId,
@@ -226,4 +274,11 @@ const getGlobalStructuredData = (locale: Locale): JsonLd[] => {
   ];
 };
 
-export { buildFaqStructuredData, getFaqStructuredData, getFrequentlyAskedQuestions, getGlobalStructuredData };
+export {
+  buildBreadcrumbStructuredData,
+  buildFaqStructuredData,
+  buildServiceStructuredData,
+  getFaqStructuredData,
+  getFrequentlyAskedQuestions,
+  getGlobalStructuredData,
+};

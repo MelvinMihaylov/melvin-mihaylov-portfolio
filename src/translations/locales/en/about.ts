@@ -5,7 +5,7 @@ const enAboutSection = {
   about: {
     path: "/about",
     label: "About",
-    title: "About | Business website developer, landing pages, portfolios, and online shops",
+    title: "About | Business website developer | Melvin Mihaylov",
     description:
       "Business website developer focused on affordable, modern websites, landing pages, portfolios, online shops, and practical launch support.",
     tableOfContent: {

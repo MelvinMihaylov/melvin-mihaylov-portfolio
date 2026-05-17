@@ -25,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [...activeRoutes, ...serviceOfferRoutes].flatMap((route) =>
     locales.map((locale) => ({
       url: `${baseURL}${getLocalizedPath(locale, route)}`,
-      lastModified: new Date(),
       changeFrequency: route === "/" ? ("weekly" as const) : ("monthly" as const),
       priority: getRoutePriority(route),
     })),

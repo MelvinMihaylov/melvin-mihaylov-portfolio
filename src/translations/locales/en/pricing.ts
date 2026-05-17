@@ -4,9 +4,9 @@ const enPricingSection = {
   pricing: {
     path: "/pricing",
     label: "Pricing",
-    title: "Website prices, affordable web design, and small business website cost | Melvin Mihaylov",
+    title: "Website pricing and affordable web design | Melvin Mihaylov",
     description:
-      "Clear website prices for business websites, landing pages, portfolio websites, and smaller online shops. Useful if you are comparing small business website cost or affordable web design options.",
+      "Clear pricing for business websites, landing pages, portfolios, and smaller online shops if you are comparing website cost or affordable web design.",
   },
   pricingSummary: {
     label: "Current offer: 50% off",
