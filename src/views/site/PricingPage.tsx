@@ -218,7 +218,14 @@ export function PricingPage({ locale }: PricingPageProps) {
         </Row>
       </Column>
       <Column fillWidth gap="24">
-        <Column maxWidth="s" horizontal="center" align="center" gap="12">
+        <Column
+          fillWidth
+          maxWidth="s"
+          horizontal="center"
+          align="center"
+          gap="12"
+          style={{ marginInline: "auto" }}
+        >
           <Heading as="h2" variant="display-strong-s" align="center">
             {ui.pricing.faqTitle}
           </Heading>

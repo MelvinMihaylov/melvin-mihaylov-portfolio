@@ -20,21 +20,21 @@ const bgHomeSection = {
     title: "Как изглеждат сайтовете, по които работя",
     description:
       "От фирмени сайтове и каталози до лендинг страници и по-силно бранд представяне - това е типът работа, който правя, когато на клиента му трябва добро първо впечатление и ясна структура.",
-    image: "/images/landingMarketingImage4.png",
+    image: "/images/landingMarketingImage4.avif",
     alt: "Пример за модерен уебсайт за бизнес в стила на Мелвин Михайлов",
   },
   homeShowcaseSlides: [
     {
-      image: "/images/landingMarketingImage4.png",
-      darkImage: "/images/landingMarketingImage4ForDarkTheme.png",
+      image: "/images/landingMarketingImage4.avif",
+      darkImage: "/images/landingMarketingImage4ForDarkTheme.avif",
       alt: "Пример за модерен уебсайт за бизнес в стила на Мелвин Михайлов",
       variant: "landscape",
       objectPosition: "center center",
       backgroundPosition: "center center",
     },
     {
-      image: "/images/landingMarketingImage3.png",
-      darkImage: "/images/landingMarketingImage3ForDarkTheme.png",
+      image: "/images/landingMarketingImage3.avif",
+      darkImage: "/images/landingMarketingImage3ForDarkTheme.avif",
       alt: "Брандирана концепция за модерен бизнес уебсайт с логото и цветовата палитра на Мелвин Михайлов",
       variant: "portrait",
       objectPosition: "center top",
@@ -91,7 +91,8 @@ const bgHomeSection = {
       "Остави имейл, телефон и тип проект. Подходящо е, ако търсиш сайт за микро бизнес, малък бизнес, лендинг страница, портфолио или по-голям и по-индивидуален проект.",
     benefits: [
       "Първа насока без ангажимент",
-      "Подходящо за микро бизнес, малък бизнес, каталог или по-индивидуална идея",
+      "Подходящо за микро и малък бизнес",
+      "Подходящо за каталог или по-индивидуална идея",
       "Може и само с кратко описание",
     ],
     emailLabel: "Имейл",

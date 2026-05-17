@@ -11,7 +11,7 @@ type BrandLogoProps = {
 export function BrandLogo({
   maxWidth = 160,
   alt = "Melvin Mihaylov",
-  src = "/images/mmlogo.png",
+  src = "/images/mmlogo.avif",
   radius,
   priority = false,
 }: BrandLogoProps) {

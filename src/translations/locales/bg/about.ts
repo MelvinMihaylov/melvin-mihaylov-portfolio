@@ -14,7 +14,7 @@ const bgAboutSection = {
     },
     avatar: {
       display: true,
-      image: "/images/me.png",
+      image: "/images/me.avif",
     },
     calendar: {
       display: false,

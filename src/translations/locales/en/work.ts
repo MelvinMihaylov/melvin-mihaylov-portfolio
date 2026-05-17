@@ -12,7 +12,7 @@ const enWorkSection = {
     title: "A simple overview of what I can do for you",
     description:
       "This page is the short version of the website types I build, the extra support I can handle, and where SEO, hosting, launch help, and campaign pages fit in.",
-    image: "/images/landingMarketingImage2.png",
+    image: "/images/landingMarketingImage2.avif",
     alt: "Examples of marketplace, shop, and custom website design work",
   },
   workWebsiteTypes: [

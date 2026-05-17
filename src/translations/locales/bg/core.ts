@@ -261,7 +261,7 @@ const bgCoreSection = {
     lastName: "Михайлов",
     name: "Мелвин Михайлов",
     role: "Уеб разработчик за бизнес сайтове, лендинг страници и онлайн магазини",
-    avatar: "/images/me.png",
+    avatar: "/images/me.avif",
     email: contactDetails.email,
     location: "Europe/Sofia",
     languages: ["Български", "English"],

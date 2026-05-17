@@ -20,21 +20,21 @@ const enHomeSection = {
     title: "How the work looks in practice",
     description:
       "From portfolios and business websites to landing pages and cleaner brand presentations, this is the kind of modern visual direction I build for clients who need a strong first impression.",
-    image: "/images/landingMarketingImage4.png",
+    image: "/images/landingMarketingImage4.avif",
     alt: "Modern website example built in the Melvin Mihaylov brand",
   },
   homeShowcaseSlides: [
     {
-      image: "/images/landingMarketingImage4.png",
-      darkImage: "/images/landingMarketingImage4ForDarkTheme.png",
+      image: "/images/landingMarketingImage4.avif",
+      darkImage: "/images/landingMarketingImage4ForDarkTheme.avif",
       alt: "Modern website example built in the Melvin Mihaylov brand",
       variant: "landscape",
       objectPosition: "center center",
       backgroundPosition: "center center",
     },
     {
-      image: "/images/landingMarketingImage3.png",
-      darkImage: "/images/landingMarketingImage3ForDarkTheme.png",
+      image: "/images/landingMarketingImage3.avif",
+      darkImage: "/images/landingMarketingImage3ForDarkTheme.avif",
       alt: "Branded website concept using the Melvin Mihaylov logo and color palette",
       variant: "portrait",
       objectPosition: "center top",

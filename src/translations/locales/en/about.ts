@@ -14,7 +14,7 @@ const enAboutSection = {
     },
     avatar: {
       display: true,
-      image: "/images/me.png",
+      image: "/images/me.avif",
     },
     calendar: {
       display: false,
