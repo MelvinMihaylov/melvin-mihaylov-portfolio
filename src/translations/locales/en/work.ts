@@ -4,14 +4,14 @@ const enWorkSection = {
   work: {
     path: "/work",
     label: "Services",
-    title: "Services - Melvin Mihaylov",
+    title: "Business website development, landing pages, portfolios and online shops | Melvin Mihaylov",
     description:
-      "A clear overview of the website types, SEO help, Google visibility support, hosting, launch support, and marketing pages I offer.",
+      "A clear overview of the business websites, landing pages, portfolio websites, online shops, redesign help, SEO support, hosting, launch work, and larger custom projects I offer.",
   },
   workShowcase: {
     title: "A simple overview of what I can do for you",
     description:
-      "This page is the short version - what kinds of websites I build, what extra support I can handle, and where SEO, Google visibility, hosting, and marketing pages fit in.",
+      "This page is the short version of the website types I build, the extra support I can handle, and where SEO, hosting, launch help, and campaign pages fit in.",
     image: "/images/landingMarketingImage2.png",
     alt: "Examples of marketplace, shop, and custom website design work",
   },
@@ -19,12 +19,13 @@ const enWorkSection = {
     {
       title: "Business websites and catalogues",
       description:
-        "For local businesses, studios, products, restaurants, menus, and company presentations that need to look clean, modern, and trustworthy.",
+        "For micro businesses, small businesses, studios, products, restaurants, menus, and company presentations that need a clear, trustworthy business website.",
       bullets: [
         "Business websites and service pages",
-        "Catalogues, menus, and landing pages",
+        "Catalogues, menus, and company overview pages",
         "Clear structure that makes the offer easy to understand",
       ],
+      serviceSlug: "business-websites-and-catalogues",
     },
     {
       title: "Portfolio and visual websites",
@@ -35,26 +36,40 @@ const enWorkSection = {
         "Gallery layouts and image-first sections",
         "Custom pages shaped around the style of the brand",
       ],
+      serviceSlug: "portfolio-and-gallery-websites",
     },
     {
-      title: "Online shops and sales pages",
+      title: "Landing pages and campaign pages",
       description:
-        "For smaller stores, product launches, and pages that need cleaner product presentation and a more confident buying flow.",
+        "For services, offers, and campaigns where one focused landing page is the smarter and more affordable place to start.",
       bullets: [
-        "Smaller online shops and product pages",
-        "Sales pages and launch pages",
-        "Cleaner structure and stronger trust around the product",
+        "Landing pages for ads, campaigns, and direct enquiries",
+        "Stronger CTA sections and clearer message hierarchy",
+        "A faster and more affordable launch option than a full website",
       ],
+      serviceSlug: "landing-pages-and-campaign-pages",
     },
     {
-      title: "AI-started projects and rebuilds",
+      title: "Online shops and product pages",
       description:
-        "If a website already started with ChatGPT, Claude, or another AI tool, I can clean up the weak parts and prepare it for a real launch.",
+        "For smaller stores and product-led projects that need cleaner structure, stronger trust, and a more confident buying path.",
+      bullets: [
+        "Smaller online shops and focused product pages",
+        "Sales sections and trust-building content",
+        "Cleaner presentation before scaling further",
+      ],
+      serviceSlug: "online-shops-and-product-pages",
+    },
+    {
+      title: "Website redesigns and unfinished projects",
+      description:
+        "If a website already started with AI, an old template, or a half-built draft, I can clean up the weak parts and prepare it for a real launch.",
       bullets: [
         "Cleanup for AI-generated drafts",
-        "Fix unfinished sections and weak layout choices",
+        "Website redesign and structure fixes",
         "Prepare the project for hosting, launch, and future updates",
       ],
+      serviceSlug: "ai-project-rescue-and-website-redesigns",
     },
   ],
   workSupportAreas: [
@@ -86,6 +101,16 @@ const enWorkSection = {
         "Hosting and domain setup help",
         "Launch fixes, cleanup, and go-live support",
         "Ongoing updates and changes after launch",
+      ],
+    },
+    {
+      title: "Larger projects and broader custom scope",
+      description:
+        "If the project is larger than a standard brochure-style website, I can shape a more custom structure, staged scope, and quote around the real requirements.",
+      bullets: [
+        "Larger business websites and multi-page builds",
+        "More complex structure, customer areas, and custom functionality",
+        "Custom quotes based on goals, integrations, and timeline",
       ],
     },
   ],

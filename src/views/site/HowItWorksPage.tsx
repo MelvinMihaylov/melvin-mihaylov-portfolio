@@ -1,23 +1,33 @@
 import { Schema } from "@once-ui-system/core";
 import HowItWorksView from "@/components/how-it-works/HowItWorksView";
-import { baseURL, buildPageMetadata, getOgImagePath, getSiteContent } from "@/resources";
-import { getRequestLocale } from "@/resources/get-request-locale";
+import {
+  baseURL,
+  buildPageMetadata,
+  getLocalizedPath,
+  getOgImagePath,
+  getSiteContent,
+  type Locale,
+} from "@/resources";
 
-export async function generateMetadata() {
-  const locale = await getRequestLocale();
+type HowItWorksPageProps = {
+  locale: Locale;
+};
+
+export function generateHowItWorksMetadata(locale: Locale) {
   const { howItWorks, person } = getSiteContent(locale);
 
   return buildPageMetadata({
+    locale,
     title: howItWorks.title,
     description: howItWorks.description,
     path: howItWorks.path,
-    image: getOgImagePath(howItWorks.title, person.role),
+    image: getOgImagePath(howItWorks.title, person.role, person.name),
   });
 }
 
-export default async function HowItWorksPage() {
-  const locale = await getRequestLocale();
+export function HowItWorksPage({ locale }: HowItWorksPageProps) {
   const { howItWorks, person } = getSiteContent(locale);
+  const howItWorksPath = getLocalizedPath(locale, howItWorks.path);
 
   return (
     <>
@@ -26,11 +36,11 @@ export default async function HowItWorksPage() {
         baseURL={baseURL}
         title={howItWorks.title}
         description={howItWorks.description}
-        path={howItWorks.path}
-        image={getOgImagePath(howItWorks.title, person.role)}
+        path={howItWorksPath}
+        image={getOgImagePath(howItWorks.title, person.role, person.name)}
         author={{
           name: person.name,
-          url: `${baseURL}${howItWorks.path}`,
+          url: `${baseURL}${howItWorksPath}`,
           image: `${baseURL}${person.avatar}`,
         }}
       />

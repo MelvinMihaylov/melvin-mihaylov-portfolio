@@ -4,9 +4,9 @@ const enHowItWorksSection = {
   howItWorks: {
     path: "/how-it-works",
     label: "How it works",
-    title: "How it works - Melvin Mihaylov",
+    title: "How website projects work, from pricing direction to launch support | Melvin Mihaylov",
     description:
-      "See the full website process: contact, references, free demo, build, hosting, SEO, and launch support.",
+      "See the full website process: contact, references, free demo, build, hosting, SEO, launch support, and how the scope stays practical.",
   },
   howItWorksIntro: {
     label: "From the first message to launch",
@@ -39,7 +39,7 @@ const enHowItWorksSection = {
     {
       title: "SEO and marketing support",
       description:
-        "The structure can be prepared so Google understands the site more easily, with on-page SEO basics and sections that support visibility.",
+        "The structure can be prepared so Google understands the site more easily, with on-page SEO basics, search-intent-minded sections, and support for stronger visibility.",
       bullets: [
         "Clear headings, metadata, and page structure",
         "Service and landing sections shaped for search intent",

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { defaultLocale, getSiteContent } from "@/resources";
+import { defaultLocale, getLocalizedPath, getSiteContent } from "@/resources";
 
 const appName = "Melvin Mihaylov";
 const themeColor = "#151515";
@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: appName,
     short_name: "Melvin",
     description: home.description,
-    start_url: "/",
+    start_url: getLocalizedPath(defaultLocale, home.path),
     scope: "/",
     display: "standalone",
     background_color: themeColor,

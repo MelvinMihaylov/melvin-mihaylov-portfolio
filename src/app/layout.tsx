@@ -13,36 +13,35 @@ import {
   RevealFx,
   SpacingToken,
 } from "@once-ui-system/core";
-import { Footer, Header, Providers } from "@/components";
-import { buildPageMetadata, dataStyle, effects, fonts, getGlobalStructuredData, getOgImagePath, getSiteContent, style } from "@/resources";
-import { getRequestLocale } from "@/resources/get-request-locale";
+import { Providers } from "@/components";
+import { baseURL, dataStyle, defaultLocale, effects, fonts, style } from "@/resources";
 
 export async function generateMetadata() {
-  const locale = await getRequestLocale();
-  const { home, person } = getSiteContent(locale);
-
-  return buildPageMetadata({
-    title: home.title,
-    description: home.description,
-    path: home.path,
-    image: getOgImagePath(home.title, person.role),
-  });
+  return {
+    metadataBase: new URL(baseURL),
+    applicationName: "Melvin Mihaylov",
+    manifest: "/manifest.webmanifest",
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+        { url: "/icon.png", sizes: "512x512", type: "image/png" },
+      ],
+      shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
+      apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    },
+  };
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getRequestLocale();
-  const { about, howItWorks, pricing, ui, work } = getSiteContent(locale);
-  const structuredData = getGlobalStructuredData(locale);
-
   return (
     <Flex
       suppressHydrationWarning
       as="html"
-      lang={locale}
+      lang={defaultLocale}
       fillWidth
       className={classNames(
         fonts.heading.variable,
@@ -59,13 +58,6 @@ export default async function RootLayout({
         <meta name="theme-color" content="#151515" />
         <meta name="msapplication-TileColor" content="#151515" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
-        {structuredData.map((entry, index) => (
-          <script
-            key={`structured-data-${index}`}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(entry) }}
-          />
-        ))}
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
@@ -176,32 +168,7 @@ export default async function RootLayout({
               }}
             />
           </RevealFx>
-          <Flex fillWidth minHeight="8" s={{ hide: true }} />
-          <Header
-            locale={locale}
-            labels={{
-              about: about.label,
-              work: work.label,
-              pricing: pricing.label,
-              howItWorks: howItWorks.label,
-            }}
-            languageToggleLabels={ui.languageToggle}
-            themeToggleLabels={ui.themeToggle}
-          />
-          <Flex
-            zIndex={0}
-            fillWidth
-            paddingX="l"
-            paddingTop="4"
-            paddingBottom="l"
-            horizontal="center"
-            flex={1}
-          >
-            <Flex horizontal="center" fillWidth minHeight="0">
-              {children}
-            </Flex>
-          </Flex>
-          <Footer />
+          {children}
           <Analytics />
         </Column>
       </Providers>

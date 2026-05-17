@@ -1,6 +1,7 @@
 import type { Locale } from "./i18n";
 import { baseURL } from "./once-ui.config";
 import { contactDetails, getSiteContent } from "./site-content";
+import type { FaqEntry } from "@/translations/schema";
 
 type JsonLd = Record<string, unknown>;
 
@@ -21,12 +22,17 @@ const getFrequentlyAskedQuestions = (locale: Locale) => {
     return [
       {
         question: "Какви сайтове изработваш?",
-        answer: `Изработвам сайтове за бизнес, каталози, портфолиа, лендинг страници и по-малки онлайн магазини. Основните направления са ${listedServices}.`,
+        answer: `Изработвам модерни уебсайтове за микро бизнес, малък бизнес, каталози, портфолиа, лендинг страници и по-малки онлайн магазини. Основните направления са ${listedServices}.`,
       },
       {
-        question: "Можеш ли да поемеш по-голям проект?",
+        question: "Можеш ли да поемеш по-голям проект или по-сложен бизнес сайт?",
         answer:
           "Да. Ако проектът включва повече страници, по-сложна структура, клиентска зона, каталог, резервации или друга по-голяма функционалност, подготвям индивидуална оферта според обхвата, сроковете и нужните интеграции.",
+      },
+      {
+        question: "Подходящо ли е и за микро бизнес или по-ограничен бюджет?",
+        answer:
+          "Да. Ако си микро бизнес или искаш по-достъпен старт, може да се започне с по-лек обхват и после сайтът да се надгради, без да изглежда евтин или компромисен.",
       },
       {
         question: "Правиш ли автоматизации и връзки с други системи?",
@@ -63,17 +69,22 @@ const getFrequentlyAskedQuestions = (locale: Locale) => {
   }
 
   return [
-    {
-      question: "What kind of websites do you build?",
-      answer: `${heroOffer.description} Core services include ${listedServices}.`,
-    },
-    {
-      question: "Can you take on larger custom projects?",
-      answer:
-        "Yes. If the project includes more pages, more complex structure, a client area, catalog, bookings, or broader functionality, I prepare a custom offer based on scope, timeline, and required integrations.",
-    },
-    {
-      question: "Do you build automations and system integrations?",
+      {
+        question: "What kind of websites do you build?",
+        answer: `${heroOffer.description} Core services include ${listedServices}.`,
+      },
+      {
+        question: "Can you take on larger custom projects?",
+        answer:
+          "Yes. If the project includes more pages, more complex structure, a client area, catalog, bookings, or broader functionality, I prepare a custom offer based on scope, timeline, and required integrations.",
+      },
+      {
+        question: "Is this suitable for a micro business or a smaller budget too?",
+        answer:
+          "Yes. A micro business can start with a lighter and more affordable scope first, then expand the website later once the business and the budget grow.",
+      },
+      {
+        question: "Do you build automations and system integrations?",
       answer:
         "Yes. I can handle automations for enquiries, notifications, calendars, CRM, forms, email flows, and other workflows. For more advanced automation work, I prepare a custom offer based on the exact requirements.",
     },
@@ -106,13 +117,11 @@ const getFrequentlyAskedQuestions = (locale: Locale) => {
   ];
 };
 
-const getFaqStructuredData = (locale: Locale): JsonLd => {
-  const faqEntries = getFrequentlyAskedQuestions(locale);
-
+const buildFaqStructuredData = (faqEntries: FaqEntry[], id: string): JsonLd => {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "@id": faqId,
+    "@id": id,
     mainEntity: faqEntries.map((entry) => ({
       "@type": "Question",
       name: entry.question,
@@ -123,6 +132,11 @@ const getFaqStructuredData = (locale: Locale): JsonLd => {
     })),
   };
 };
+
+const getFaqStructuredData = (locale: Locale): JsonLd => buildFaqStructuredData(
+  getFrequentlyAskedQuestions(locale),
+  faqId,
+);
 
 const getGlobalStructuredData = (locale: Locale): JsonLd[] => {
   const { heroOffer, home, person, pricingSummary, serviceOffers } = getSiteContent(locale);
@@ -157,7 +171,7 @@ const getGlobalStructuredData = (locale: Locale): JsonLd[] => {
       url: baseURL,
       description: home.description,
       image: `${baseURL}${person.avatar}`,
-      logo: `${baseURL}/icon.png`,
+      logo: `${baseURL}/images/mmlogo.png`,
       areaServed: serviceArea,
       availableLanguage: person.languages,
       email: contactDetails.email,
@@ -212,4 +226,4 @@ const getGlobalStructuredData = (locale: Locale): JsonLd[] => {
   ];
 };
 
-export { getFaqStructuredData, getFrequentlyAskedQuestions, getGlobalStructuredData };
+export { buildFaqStructuredData, getFaqStructuredData, getFrequentlyAskedQuestions, getGlobalStructuredData };

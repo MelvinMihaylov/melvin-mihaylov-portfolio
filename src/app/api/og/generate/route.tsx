@@ -8,6 +8,7 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const title = url.searchParams.get("title") || person.name;
   const role = url.searchParams.get("role") || person.role;
+  const name = url.searchParams.get("name") || person.name;
   const assetOrigin = url.origin;
 
   async function loadGoogleFont(font: string) {
@@ -89,7 +90,7 @@ export async function GET(request: Request) {
                 textWrap: "balance",
               }}
             >
-              {person.name}
+              {name}
             </span>
             <span
               style={{

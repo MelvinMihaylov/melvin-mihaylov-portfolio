@@ -1,10 +1,8 @@
 import { Column, Heading, Text } from "@once-ui-system/core";
-import { getSiteContent } from "@/resources";
-import { getRequestLocale } from "@/resources/get-request-locale";
+import { defaultLocale, getSiteContent } from "@/resources";
 
-export default async function NotFound() {
-  const locale = await getRequestLocale();
-  const { ui } = getSiteContent(locale);
+export default function NotFound() {
+  const { ui } = getSiteContent(defaultLocale);
 
   return (
     <Column as="section" fill center paddingBottom="160">

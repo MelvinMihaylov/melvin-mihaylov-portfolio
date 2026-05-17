@@ -1,36 +1,49 @@
-import { Button, Column, Heading, Row, Schema, Text } from "@once-ui-system/core";
-import { baseURL, buildPageMetadata, contactDetails, getOgImagePath, getSiteContent } from "@/resources";
-import { getRequestLocale } from "@/resources/get-request-locale";
+import { Button, Column, Heading, Row, Schema, Tag, Text } from "@once-ui-system/core";
+import {
+  baseURL,
+  buildPageMetadata,
+  contactDetails,
+  getLocalizedPath,
+  getOgImagePath,
+  getSiteContent,
+  type Locale,
+} from "@/resources";
 
-export async function generateMetadata() {
-  const locale = await getRequestLocale();
+type WorkPageProps = {
+  locale: Locale;
+};
+
+export function generateWorkMetadata(locale: Locale) {
   const { person, work } = getSiteContent(locale);
 
   return buildPageMetadata({
+    locale,
     title: work.title,
     description: work.description,
     path: work.path,
-    image: getOgImagePath(work.title, person.role),
+    image: getOgImagePath(work.title, person.role, person.name),
   });
 }
 
-export default async function Work() {
-  const locale = await getRequestLocale();
-  const { about, howItWorks, person, ui, work, workSupportAreas, workWebsiteTypes, workShowcase } =
+export function WorkPage({ locale }: WorkPageProps) {
+  const { about, howItWorks, person, serviceOffers, ui, work, workSupportAreas, workWebsiteTypes, workShowcase } =
     getSiteContent(locale);
+  const workPath = getLocalizedPath(locale, work.path);
+  const aboutPath = getLocalizedPath(locale, about.path);
+  const howItWorksPath = getLocalizedPath(locale, howItWorks.path);
 
   return (
     <Column maxWidth="m" paddingTop="24" gap="xl">
       <Schema
         as="webPage"
         baseURL={baseURL}
-        path={work.path}
+        path={workPath}
         title={work.title}
         description={work.description}
-        image={getOgImagePath(work.title, person.role)}
+        image={getOgImagePath(work.title, person.role, person.name)}
         author={{
           name: person.name,
-          url: `${baseURL}${about.path}`,
+          url: `${baseURL}${aboutPath}`,
           image: `${baseURL}${person.avatar}`,
         }}
       />
@@ -97,6 +110,52 @@ export default async function Work() {
         </Row>
       </Column>
       <Column fillWidth gap="24">
+        <Column maxWidth="s" horizontal="center" align="center" gap="12">
+          <Heading as="h2" variant="display-strong-s" align="center">
+            {ui.work.serviceDetailsTitle}
+          </Heading>
+          <Text variant="body-default-l" onBackground="neutral-weak" align="center">
+            {ui.work.serviceDetailsDescription}
+          </Text>
+        </Column>
+        <Row fillWidth gap="16" wrap>
+          {serviceOffers.map((offer) => (
+            <Column
+              key={offer.slug}
+              flex={1}
+              background="neutral-alpha-weak"
+              border="neutral-alpha-medium"
+              radius="xl"
+              padding="24"
+              gap="12"
+              style={{ minWidth: "16rem" }}
+            >
+              <Heading as="h3" variant="heading-strong-l">
+                {offer.title}
+              </Heading>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {offer.description}
+              </Text>
+              <Row gap="8" wrap>
+                {offer.tags.slice(0, 3).map((tag) => (
+                  <Tag key={tag} size="m">
+                    {tag}
+                  </Tag>
+                ))}
+              </Row>
+              <Button
+                href={getLocalizedPath(locale, `/work/${offer.slug}`)}
+                variant="secondary"
+                size="m"
+                arrowIcon
+              >
+                {ui.work.serviceDetailsCta}
+              </Button>
+            </Column>
+          ))}
+        </Row>
+      </Column>
+      <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">
           {ui.work.supportTitle}
         </Heading>
@@ -143,7 +202,7 @@ export default async function Work() {
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}
           </Button>
-          <Button href={howItWorks.path} variant="tertiary" size="m" arrowIcon>
+          <Button href={howItWorksPath} variant="tertiary" size="m" arrowIcon>
             {howItWorks.label}
           </Button>
         </Row>

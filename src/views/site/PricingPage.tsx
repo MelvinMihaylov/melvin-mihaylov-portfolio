@@ -1,44 +1,66 @@
 import { Button, Column, Heading, Line, RevealFx, Row, Schema, Tag, Text } from "@once-ui-system/core";
-import { baseURL, buildPageMetadata, contactDetails, getOgImagePath, getSiteContent } from "@/resources";
-import { getRequestLocale } from "@/resources/get-request-locale";
+import {
+  baseURL,
+  buildFaqStructuredData,
+  buildPageMetadata,
+  contactDetails,
+  getLocalizedPath,
+  getOgImagePath,
+  getSiteContent,
+  type Locale,
+} from "@/resources";
 
-export async function generateMetadata() {
-  const locale = await getRequestLocale();
+type PricingPageProps = {
+  locale: Locale;
+};
+
+export function generatePricingMetadata(locale: Locale) {
   const { person, pricing } = getSiteContent(locale);
 
   return buildPageMetadata({
+    locale,
     title: pricing.title,
     description: pricing.description,
     path: pricing.path,
-    image: getOgImagePath(pricing.title, person.role),
+    image: getOgImagePath(pricing.title, person.role, person.name),
   });
 }
 
-export default async function PricingPage() {
-  const locale = await getRequestLocale();
-  const { about, howItWorks, person, pricing, pricingEstimates, pricingNotes, pricingSummary, ui } =
+export function PricingPage({ locale }: PricingPageProps) {
+  const { about, howItWorks, person, pricing, pricingEstimates, pricingFaq, pricingNotes, pricingSummary, ui } =
     getSiteContent(locale);
   const currentRate = locale === "bg" ? "50 EUR / час" : "50 EUR / hour";
   const standardRate = locale === "bg" ? "100 EUR / час" : "100 EUR / hour";
   const pricingTags =
     locale === "bg"
-      ? ["Изработка на уебсайт", "Модерен сайт на разумен бюджет", "SEO и хостинг помощ"]
-      : ["Websites", "SEO support", "Hosting help", "Google-ready pages"];
+      ? ["Цени за уебсайт", "Бизнес сайт цена", "Лендинг страница цена", "Онлайн магазин цена"]
+      : ["Website prices", "Small business website cost", "Landing page pricing", "Affordable web design"];
+  const pricingPath = getLocalizedPath(locale, pricing.path);
+  const aboutPath = getLocalizedPath(locale, about.path);
+  const howItWorksPath = getLocalizedPath(locale, howItWorks.path);
+  const pricingFaqStructuredData = buildFaqStructuredData(
+    pricingFaq,
+    `${baseURL}#pricing-faq-${locale}`,
+  );
 
   return (
     <Column maxWidth="m" paddingTop="24" gap="xl">
       <Schema
         as="webPage"
         baseURL={baseURL}
-        path={pricing.path}
+        path={pricingPath}
         title={pricing.title}
         description={pricing.description}
-        image={getOgImagePath(pricing.title, person.role)}
+        image={getOgImagePath(pricing.title, person.role, person.name)}
         author={{
           name: person.name,
-          url: `${baseURL}${about.path}`,
+          url: `${baseURL}${aboutPath}`,
           image: `${baseURL}${person.avatar}`,
         }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingFaqStructuredData) }}
       />
       <Column fillWidth horizontal="center" align="center" gap="20">
         <Tag size="l">{pricingSummary.label}</Tag>
@@ -195,6 +217,37 @@ export default async function PricingPage() {
           ))}
         </Row>
       </Column>
+      <Column fillWidth gap="24">
+        <Column maxWidth="s" horizontal="center" align="center" gap="12">
+          <Heading as="h2" variant="display-strong-s" align="center">
+            {ui.pricing.faqTitle}
+          </Heading>
+          <Text variant="body-default-l" onBackground="neutral-weak" align="center">
+            {ui.pricing.faqDescription}
+          </Text>
+        </Column>
+        <Row fillWidth gap="16" wrap>
+          {pricingFaq.map((entry) => (
+            <Column
+              key={entry.question}
+              flex={1}
+              background="neutral-alpha-weak"
+              border="neutral-alpha-medium"
+              radius="xl"
+              padding="24"
+              gap="12"
+              style={{ minWidth: "16rem" }}
+            >
+              <Heading as="h3" variant="heading-strong-l">
+                {entry.question}
+              </Heading>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {entry.answer}
+              </Text>
+            </Column>
+          ))}
+        </Row>
+      </Column>
       <Column fillWidth horizontal="center" align="center" gap="20" marginBottom="40">
         <Heading as="h2" variant="display-strong-s" align="center">
           {ui.pricing.ctaTitle}
@@ -209,7 +262,7 @@ export default async function PricingPage() {
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}
           </Button>
-          <Button href={howItWorks.path} variant="tertiary" size="m" arrowIcon>
+          <Button href={howItWorksPath} variant="tertiary" size="m" arrowIcon>
             {howItWorks.label}
           </Button>
         </Row>

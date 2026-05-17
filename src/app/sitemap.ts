@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { baseURL, routes as routesConfig } from "@/resources";
+import { baseURL, defaultLocale, getLocalizedPath, getSiteContent, locales, routes as routesConfig } from "@/resources";
 
 const getRoutePriority = (route: string) => {
   switch (route) {
@@ -19,12 +19,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (route) => routesConfig[route as keyof typeof routesConfig],
   );
 
-  const routes = activeRoutes.map((route) => ({
-    url: `${baseURL}${route !== "/" ? route : ""}`,
-    lastModified: new Date(),
-    changeFrequency: route === "/" ? ("weekly" as const) : ("monthly" as const),
-    priority: getRoutePriority(route),
-  }));
+  const serviceOfferRoutes = getSiteContent(defaultLocale).serviceOffers.map(
+    (offer) => `/work/${offer.slug}`,
+  );
+  const routes = [...activeRoutes, ...serviceOfferRoutes].flatMap((route) =>
+    locales.map((locale) => ({
+      url: `${baseURL}${getLocalizedPath(locale, route)}`,
+      lastModified: new Date(),
+      changeFrequency: route === "/" ? ("weekly" as const) : ("monthly" as const),
+      priority: getRoutePriority(route),
+    })),
+  );
 
   return routes;
 }

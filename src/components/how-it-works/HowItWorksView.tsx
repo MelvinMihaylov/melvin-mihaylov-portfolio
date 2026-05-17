@@ -1,6 +1,6 @@
 import { Button, Column, Heading, Line, Row, Tag, Text } from "@once-ui-system/core";
 import { BrandLogo } from "@/components";
-import { contactDetails, getSiteContent, type Locale } from "@/resources";
+import { contactDetails, getLocalizedPath, getSiteContent, type Locale } from "@/resources";
 
 const cardStyle = { minWidth: "16rem" } as const;
 
@@ -17,6 +17,7 @@ export default function HowItWorksView({ locale }: HowItWorksViewProps) {
     ui,
     work,
   } = getSiteContent(locale);
+  const workPath = getLocalizedPath(locale, work.path);
 
   return (
     <Column maxWidth="m" gap="xl" paddingTop="24" paddingBottom="40">
@@ -37,7 +38,7 @@ export default function HowItWorksView({ locale }: HowItWorksViewProps) {
           <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
             {ui.howItWorks.primaryCta}
           </Button>
-          <Button href={work.path} variant="secondary" size="m" arrowIcon>
+          <Button href={workPath} variant="secondary" size="m" arrowIcon>
             {ui.howItWorks.secondaryCta}
           </Button>
         </Row>

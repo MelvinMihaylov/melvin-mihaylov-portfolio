@@ -4,13 +4,24 @@ export type PortfolioHighlight = {
   description: string;
 };
 
+export type FaqEntry = {
+  question: string;
+  answer: string;
+};
+
 export type ServiceOffer = {
   slug: string;
   title: string;
+  headline: string;
+  seoTitle: string;
+  seoDescription: string;
   description: string;
   bullets: string[];
   tags: string[];
+  idealFor: string[];
+  pricingHint: string;
   ctaLabel: string;
+  faq: FaqEntry[];
 };
 
 export type PortfolioFact = {
@@ -83,6 +94,7 @@ export type ServiceInfoBlock = {
   title: string;
   description: string;
   bullets: string[];
+  serviceSlug?: string;
 };
 
 export type PricingEstimate = {
@@ -127,6 +139,9 @@ type SiteUI = {
   work: {
     introTitle: string;
     websiteTypesTitle: string;
+    serviceDetailsTitle: string;
+    serviceDetailsDescription: string;
+    serviceDetailsCta: string;
     supportTitle: string;
     ctaTitle: string;
     ctaDescription: string;
@@ -143,9 +158,23 @@ type SiteUI = {
     estimatesDescription: string;
     standardPriceLabel: string;
     finalPriceTitle: string;
+    faqTitle: string;
+    faqDescription: string;
     ctaTitle: string;
     ctaDescription: string;
     emailCta: string;
+  };
+  servicePage: {
+    idealForTitle: string;
+    deliverablesTitle: string;
+    pricingHintTitle: string;
+    faqTitle: string;
+    faqDescription: string;
+    ctaTitle: string;
+    ctaDescription: string;
+    emailCta: string;
+    pricingCta: string;
+    servicesCta: string;
   };
   howItWorks: {
     primaryCta: string;
@@ -194,6 +223,7 @@ export type SiteContent = {
   };
   pricingEstimates: PricingEstimate[];
   pricingNotes: PortfolioHighlight[];
+  pricingFaq: FaqEntry[];
   homeHighlights: PortfolioHighlight[];
   serviceOffers: ServiceOffer[];
   processSteps: ProcessStep[];

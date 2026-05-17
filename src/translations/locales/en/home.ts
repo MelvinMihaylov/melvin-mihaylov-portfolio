@@ -5,7 +5,7 @@ const enHomeSection = {
   home: {
     path: "/",
     label: "Home",
-    title: "Melvin Mihaylov - Modern websites with practical pricing",
+    title: "Affordable business websites, landing pages, portfolios, and online shops | Melvin Mihaylov",
     description: enHeroOffer.description,
     headline: enHeroOffer.title,
     featured: {
@@ -13,7 +13,8 @@ const enHomeSection = {
       title: enHeroOffer.label,
       href: "/work",
     },
-    subline: enHeroOffer.description,
+    subline:
+      "I build modern websites for micro businesses, small businesses, growing brands, and larger custom projects with practical pricing and clear launch support.",
   },
   homeShowcase: {
     title: "How the work looks in practice",
@@ -54,7 +55,7 @@ const enHomeSection = {
     {
       title: "Modern look with a practical budget",
       description:
-        "The goal is a website that feels current and professional without becoming unnecessarily expensive.",
+        "The goal is a website that feels current and professional without becoming unnecessarily expensive or cheap-looking.",
     },
     {
       title: "Help after an AI start",
@@ -86,8 +87,8 @@ const enHomeSection = {
     tag: "Send inquiry",
     title: "Tell me what kind of website or idea you want and I can reply with a clear direction.",
     description:
-      "Leave your email, phone, and project type. When you send the form, I receive the inquiry directly by email so I can reply with the next step.",
-    benefits: ["Free first direction", "Works for custom ideas too", "Fine even with a short brief"],
+      "Leave your email, phone, and project type. When you send the form, I receive the inquiry directly by email so I can reply with the next step, whether the project is for a micro business, a small business, or a larger custom build.",
+    benefits: ["Free first direction", "Works for micro and small businesses too", "Fine even with a short brief"],
     emailLabel: "Email",
     emailPlaceholder: "ivan@example.com",
     phoneLabel: "Phone",

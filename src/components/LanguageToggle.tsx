@@ -1,9 +1,15 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ToggleButton } from "@once-ui-system/core";
-import { getAlternateLocale, type Locale } from "@/resources";
+import {
+  getAlternateLocale,
+  getLocalizedPath,
+  getLocaleNativeLabel,
+  getLocaleShortLabel,
+  getPathnameWithoutLocale,
+  type Locale,
+} from "@/resources";
 
 type LanguageToggleProps = {
   locale: Locale;
@@ -16,48 +22,20 @@ export function LanguageToggle({
   switchToBgLabel,
   switchToEnLabel,
 }: LanguageToggleProps) {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-  const [isSaving, setIsSaving] = useState(false);
+  const pathname = usePathname() ?? getLocalizedPath(locale, "/");
+  const pathnameWithoutLocale = getPathnameWithoutLocale(pathname);
   const nextLocale = getAlternateLocale(locale);
-  const ariaLabel = nextLocale === "bg" ? switchToBgLabel : switchToEnLabel;
-  const isDisabled = isPending || isSaving;
-
-  useEffect(() => {
-    setIsSaving(false);
-  }, [locale]);
-
-  const handleToggle = async () => {
-    if (isDisabled) {
-      return;
-    }
-
-    setIsSaving(true);
-
-    const response = await fetch("/api/locale", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ locale: nextLocale }),
-    });
-
-    if (!response.ok) {
-      setIsSaving(false);
-      throw new Error("Failed to update locale");
-    }
-
-    startTransition(() => {
-      router.refresh();
-    });
-  };
+  const ariaLabel = nextLocale === "bg"
+    ? switchToBgLabel
+    : nextLocale === "en"
+      ? switchToEnLabel
+      : getLocaleNativeLabel(nextLocale);
 
   return (
     <ToggleButton
-      label={nextLocale.toUpperCase()}
+      href={getLocalizedPath(nextLocale, pathnameWithoutLocale)}
+      label={getLocaleShortLabel(nextLocale)}
       size="m"
-      onClick={() => void handleToggle()}
-      disabled={isDisabled}
       aria-label={ariaLabel}
     />
   );

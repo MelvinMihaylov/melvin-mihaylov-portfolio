@@ -9,26 +9,38 @@ import {
   Tag,
   Text,
 } from "@once-ui-system/core";
-import { baseURL, buildPageMetadata, contactDetails, getOgImagePath, getSiteContent } from "@/resources";
-import { getRequestLocale } from "@/resources/get-request-locale";
 import React from "react";
+import {
+  baseURL,
+  buildPageMetadata,
+  contactDetails,
+  getLocalizedPath,
+  getOgImagePath,
+  getSiteContent,
+  type Locale,
+} from "@/resources";
 
-export async function generateMetadata() {
-  const locale = await getRequestLocale();
+type AboutPageProps = {
+  locale: Locale;
+};
+
+export function generateAboutMetadata(locale: Locale) {
   const { about, person } = getSiteContent(locale);
 
   return buildPageMetadata({
+    locale,
     title: about.title,
     description: about.description,
     path: about.path,
-    image: getOgImagePath(about.title, person.role),
+    image: getOgImagePath(about.title, person.role, person.name),
   });
 }
 
-export default async function About() {
-  const locale = await getRequestLocale();
+export function AboutPage({ locale }: AboutPageProps) {
   const { about, aboutFacts, aboutHighlights, person, processSteps, social, supportOptions, ui, work } =
     getSiteContent(locale);
+  const aboutPath = getLocalizedPath(locale, about.path);
+  const workPath = getLocalizedPath(locale, work.path);
 
   return (
     <Column maxWidth="m" gap="xl" paddingY="12">
@@ -37,11 +49,11 @@ export default async function About() {
         baseURL={baseURL}
         title={about.title}
         description={about.description}
-        path={about.path}
-        image={getOgImagePath(about.title, person.role)}
+        path={aboutPath}
+        image={getOgImagePath(about.title, person.role, person.name)}
         author={{
           name: person.name,
-          url: `${baseURL}${about.path}`,
+          url: `${baseURL}${aboutPath}`,
           image: `${baseURL}${about.avatar.image ?? person.avatar}`,
         }}
       />
@@ -177,7 +189,7 @@ export default async function About() {
           <Button href={`tel:${contactDetails.phone}`} variant="secondary" size="m" arrowIcon>
             {contactDetails.phoneDisplay}
           </Button>
-          <Button href={work.path} variant="tertiary" size="m" arrowIcon>
+          <Button href={workPath} variant="tertiary" size="m" arrowIcon>
             {ui.about.servicesCta}
           </Button>
         </Row>

@@ -1,19 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { Fade, Line, Row, ToggleButton } from "@once-ui-system/core";
 
-import { display, routes, type Locale } from "@/resources";
+import { defaultLocale, display, getLocaleFromPathname, getLocalizedPath, getPathnameWithoutLocale, routes } from "@/resources";
 import { LanguageToggle } from "./LanguageToggle";
 import { ThemeToggle } from "./ThemeToggle";
 import styles from "./Header.module.scss";
 
-const headerRoutes = ["/", "/about", "/work", "/pricing", "/how-it-works"] as const;
-
 type HeaderProps = {
-  locale: Locale;
   labels: {
     about: string;
     work: string;
@@ -31,46 +27,14 @@ type HeaderProps = {
 };
 
 export const Header = ({
-  locale,
   labels,
   languageToggleLabels,
   themeToggleLabels,
 }: HeaderProps) => {
-  const pathname = usePathname() ?? "";
-  const router = useRouter();
+  const pathname = usePathname() ?? getLocalizedPath(defaultLocale, "/");
+  const activeLocale = getLocaleFromPathname(pathname);
+  const pathnameWithoutLocale = getPathnameWithoutLocale(pathname);
   const navButtonSize = "m" as const;
-
-  useEffect(() => {
-    headerRoutes.forEach((route) => {
-      if (routes[route]) {
-        void router.prefetch(route);
-      }
-    });
-  }, [locale, router]);
-
-  const scrollToPageTop = () => {
-    const runScroll = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.body.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.scrollingElement?.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    };
-
-    runScroll();
-
-    window.requestAnimationFrame(runScroll);
-    window.setTimeout(runScroll, 80);
-  };
-
-  const navigateTo = (target: string) => {
-    if (pathname === target) {
-      scrollToPageTop();
-      return;
-    }
-
-    router.push(target, { scroll: true });
-    scrollToPageTop();
-  };
 
   return (
     <>
@@ -113,8 +77,8 @@ export const Header = ({
               {routes["/"] && (
                 <ToggleButton
                   prefixIcon="home"
-                  onClick={() => navigateTo("/")}
-                  selected={pathname === "/"}
+                  href={getLocalizedPath(activeLocale, "/")}
+                  selected={pathnameWithoutLocale === "/"}
                   size={navButtonSize}
                 />
               )}
@@ -124,17 +88,17 @@ export const Header = ({
                   <Row s={{ hide: true }}>
                     <ToggleButton
                       prefixIcon="person"
-                      onClick={() => navigateTo("/about")}
+                      href={getLocalizedPath(activeLocale, "/about")}
                       label={labels.about}
-                      selected={pathname === "/about"}
+                      selected={pathnameWithoutLocale === "/about"}
                       size={navButtonSize}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="person"
-                      onClick={() => navigateTo("/about")}
-                      selected={pathname === "/about"}
+                      href={getLocalizedPath(activeLocale, "/about")}
+                      selected={pathnameWithoutLocale === "/about"}
                       size={navButtonSize}
                     />
                   </Row>
@@ -145,17 +109,17 @@ export const Header = ({
                   <Row s={{ hide: true }}>
                     <ToggleButton
                       prefixIcon="grid"
-                      onClick={() => navigateTo("/work")}
+                      href={getLocalizedPath(activeLocale, "/work")}
                       label={labels.work}
-                      selected={pathname.startsWith("/work")}
+                      selected={pathnameWithoutLocale.startsWith("/work")}
                       size={navButtonSize}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="grid"
-                      onClick={() => navigateTo("/work")}
-                      selected={pathname.startsWith("/work")}
+                      href={getLocalizedPath(activeLocale, "/work")}
+                      selected={pathnameWithoutLocale.startsWith("/work")}
                       size={navButtonSize}
                     />
                   </Row>
@@ -166,17 +130,17 @@ export const Header = ({
                   <Row s={{ hide: true }}>
                     <ToggleButton
                       prefixIcon="card"
-                      onClick={() => navigateTo("/pricing")}
+                      href={getLocalizedPath(activeLocale, "/pricing")}
                       label={labels.pricing}
-                      selected={pathname.startsWith("/pricing")}
+                      selected={pathnameWithoutLocale.startsWith("/pricing")}
                       size={navButtonSize}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="card"
-                      onClick={() => navigateTo("/pricing")}
-                      selected={pathname.startsWith("/pricing")}
+                      href={getLocalizedPath(activeLocale, "/pricing")}
+                      selected={pathnameWithoutLocale.startsWith("/pricing")}
                       size={navButtonSize}
                     />
                   </Row>
@@ -187,17 +151,17 @@ export const Header = ({
                   <Row s={{ hide: true }}>
                     <ToggleButton
                       prefixIcon="rocket"
-                      onClick={() => navigateTo("/how-it-works")}
+                      href={getLocalizedPath(activeLocale, "/how-it-works")}
                       label={labels.howItWorks}
-                      selected={pathname.startsWith("/how-it-works")}
+                      selected={pathnameWithoutLocale.startsWith("/how-it-works")}
                       size={navButtonSize}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="rocket"
-                      onClick={() => navigateTo("/how-it-works")}
-                      selected={pathname.startsWith("/how-it-works")}
+                      href={getLocalizedPath(activeLocale, "/how-it-works")}
+                      selected={pathnameWithoutLocale.startsWith("/how-it-works")}
                       size={navButtonSize}
                     />
                   </Row>
@@ -205,7 +169,7 @@ export const Header = ({
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="24" />
               <LanguageToggle
-                locale={locale}
+                locale={activeLocale}
                 switchToBgLabel={languageToggleLabels.switchToBg}
                 switchToEnLabel={languageToggleLabels.switchToEn}
               />

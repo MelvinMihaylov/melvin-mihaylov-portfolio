@@ -1,17 +1,25 @@
 export {
   contactDetails,
+  getServiceOffer,
   getSiteContent,
+  type FaqEntry,
   type MarketingShowcaseSlide,
   type SiteContent,
 } from "./site-content";
 
 export {
   defaultLocale,
+  getAlternateOpenGraphLocales,
   getAlternateLocale,
+  getLocaleFromPathname,
+  getLocaleNativeLabel,
+  getLocalePrefix,
+  getLocaleShortLabel,
+  getLocalizedPath,
+  getOpenGraphLocale,
+  getPathnameWithoutLocale,
   isLocale,
-  localeCookieName,
   locales,
-  normalizeLocale,
   type Locale,
 } from "./i18n";
 
@@ -31,4 +39,4 @@ export {
 
 export { formspreeEndpoint, hasConfiguredFormspree } from "./formspree";
 export { buildPageMetadata, getCanonicalUrl, getOgImagePath, searchRobotsDirectives } from "./seo";
-export { getFaqStructuredData, getFrequentlyAskedQuestions, getGlobalStructuredData } from "./structured-data";
+export { buildFaqStructuredData, getFaqStructuredData, getFrequentlyAskedQuestions, getGlobalStructuredData } from "./structured-data";

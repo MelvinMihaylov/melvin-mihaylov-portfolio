@@ -5,8 +5,9 @@ const enAboutSection = {
   about: {
     path: "/about",
     label: "About",
-    title: "About - Melvin Mihaylov",
-    description: "Modern professional websites with a practical and flexible way of working.",
+    title: "About | Business website developer, landing pages, portfolios, and online shops",
+    description:
+      "Business website developer focused on affordable, modern websites, landing pages, portfolios, online shops, and practical launch support.",
     tableOfContent: {
       display: false,
       subItems: false,
@@ -23,7 +24,7 @@ const enAboutSection = {
       display: true,
       title: "About",
       description:
-        "The goal is simple: build something that looks modern, feels custom, stays understandable for the client, and does not become more expensive than it needs to be.",
+        "The goal is simple: build something that looks modern, feels custom, stays understandable for the client, and does not become more expensive than it needs to be, whether the project is for a micro business or a larger custom build.",
     },
     work: {
       display: false,
@@ -55,7 +56,7 @@ const enAboutSection = {
     {
       title: "Custom requests are welcome",
       description:
-        "The project can go as far as it needs to go - from a simple catalogue to a more custom visual website.",
+        "The project can go as far as it needs to go - from a simple micro-business website or catalogue to a broader custom website.",
     },
     {
       title: "Modern and easy to understand",
@@ -65,7 +66,7 @@ const enAboutSection = {
     {
       title: "Budget-aware, not cheap-looking",
       description:
-        "The focus stays on strong presentation and practical scope so the website feels premium without agency-sized pricing.",
+        "The focus stays on strong presentation and practical scope so the website feels premium without agency-sized pricing or cheap-looking shortcuts.",
     },
     {
       title: "Useful after the build too",
@@ -75,6 +76,8 @@ const enAboutSection = {
   ],
   supportOptions: [
     "Catalogues",
+    "Micro business websites",
+    "Small business websites",
     "Portfolios",
     "Galleries",
     "Online shops",
@@ -87,6 +90,7 @@ const enAboutSection = {
     "Google SEO",
     "AI SEO",
     "ChatGPT / Claude project help",
+    "Larger custom projects",
   ],
 } satisfies Pick<SiteContent, "about" | "aboutHighlights" | "supportOptions">;
 

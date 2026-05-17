@@ -1,5 +1,6 @@
-export { contactDetails, getSiteContent, siteContentByLocale } from "@/translations";
+export { contactDetails, getServiceOffer, getSiteContent, siteContentByLocale } from "@/translations";
 export type {
+  FaqEntry,
   HowItWorksCoverage,
   MarketingShowcase,
   MarketingShowcaseSlide,

@@ -36,6 +36,10 @@ const enUiSection = {
     work: {
       introTitle: "What I do - explained simply and clearly.",
       websiteTypesTitle: "Types of websites I build",
+      serviceDetailsTitle: "More specific pages for each service type",
+      serviceDetailsDescription:
+        "If you already know you need a business website, landing page, portfolio website, online shop, or help with an unfinished project, open the dedicated service page.",
+      serviceDetailsCta: "Open the detailed page",
       supportTitle: "Support around the website",
       ctaTitle: "Want the simple process too?",
       ctaDescription:
@@ -55,10 +59,27 @@ const enUiSection = {
         "These are ballpark examples so it is easier to get a realistic sense of budget before we even talk.",
       standardPriceLabel: "Standard price",
       finalPriceTitle: "What affects the final price",
+      faqTitle: "Frequently asked questions about website pricing",
+      faqDescription:
+        "Short answers for people comparing website prices, looking for an affordable website, or trying to understand what affects the budget most.",
       ctaTitle: "Want a more exact quote?",
       ctaDescription:
         "Send a short description, a few examples you like, or even an AI-made outline and I can give you a more realistic budget direction.",
       emailCta: "Email me",
+    },
+    servicePage: {
+      idealForTitle: "Best for",
+      deliverablesTitle: "What is included",
+      pricingHintTitle: "How pricing usually works",
+      faqTitle: "Frequently asked questions",
+      faqDescription:
+        "These are the most common questions that come up when someone is comparing this kind of service and trying to understand the likely budget and scope.",
+      ctaTitle: "Want to talk about this exact kind of website?",
+      ctaDescription:
+        "Send a short brief, examples, or a rough budget direction and I can quickly tell you whether this service is the right fit for the project.",
+      emailCta: "Email me",
+      pricingCta: "See pricing",
+      servicesCta: "Back to services",
     },
     howItWorks: {
       primaryCta: "Request a free demo",

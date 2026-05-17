@@ -1,11 +1,13 @@
 import { Row, SmartLink, Text } from "@once-ui-system/core";
-import { contactDetails, getSiteContent } from "@/resources";
-import { getRequestLocale } from "@/resources/get-request-locale";
+import { contactDetails, getSiteContent, type Locale } from "@/resources";
 import styles from "./Footer.module.scss";
 
-export const Footer = async () => {
+type FooterProps = {
+  locale: Locale;
+};
+
+export const Footer = ({ locale }: FooterProps) => {
   const currentYear = new Date().getFullYear();
-  const locale = await getRequestLocale();
   const { person, ui } = getSiteContent(locale);
 
   return (
