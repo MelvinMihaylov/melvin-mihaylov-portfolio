@@ -13,6 +13,7 @@ import {
   getSiteContent,
   type Locale,
 } from "@/resources";
+import styles from "./ServiceOfferPage.module.scss";
 
 type ServiceOfferPageProps = {
   locale: Locale;
@@ -47,6 +48,7 @@ export function ServiceOfferPage({ locale, slug }: ServiceOfferPageProps) {
   const pagePath = getLocalizedPath(locale, `/work/${offer.slug}`);
   const pricingPath = getLocalizedPath(locale, pricing.path);
   const workPath = getLocalizedPath(locale, work.path);
+  const serviceMailto = `mailto:${contactDetails.email}?subject=${encodeURIComponent(offer.title)}`;
   const faqStructuredData = buildFaqStructuredData(
     offer.faq,
     `${baseURL}#service-faq-${locale}-${offer.slug}`,
@@ -66,7 +68,7 @@ export function ServiceOfferPage({ locale, slug }: ServiceOfferPageProps) {
   });
 
   return (
-    <Column maxWidth="m" gap="xl" paddingTop="24" paddingBottom="40">
+    <Column maxWidth="l" gap="xl" paddingTop="24" paddingBottom="40">
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -92,156 +94,194 @@ export function ServiceOfferPage({ locale, slug }: ServiceOfferPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceStructuredData) }}
       />
-      <Column fillWidth horizontal="center" align="center" gap="20">
-        <Tag size="l">{offer.title}</Tag>
-        <Heading variant="display-strong-l" align="center">
-          {offer.headline}
-        </Heading>
-        <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          {offer.description}
-        </Text>
-        <Row gap="8" wrap horizontal="center">
-          {offer.tags.map((tag) => (
-            <Tag key={tag} size="m">
-              {tag}
-            </Tag>
-          ))}
-        </Row>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: "3 / 2",
-            display: "block",
-            borderRadius: "1.5rem",
-            overflow: "hidden",
-          }}
-        >
-          <Image
-            alt={offer.imageAlt}
-            src={offer.image}
-            fill
-            priority
-            quality={82}
-            sizes="(max-width: 768px) 100vw, 768px"
-            style={{
-              objectFit: "cover",
-            }}
-          />
-        </div>
-      </Column>
-      <Column fillWidth gap="24">
-        <Heading as="h2" variant="display-strong-s" align="center">
-          {ui.servicePage.idealForTitle}
-        </Heading>
-        <Row fillWidth gap="16" wrap>
-          {offer.idealFor.map((item) => (
-            <Column
-              key={item}
-              flex={1}
-              background="neutral-alpha-weak"
-              border="neutral-alpha-medium"
-              radius="xl"
-              padding="24"
-              gap="12"
-              style={{ minWidth: "16rem" }}
-            >
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {item}
-              </Text>
+      <article className={styles.page}>
+        <section className={styles.hero}>
+          <div className={styles.heroContent}>
+            <Tag size="l">{offer.title}</Tag>
+            <Heading variant="display-strong-l" align="center">
+              {offer.headline}
+            </Heading>
+            <Text variant="body-default-l" onBackground="neutral-weak" align="center">
+              {offer.description}
+            </Text>
+            <div className={styles.tagRow}>
+              {offer.tags.map((tag) => (
+                <Tag key={tag} size="m">
+                  {tag}
+                </Tag>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.heroMediaSection}>
+          <div className={styles.heroMediaFrame}>
+            <Image
+              className={styles.heroImageBackground}
+              alt=""
+              aria-hidden="true"
+              src={offer.image}
+              fill
+              quality={35}
+              sizes="100vw"
+            />
+            <div className={styles.heroImageOverlay} />
+            <Image
+              className={styles.heroImage}
+              alt={offer.imageAlt}
+              src={offer.image}
+              fill
+              priority
+              quality={84}
+              sizes="100vw"
+            />
+          </div>
+        </section>
+
+        {offer.articleIntro?.length ? (
+          <section className={styles.introPanel}>
+            <Column gap="12">
+              {offer.articleIntro.map((paragraph) => (
+                <Text key={paragraph} variant="body-default-m" onBackground="neutral-weak">
+                  {paragraph}
+                </Text>
+              ))}
             </Column>
-          ))}
-        </Row>
-      </Column>
-      <Column fillWidth gap="24">
-        <Heading as="h2" variant="display-strong-s" align="center">
-          {ui.servicePage.deliverablesTitle}
-        </Heading>
-        <Row fillWidth gap="16" wrap>
-          {offer.bullets.map((bullet) => (
-            <Column
-              key={bullet}
-              flex={1}
-              background="neutral-alpha-weak"
-              border="neutral-alpha-medium"
-              radius="xl"
-              padding="24"
-              gap="12"
-              style={{ minWidth: "16rem" }}
-            >
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {bullet}
-              </Text>
-            </Column>
-          ))}
-        </Row>
-      </Column>
-      <Column fillWidth gap="24">
-        <Heading as="h2" variant="display-strong-s" align="center">
-          {ui.servicePage.pricingHintTitle}
-        </Heading>
-        <Column
-          background="neutral-alpha-weak"
-          border="neutral-alpha-medium"
-          radius="xl"
-          padding="24"
-          gap="12"
-        >
-          <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-            {offer.pricingHint}
-          </Text>
-        </Column>
-      </Column>
-      <Column fillWidth gap="24">
-        <Column maxWidth="s" horizontal="center" align="center" gap="12">
-          <Heading as="h2" variant="display-strong-s" align="center">
-            {ui.servicePage.faqTitle}
-          </Heading>
-          <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-            {ui.servicePage.faqDescription}
-          </Text>
-        </Column>
-        <Row fillWidth gap="16" wrap>
-          {offer.faq.map((entry) => (
-            <Column
-              key={entry.question}
-              flex={1}
-              background="neutral-alpha-weak"
-              border="neutral-alpha-medium"
-              radius="xl"
-              padding="24"
-              gap="12"
-              style={{ minWidth: "16rem" }}
-            >
-              <Heading as="h3" variant="heading-strong-l">
-                {entry.question}
+          </section>
+        ) : null}
+
+        <section className={styles.summaryGrid}>
+          <div className={styles.summaryPanel}>
+            <Column gap="16">
+              <Heading as="h2" variant="display-strong-s">
+                {ui.servicePage.idealForTitle}
               </Heading>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {entry.answer}
-              </Text>
+              <ul className={styles.summaryList}>
+                {offer.idealFor.map((item) => (
+                  <li key={item} className={styles.summaryItem}>
+                    <span className={styles.summaryMark} aria-hidden="true" />
+                    <Text variant="body-default-m" onBackground="neutral-weak">
+                      {item}
+                    </Text>
+                  </li>
+                ))}
+              </ul>
             </Column>
-          ))}
-        </Row>
-      </Column>
-      <Column fillWidth horizontal="center" align="center" gap="20">
-        <Heading as="h2" variant="display-strong-s" align="center">
-          {ui.servicePage.ctaTitle}
-        </Heading>
-        <Text variant="body-default-l" onBackground="neutral-weak" align="center">
-          {ui.servicePage.ctaDescription}
-        </Text>
-        <Row gap="12" wrap horizontal="center">
-          <Button href={`mailto:${contactDetails.email}`} variant="primary" size="m" arrowIcon>
-            {offer.ctaLabel}
-          </Button>
-          <Button href={pricingPath} variant="secondary" size="m" arrowIcon>
-            {ui.servicePage.pricingCta}
-          </Button>
-          <Button href={workPath} variant="tertiary" size="m" arrowIcon>
-            {ui.servicePage.servicesCta}
-          </Button>
-        </Row>
-      </Column>
+          </div>
+          <div className={styles.summaryPanel}>
+            <Column gap="16">
+              <Heading as="h2" variant="display-strong-s">
+                {ui.servicePage.deliverablesTitle}
+              </Heading>
+              <ul className={styles.summaryList}>
+                {offer.bullets.map((bullet) => (
+                  <li key={bullet} className={styles.summaryItem}>
+                    <span className={styles.summaryMark} aria-hidden="true" />
+                    <Text variant="body-default-m" onBackground="neutral-weak">
+                      {bullet}
+                    </Text>
+                  </li>
+                ))}
+              </ul>
+            </Column>
+          </div>
+        </section>
+
+        {offer.articleSections?.map((section, index) => (
+          <section
+            key={section.title}
+            className={index % 2 === 1 ? `${styles.storySection} ${styles.storySectionAlt}` : styles.storySection}
+          >
+            <div className={styles.storyBody}>
+              <Heading as="h2" variant="display-strong-s">
+                {section.title}
+              </Heading>
+              <div className={styles.storyParagraphs}>
+                {section.paragraphs.map((paragraph) => (
+                  <Text key={paragraph} variant="body-default-m" onBackground="neutral-weak">
+                    {paragraph}
+                  </Text>
+                ))}
+              </div>
+            </div>
+            {section.bullets?.length ? (
+              <div className={styles.storyAside}>
+                {section.bullets.map((bullet) => (
+                  <div key={bullet} className={styles.storyBulletCard}>
+                    <div className={styles.storyBullet}>
+                      <span className={styles.storyBulletMark} aria-hidden="true" />
+                      <Text variant="body-default-s" onBackground="neutral-weak">
+                        {bullet}
+                      </Text>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </section>
+        ))}
+
+        <section className={styles.pricingPanel}>
+          <Column gap="12">
+            <Heading as="h2" variant="display-strong-s">
+              {ui.servicePage.pricingHintTitle}
+            </Heading>
+            <Text variant="body-default-l" onBackground="neutral-weak">
+              {offer.pricingHint}
+            </Text>
+          </Column>
+        </section>
+
+        <section className={styles.faqSection}>
+          <Column gap="12">
+            <Heading as="h2" variant="display-strong-s">
+              {ui.servicePage.faqTitle}
+            </Heading>
+            <Text variant="body-default-l" onBackground="neutral-weak">
+              {ui.servicePage.faqDescription}
+            </Text>
+          </Column>
+          <div className={styles.faqAccordion}>
+            {offer.faq.map((entry, index) => (
+              <details key={entry.question} className={styles.faqItem}>
+                <summary className={styles.faqSummary}>
+                  <Text variant="label-default-s" onBackground="brand-weak" className={styles.faqIndex}>
+                    {String(index + 1).padStart(2, "0")}
+                  </Text>
+                  <Text variant="heading-strong-s">{entry.question}</Text>
+                </summary>
+                <div className={styles.faqAnswer}>
+                  <Text variant="body-default-m" onBackground="neutral-weak">
+                    {entry.answer}
+                  </Text>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section className={styles.ctaPanel}>
+          <Column gap="16">
+            <Heading as="h2" variant="display-strong-s">
+              {ui.servicePage.ctaTitle}
+            </Heading>
+            <Text variant="body-default-l" onBackground="neutral-weak">
+              {ui.servicePage.ctaDescription}
+            </Text>
+            <div className={styles.ctaActions}>
+              <Button href={serviceMailto} variant="primary" size="m" arrowIcon>
+                {offer.ctaLabel}
+              </Button>
+              <Button href={pricingPath} variant="secondary" size="m" arrowIcon>
+                {ui.servicePage.pricingCta}
+              </Button>
+              <Button href={workPath} variant="tertiary" size="m" arrowIcon>
+                {ui.servicePage.servicesCta}
+              </Button>
+            </div>
+          </Column>
+        </section>
+      </article>
     </Column>
   );
 }

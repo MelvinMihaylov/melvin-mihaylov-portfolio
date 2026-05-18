@@ -168,7 +168,7 @@ const buildServiceStructuredData = ({
     "@id": `${baseURL}${path}#service`,
     name: offer.title,
     serviceType: offer.title,
-    description: offer.seoDescription,
+    description: joinText([offer.seoDescription, ...(offer.articleIntro ?? [])]),
     image: `${baseURL}${offer.image}`,
     url: `${baseURL}${path}`,
     mainEntityOfPage: `${baseURL}${path}`,

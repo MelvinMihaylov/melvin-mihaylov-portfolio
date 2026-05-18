@@ -9,6 +9,12 @@ export type FaqEntry = {
   answer: string;
 };
 
+export type ServiceOfferSection = {
+  title: string;
+  paragraphs: string[];
+  bullets?: string[];
+};
+
 export type ServiceOffer = {
   slug: string;
   title: string;
@@ -21,6 +27,8 @@ export type ServiceOffer = {
   bullets: string[];
   tags: string[];
   idealFor: string[];
+  articleIntro?: string[];
+  articleSections?: ServiceOfferSection[];
   pricingHint: string;
   ctaLabel: string;
   faq: FaqEntry[];
