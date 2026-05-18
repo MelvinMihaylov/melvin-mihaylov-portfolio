@@ -11,6 +11,8 @@ const enServiceOffers: ServiceOffer[] = [
       "Affordable business website development for company websites, service pages, and catalogues with clear structure, enquiries, and SEO-ready foundations.",
     description:
       "For micro businesses, small businesses, local companies, studios, restaurants, products, menus, and broader company presentations that need a clean, modern, and trustworthy business website with a clearer path to enquiries.",
+    image: "/images/services/business-websites-and-catalogues.avif",
+    imageAlt: "Premium business website and catalogue mockup displayed across refined digital screens",
     bullets: [
       "Custom homepage and inner pages shaped around the offer and the service flow",
       "Clear contact, enquiry, call, or booking path",
@@ -59,6 +61,8 @@ const enServiceOffers: ServiceOffer[] = [
       "Portfolio website design for photographers, architects, creators, studios, and visual brands that need a stronger first impression.",
     description:
       "For creators, photographers, architects, beauty brands, car projects, and businesses that need a stronger visual presentation and a more memorable portfolio website.",
+    image: "/images/services/portfolio-and-gallery-websites.avif",
+    imageAlt: "Premium editorial portfolio website with image-led gallery layouts and refined visual styling",
     bullets: [
       "Portfolio websites, gallery pages, and image-led layouts",
       "Custom sections shaped around the visual style of the brand",
@@ -101,6 +105,8 @@ const enServiceOffers: ServiceOffer[] = [
       "Landing page design for offers, ads, campaign pages, and lead generation with clearer messaging, stronger structure, and practical pricing.",
     description:
       "For offers, campaigns, ads, and services that need a landing page or campaign page with clearer messaging, stronger CTA sections, and a cleaner conversion path.",
+    image: "/images/services/landing-pages-and-campaign-pages.avif",
+    imageAlt: "Premium landing page concept with focused conversion structure and polished campaign presentation",
     bullets: [
       "Landing pages for Google Ads, Meta campaigns, launches, and direct enquiries",
       "Clear core message, offer framing, contact form, and CTA flow",
@@ -143,6 +149,8 @@ const enServiceOffers: ServiceOffer[] = [
       "Online shop development for smaller stores, product pages, and sales sections with cleaner structure, stronger trust, and practical launch help.",
     description:
       "For smaller online shops, product pages, and sales-led projects that need cleaner product presentation, better trust, and a more confident buying path.",
+    image: "/images/services/online-shops-and-product-pages.avif",
+    imageAlt: "Premium ecommerce storefront with elegant product presentation and boutique-style product pages",
     bullets: [
       "Smaller online shops with clearer structure and stronger product presentation",
       "Product pages, offer sections, and trust-building content blocks",
@@ -185,6 +193,8 @@ const enServiceOffers: ServiceOffer[] = [
       "Website redesign help, AI website cleanup, and finishing unfinished websites started with ChatGPT, Claude, old templates, or messy drafts.",
     description:
       "If a website already started with ChatGPT, Claude, an old template, or a half-built draft, I can clean it up, redesign the weak parts, and prepare it for a real launch. That applies both to smaller businesses and to larger custom projects that need stronger structure.",
+    image: "/images/services/ai-project-rescue-and-website-redesigns.avif",
+    imageAlt: "Before-and-after website redesign concept showing AI-generated rough work refined into a polished product",
     bullets: [
       "Cleanup for AI-generated drafts and unfinished websites",
       "Website redesign and structural improvements for older websites",

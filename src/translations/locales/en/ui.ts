@@ -41,6 +41,9 @@ const enUiSection = {
         "If you already know you need a business website, landing page, portfolio website, online shop, or help with an unfinished project, open the dedicated service page.",
       serviceDetailsCta: "Open the detailed page",
       supportTitle: "Support around the website",
+      supportDescription:
+        "The website can also include search visibility work, campaign landing pages, technical launch help, and a broader custom scope when the project grows beyond the standard setup.",
+      supportCta: "Ask about this",
       ctaTitle: "Want the simple process too?",
       ctaDescription:
         'The "How it works" page shows the full flow - from the first contact and references to the free demo, build, SEO, hosting, and launch support.',

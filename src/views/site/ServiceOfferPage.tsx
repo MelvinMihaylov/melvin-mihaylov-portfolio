@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button, Column, Heading, Row, Schema, Tag, Text } from "@once-ui-system/core";
 import {
@@ -8,7 +9,6 @@ import {
   buildServiceStructuredData,
   contactDetails,
   getLocalizedPath,
-  getOgImagePath,
   getServiceOffer,
   getSiteContent,
   type Locale,
@@ -21,7 +21,6 @@ type ServiceOfferPageProps = {
 
 export function generateServiceOfferMetadata(locale: Locale, slug: string) {
   const offer = getServiceOffer(locale, slug);
-  const { person } = getSiteContent(locale);
 
   if (!offer) {
     notFound();
@@ -32,7 +31,7 @@ export function generateServiceOfferMetadata(locale: Locale, slug: string) {
     title: offer.seoTitle,
     description: offer.seoDescription,
     path: `/work/${offer.slug}`,
-    image: getOgImagePath(offer.title, person.role, person.name),
+    image: offer.image,
   });
 }
 
@@ -74,7 +73,7 @@ export function ServiceOfferPage({ locale, slug }: ServiceOfferPageProps) {
         title={offer.seoTitle}
         description={offer.seoDescription}
         path={pagePath}
-        image={getOgImagePath(offer.title, person.role, person.name)}
+        image={offer.image}
         author={{
           name: person.name,
           url: `${baseURL}${pagePath}`,
@@ -108,6 +107,28 @@ export function ServiceOfferPage({ locale, slug }: ServiceOfferPageProps) {
             </Tag>
           ))}
         </Row>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            aspectRatio: "3 / 2",
+            display: "block",
+            borderRadius: "1.5rem",
+            overflow: "hidden",
+          }}
+        >
+          <Image
+            alt={offer.imageAlt}
+            src={offer.image}
+            fill
+            priority
+            quality={82}
+            sizes="(max-width: 768px) 100vw, 768px"
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </div>
       </Column>
       <Column fillWidth gap="24">
         <Heading as="h2" variant="display-strong-s" align="center">

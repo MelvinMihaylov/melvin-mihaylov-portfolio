@@ -16,6 +16,8 @@ export type ServiceOffer = {
   seoTitle: string;
   seoDescription: string;
   description: string;
+  image: string;
+  imageAlt: string;
   bullets: string[];
   tags: string[];
   idealFor: string[];
@@ -92,9 +94,13 @@ export type MarketingShowcaseSlide = {
 
 export type ServiceInfoBlock = {
   title: string;
+  subtitle?: string;
   description: string;
   bullets: string[];
+  badges?: string[];
   serviceSlug?: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 export type PricingEstimate = {
@@ -143,6 +149,8 @@ type SiteUI = {
     serviceDetailsDescription: string;
     serviceDetailsCta: string;
     supportTitle: string;
+    supportDescription: string;
+    supportCta: string;
     ctaTitle: string;
     ctaDescription: string;
     emailCta: string;

@@ -12,8 +12,8 @@ const enWorkSection = {
     title: "A simple overview of what I can do for you",
     description:
       "This page is the short version of the website types I build, the extra support I can handle, and where SEO, hosting, launch help, and campaign pages fit in.",
-    image: "/images/landingMarketingImage2.avif",
-    alt: "Examples of marketplace, shop, and custom website design work",
+    image: "/images/services/services-overview.avif",
+    alt: "Premium overview of modern business websites, landing pages, stores, and custom digital experiences",
   },
   workWebsiteTypes: [
     {
@@ -75,8 +75,12 @@ const enWorkSection = {
   workSupportAreas: [
     {
       title: "SEO optimization",
+      subtitle: "Search-ready structure, indexing signals, and cleaner visibility foundations.",
       description:
         "I can help structure the website so Google can understand, index, and present it more easily.",
+      badges: ["SEO", "Indexing", "Metadata"],
+      image: "/images/services/seo-optimization.avif",
+      imageAlt: "Premium website SEO interface with refined structure, visibility cues, and search-ready presentation",
       bullets: [
         "Clear headings, page structure, and metadata",
         "Better internal flow between pages and content",
@@ -85,8 +89,12 @@ const enWorkSection = {
     },
     {
       title: "Marketing pages and Google campaigns",
+      subtitle: "Campaign-focused pages with clearer offers, cleaner ad flow, and better enquiry paths.",
       description:
         "If you need campaign support, I can build landing pages and sections that fit ads, offers, and lead generation better.",
+      badges: ["Campaigns", "Landing pages", "Lead generation"],
+      image: "/images/services/landing-pages-and-campaign-pages.avif",
+      imageAlt: "Premium landing page system with focused campaign layouts and polished conversion sections",
       bullets: [
         "Landing pages for ads and campaigns",
         "Clear offers and stronger call-to-action sections",
@@ -95,8 +103,12 @@ const enWorkSection = {
     },
     {
       title: "Hosting, domain, and launch support",
+      subtitle: "Technical help so the project actually goes live cleanly and stays easier to manage.",
       description:
         "The project does not need to stop at the design. I can help with the practical technical side too.",
+      badges: ["Hosting", "Domain", "Launch"],
+      image: "/images/services/hosting-domain-and-launch-support.avif",
+      imageAlt: "Premium hosting and launch support interface with domain setup, infrastructure cues, and go-live readiness",
       bullets: [
         "Hosting and domain setup help",
         "Launch fixes, cleanup, and go-live support",
@@ -105,8 +117,12 @@ const enWorkSection = {
     },
     {
       title: "Larger projects and broader custom scope",
+      subtitle: "When the scope grows beyond a simple brochure site, I can shape the structure around it.",
       description:
         "If the project is larger than a standard brochure-style website, I can shape a more custom structure, staged scope, and quote around the real requirements.",
+      badges: ["Custom scope", "Client areas", "Integrations"],
+      image: "/images/services/larger-custom-projects-and-broader-scope.avif",
+      imageAlt: "Premium overview of a larger custom website system with multiple polished digital surfaces",
       bullets: [
         "Larger business websites and multi-page builds",
         "More complex structure, customer areas, and custom functionality",

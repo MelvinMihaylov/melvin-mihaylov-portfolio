@@ -169,6 +169,7 @@ const buildServiceStructuredData = ({
     name: offer.title,
     serviceType: offer.title,
     description: offer.seoDescription,
+    image: `${baseURL}${offer.image}`,
     url: `${baseURL}${path}`,
     mainEntityOfPage: `${baseURL}${path}`,
     category: locale === "bg" ? "Уеб услуги" : "Web services",

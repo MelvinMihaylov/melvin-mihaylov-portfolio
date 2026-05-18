@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { Button, Column, Heading, Row, Schema, Tag, Text } from "@once-ui-system/core";
+import { Button, Column, Heading, Row, Schema, Text } from "@once-ui-system/core";
+import { ServiceOfferShowcase } from "@/components/work/ServiceOfferShowcase";
 import {
   baseURL,
   buildPageMetadata,
   contactDetails,
   getLocalizedPath,
-  getOgImagePath,
   getSiteContent,
   type Locale,
 } from "@/resources";
@@ -15,23 +15,46 @@ type WorkPageProps = {
 };
 
 export function generateWorkMetadata(locale: Locale) {
-  const { person, work } = getSiteContent(locale);
+  const { work, workShowcase } = getSiteContent(locale);
 
   return buildPageMetadata({
     locale,
     title: work.title,
     description: work.description,
     path: work.path,
-    image: getOgImagePath(work.title, person.role, person.name),
+    image: workShowcase.image,
   });
 }
 
 export function WorkPage({ locale }: WorkPageProps) {
-  const { about, howItWorks, person, serviceOffers, ui, work, workSupportAreas, workWebsiteTypes, workShowcase } =
+  const { about, howItWorks, person, serviceOffers, ui, work, workSupportAreas, workShowcase } =
     getSiteContent(locale);
   const workPath = getLocalizedPath(locale, work.path);
   const aboutPath = getLocalizedPath(locale, about.path);
   const howItWorksPath = getLocalizedPath(locale, howItWorks.path);
+  const localizedServiceOffers = serviceOffers.map((offer) => ({
+    id: offer.slug,
+    title: offer.title,
+    subtitle: offer.headline,
+    description: offer.description,
+    bullets: offer.bullets,
+    image: offer.image,
+    imageAlt: offer.imageAlt,
+    badges: offer.tags,
+    href: getLocalizedPath(locale, `/work/${offer.slug}`),
+  }));
+  const localizedSupportAreas = workSupportAreas.map((item) => ({
+    id: item.title,
+    title: item.title,
+    subtitle: item.subtitle,
+    description: item.description,
+    bullets: item.bullets,
+    image: item.image ?? workShowcase.image,
+    imageAlt: item.imageAlt ?? item.title,
+    badges: item.badges,
+    href: `mailto:${contactDetails.email}?subject=${encodeURIComponent(item.title)}`,
+    ctaLabel: ui.work.supportCta,
+  }));
 
   return (
     <Column maxWidth="m" paddingTop="24" gap="xl">
@@ -41,7 +64,7 @@ export function WorkPage({ locale }: WorkPageProps) {
         path={workPath}
         title={work.title}
         description={work.description}
-        image={getOgImagePath(work.title, person.role, person.name)}
+        image={workShowcase.image}
         author={{
           name: person.name,
           url: `${baseURL}${aboutPath}`,
@@ -88,123 +111,33 @@ export function WorkPage({ locale }: WorkPageProps) {
         </div>
       </Column>
       <Column fillWidth gap="24">
-        <Heading as="h2" variant="display-strong-s" align="center">
-          {ui.work.websiteTypesTitle}
-        </Heading>
-        <Row fillWidth gap="16" wrap>
-          {workWebsiteTypes.map((item) => (
-            <Column
-              key={item.title}
-              flex={1}
-              background="neutral-alpha-weak"
-              border="neutral-alpha-medium"
-              radius="xl"
-              padding="24"
-              gap="12"
-              style={{ minWidth: "16rem" }}
-            >
-              <Heading as="h3" variant="heading-strong-l">
-                {item.title}
-              </Heading>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {item.description}
-              </Text>
-              <Column gap="8">
-                {item.bullets.map((bullet) => (
-                  <Text key={bullet} variant="body-default-s" onBackground="neutral-weak">
-                    - {bullet}
-                  </Text>
-                ))}
-              </Column>
-            </Column>
-          ))}
-        </Row>
-      </Column>
-        <Column fillWidth gap="24">
-          <Column
-            fillWidth
-            maxWidth="s"
-            horizontal="center"
-            align="center"
-            gap="12"
-            style={{ marginInline: "auto" }}
-          >
-            <Heading as="h2" variant="display-strong-s" align="center">
-              {ui.work.serviceDetailsTitle}
-            </Heading>
+        <Column
+          fillWidth
+          maxWidth="s"
+          horizontal="center"
+          align="center"
+          gap="12"
+          style={{ marginInline: "auto" }}
+        >
+          <Heading as="h2" variant="display-strong-s" align="center">
+            {ui.work.serviceDetailsTitle}
+          </Heading>
           <Text variant="body-default-l" onBackground="neutral-weak" align="center">
             {ui.work.serviceDetailsDescription}
           </Text>
         </Column>
-        <Row fillWidth gap="16" wrap>
-          {serviceOffers.map((offer) => (
-            <Column
-              key={offer.slug}
-              flex={1}
-              background="neutral-alpha-weak"
-              border="neutral-alpha-medium"
-              radius="xl"
-              padding="24"
-              gap="12"
-              style={{ minWidth: "16rem" }}
-            >
-              <Heading as="h3" variant="heading-strong-l">
-                {offer.title}
-              </Heading>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {offer.description}
-              </Text>
-              <Row gap="8" wrap>
-                {offer.tags.slice(0, 3).map((tag) => (
-                  <Tag key={tag} size="m">
-                    {tag}
-                  </Tag>
-                ))}
-              </Row>
-              <Button
-                href={getLocalizedPath(locale, `/work/${offer.slug}`)}
-                variant="secondary"
-                size="m"
-                arrowIcon
-              >
-                {ui.work.serviceDetailsCta}
-              </Button>
-            </Column>
-          ))}
-        </Row>
+        <ServiceOfferShowcase items={localizedServiceOffers} defaultCtaLabel={ui.work.serviceDetailsCta} />
       </Column>
       <Column fillWidth gap="24">
-        <Heading as="h2" variant="display-strong-s" align="center">
-          {ui.work.supportTitle}
-        </Heading>
-        <Row fillWidth gap="16" wrap>
-          {workSupportAreas.map((item) => (
-            <Column
-              key={item.title}
-              flex={1}
-              background="neutral-alpha-weak"
-              border="neutral-alpha-medium"
-              radius="xl"
-              padding="24"
-              gap="12"
-              style={{ minWidth: "16rem" }}
-            >
-              <Heading as="h3" variant="heading-strong-l">
-                {item.title}
-              </Heading>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {item.description}
-              </Text>
-              <Column gap="8">
-                {item.bullets.map((bullet) => (
-                  <Text key={bullet} variant="body-default-s" onBackground="neutral-weak">
-                    - {bullet}
-                  </Text>
-                ))}
-              </Column>
-            </Column>
-          ))}
-        </Row>
+        <Column fillWidth maxWidth="s" horizontal="center" align="center" gap="12" style={{ marginInline: "auto" }}>
+          <Heading as="h2" variant="display-strong-s" align="center">
+            {ui.work.supportTitle}
+          </Heading>
+          <Text variant="body-default-l" onBackground="neutral-weak" align="center">
+            {ui.work.supportDescription}
+          </Text>
+        </Column>
+        <ServiceOfferShowcase items={localizedSupportAreas} />
       </Column>
       <Column fillWidth horizontal="center" align="center" gap="20" marginBottom="40">
         <Heading as="h2" variant="display-strong-s" align="center">
