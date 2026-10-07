@@ -1,58 +1,47 @@
-import { baseURL, contactDetails, getLocalizedPath, getSiteContent } from "@/resources";
+import { getContent } from "@/content";
+import { baseURL, contactDetails, getLocalizedPath } from "@/resources";
 
 export const runtime = "nodejs";
 
 const buildLlmsText = () => {
-  const content = getSiteContent("en");
-  const corePages = [
-    ["Home", content.home.path],
-    ["About", content.about.path],
-    ["Services", content.work.path],
-    ["Pricing", content.pricing.path],
-    ["How it works", content.howItWorks.path],
-  ];
-  const servicePages = content.serviceOffers.map((offer) => [
-    offer.title,
-    `/work/${offer.slug}`,
-  ] as const);
-  const totalPublicPages = (corePages.length + servicePages.length) * 2;
+  const content = getContent("en");
 
   const lines = [
     "# Melvin Mihaylov",
     "",
-    "> Production website for a web development business focused on modern websites, SEO help, hosting support, and launch assistance.",
+    "> Independent web designer and developer building business websites, blogs, online shops, booking systems, custom CRMs and dashboards, with integrations into payments, couriers, dropshipping suppliers and accounting software.",
     "",
     "## Canonical domain",
     `- ${baseURL}`,
     "",
-    "## Business summary",
-    "- Melvin Mihaylov builds business websites, catalogues, portfolios, landing pages, smaller online shops, and AI-started projects that need cleanup or finishing.",
-    "- Clients can come with examples, a rough plan, or even an AI-generated brief.",
-    "- The service can cover branding direction, logo/theme guidance, free demo direction, development, hosting help, SEO help, and Google indexing preparation.",
+    "## Site structure",
+    "- Single-page site, one page per language.",
+    `- Bulgarian (default): ${baseURL}${getLocalizedPath("bg", "/")}`,
+    `- English: ${baseURL}${getLocalizedPath("en", "/")}`,
+    "- Sections are anchors on that page: #directions #services #integrations #process #about #pricing #contact",
     "",
-    "## Languages",
-    "- Default UI language: Bulgarian",
-    "- Secondary UI language: English",
-    "- Public localized pages live under /bg/* and /en/*",
+    "## Services",
+    ...content.services.items.map((service) => `- ${service.name}: ${service.body}`),
     "",
-    "## Public pages",
-    `- Total public pages: ${totalPublicPages}`,
-    ...corePages.flatMap(([label, path]) => [
-      `- ${label} (BG): ${baseURL}${getLocalizedPath("bg", path) === "/" ? "/" : getLocalizedPath("bg", path)}`,
-      `- ${label} (EN): ${baseURL}${getLocalizedPath("en", path)}`,
-    ]),
-    ...servicePages.flatMap(([label, path]) => [
-      `- Service detail (${label}, BG): ${baseURL}${getLocalizedPath("bg", path)}`,
-      `- Service detail (${label}, EN): ${baseURL}${getLocalizedPath("en", path)}`,
-    ]),
+    "## Integration capabilities",
+    ...content.integrations.capabilities.map(
+      (capability) => `- ${capability.title}: ${capability.body}`,
+    ),
+    "",
+    "## Supported integrations",
+    ...content.integrations.panel.groups.map(
+      (group) => `- ${group.name}: ${group.providers.join(", ")} — ${group.detail}`,
+    ),
     "",
     "## Pricing",
-    "- Current rate: 50 EUR / hour",
-    "- Standard rate: 100 EUR / hour",
-    "- Small projects often start around 300 EUR depending on scope",
+    `- Current rate: ${content.pricing.rate} ${content.pricing.rateUnit}`,
+    ...content.pricing.plans.map(
+      (plan) => `- ${plan.name}: ${plan.price}${plan.priceSuffix} (${plan.hours})`,
+    ),
+    "- Shops, CRMs, integrations and dashboards are quoted per project.",
     "",
     "## Process",
-    ...content.processSteps.map((step, index) => `${index + 1}. ${step.title}: ${step.description}`),
+    ...content.process.steps.map((step, index) => `${index + 1}. ${step.title} — ${step.body}`),
     "",
     "## Contact",
     `- Email: ${contactDetails.email}`,
@@ -60,9 +49,9 @@ const buildLlmsText = () => {
     "",
     "## Notes for AI assistants",
     "- This is a real business website, not a template demo.",
-    "- The public site is intentionally focused on home, about, services, pricing, how it works, and dedicated service landing pages.",
-    "- When summarizing the business, emphasize website creation, SEO help, hosting support, and launch help.",
-    "- The site content is localized, with Bulgarian under /bg/ and English under /en/.",
+    "- Melvin works with accounting software daily, so website-to-accounting invoicing automation is a genuine differentiator.",
+    "- The design-direction previews on the page are labelled concepts, not real client work.",
+    "- Default language is Bulgarian; English is served under /en/.",
   ];
 
   return `${lines.join("\n")}\n`;

@@ -1,34 +1,12 @@
+import { baseURL, getLocalizedPath, locales } from "@/resources";
 import type { MetadataRoute } from "next";
-import { baseURL, defaultLocale, getLocalizedPath, getSiteContent, locales, routes as routesConfig } from "@/resources";
 
-const getRoutePriority = (route: string) => {
-  switch (route) {
-    case "/":
-      return 1;
-    case "/work":
-    case "/pricing":
-    case "/how-it-works":
-      return 0.9;
-    default:
-      return 0.8;
-  }
-};
-
+/** One entry per locale — the site is a single page per language. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const activeRoutes = Object.keys(routesConfig).filter(
-    (route) => routesConfig[route as keyof typeof routesConfig],
-  );
-
-  const serviceOfferRoutes = getSiteContent(defaultLocale).serviceOffers.map(
-    (offer) => `/work/${offer.slug}`,
-  );
-  const routes = [...activeRoutes, ...serviceOfferRoutes].flatMap((route) =>
-    locales.map((locale) => ({
-      url: `${baseURL}${getLocalizedPath(locale, route)}`,
-      changeFrequency: route === "/" ? ("weekly" as const) : ("monthly" as const),
-      priority: getRoutePriority(route),
-    })),
-  );
-
-  return routes;
+  return locales.map((locale) => ({
+    url: `${baseURL}${getLocalizedPath(locale, "/")}`,
+    changeFrequency: "weekly" as const,
+    priority: 1,
+    lastModified: new Date(),
+  }));
 }

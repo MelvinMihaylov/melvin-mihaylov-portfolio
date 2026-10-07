@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import { defaultLocale } from "@/resources";
+import type { ReactNode } from "react";
 
 type RedirectLayoutProps = {
   children: ReactNode;

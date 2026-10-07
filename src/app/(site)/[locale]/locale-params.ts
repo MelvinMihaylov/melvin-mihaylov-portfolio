@@ -1,5 +1,5 @@
+import { type Locale, isLocale } from "@/resources";
 import { notFound } from "next/navigation";
-import { isLocale, type Locale } from "@/resources";
 
 type LocaleParamRecord = {
   locale: string;
@@ -10,9 +10,11 @@ export type LocaleRouteProps = {
 };
 
 export type LocaleSlugRouteProps = {
-  params: Promise<LocaleParamRecord & {
-    slug: string;
-  }>;
+  params: Promise<
+    LocaleParamRecord & {
+      slug: string;
+    }
+  >;
 };
 
 export function validateLocaleParam(locale: string): Locale {

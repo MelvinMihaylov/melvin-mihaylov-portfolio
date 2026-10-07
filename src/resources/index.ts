@@ -1,16 +1,7 @@
 export {
-  contactDetails,
-  getServiceOffer,
-  getSiteContent,
-  type FaqEntry,
-  type MarketingShowcaseSlide,
-  type SiteContent,
-} from "./site-content";
-
-export {
   defaultLocale,
-  getAlternateOpenGraphLocales,
   getAlternateLocale,
+  getAlternateOpenGraphLocales,
   getLocaleFromPathname,
   getLocaleNativeLabel,
   getLocalePrefix,
@@ -23,27 +14,7 @@ export {
   type Locale,
 } from "./i18n";
 
-export {
-  display,
-  mailchimp,
-  routes,
-  baseURL,
-  fonts,
-  style,
-  schema,
-  sameAs,
-  socialSharing,
-  effects,
-  dataStyle,
-} from "./once-ui.config";
-
+export { baseURL, contactDetails, person, sameAs } from "./site";
 export { formspreeEndpoint, hasConfiguredFormspree } from "./formspree";
 export { buildPageMetadata, getCanonicalUrl, getOgImagePath, searchRobotsDirectives } from "./seo";
-export {
-  buildBreadcrumbStructuredData,
-  buildFaqStructuredData,
-  buildServiceStructuredData,
-  getFaqStructuredData,
-  getFrequentlyAskedQuestions,
-  getGlobalStructuredData,
-} from "./structured-data";
+export { getLandingStructuredData } from "./structured-data";

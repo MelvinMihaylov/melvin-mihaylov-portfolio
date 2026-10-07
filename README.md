@@ -1,96 +1,136 @@
-# Magic Portfolio
+# melvinmihaylov.com
 
-Magic Portfolio is a simple, clean, beginner-friendly portfolio template. It supports an MDX-based content system for projects and blog posts, an about / CV page and a gallery.
-
-View the demo [here](https://demo.magic-portfolio.com).
-
-![Magic Portfolio](public/images/og/home.jpg)
+Single-page portfolio and services site. Bulgarian first, English second.
 
 ## Getting started
 
-**1. Clone the repository**
-```
-git clone https://github.com/once-ui-system/magic-portfolio.git
-```
+Requires Node.js 20.9+.
 
-**2. Install dependencies**
-```
+```bash
 npm install
+npm run dev        # http://localhost:3000 → redirects to /bg
 ```
 
-**3. Run dev server**
-```
-npm run dev
-```
+Other scripts:
 
-**Inquiry form with Formspree**
-1. Create a free form in the Formspree dashboard
-2. Replace the placeholder in `src/resources/formspree.ts` with your real endpoint (`https://formspree.io/f/xxxxxxx`)
-3. Deploy the site
-
-**4. Edit config**
-```
-src/resources/once-ui.config.js
+```bash
+npm run build      # production build
+npm run start      # serve the production build
+npm run lint       # biome check .
+npm run typecheck  # tsc --noEmit
+npm run format     # biome check --write .
 ```
 
-**5. Edit content**
+## Stack
+
+| Concern | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router, Turbopack) + React 19 |
+| Styling | Tailwind v4 + hand-written CSS in `src/app/globals.css` |
+| Components | Radix primitives (accordion, tabs), lucide icons |
+| Type | Manrope (`next/font/google`, latin + cyrillic) |
+| Forms | Formspree |
+
+## Structure
+
 ```
-src/resources/content.js
+src/
+  app/(site)/[locale]/     the landing page, one route per locale
+  app/(redirect)/          / → /bg
+  components/              JourneyPath, SiteHeader, ConceptPreview
+  components/sections/     one file per page section
+  content/                 all copy: types.ts + bg.ts + en.ts
+  resources/               i18n, SEO metadata, structured data, site constants
 ```
 
-**6. Create blog posts / projects**
-```
-Add a new .mdx file to src/app/blog/posts or src/app/work/projects
-```
+### Content and translation
 
-Magic Portfolio was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
+Every visible string lives in `src/content/bg.ts` and `src/content/en.ts`, both
+typed against `LandingContent` in `src/content/types.ts`. Because each file ends
+with `satisfies LandingContent`, **a key added to one locale and forgotten in the
+other is a build error** — the two can't drift.
 
-## Documentation
+To change copy, edit those two files. Nothing else needs touching.
 
-Docs available at: [docs.once-ui.com](https://docs.once-ui.com/docs/magic-portfolio/quick-start)
+### Sections
 
-## Features
+The page is one continuous scroll with anchored sections:
 
-### Once UI
-- All tokens, components & features of [Once UI](https://once-ui.com)
+`#why` · `#directions` · `#services` · `#integrations` · `#process` · `#about` · `#pricing` · `#contact`
 
-### SEO
-- Automatic open-graph and X image generation with next/og
-- Automatic schema and metadata generation based on the content file
+Old multi-page routes (`/pricing`, `/about`, `/work`, `/how-it-works`) permanently
+redirect to the matching anchor — see `SECTION_REDIRECTS` in `next.config.mjs`.
 
-### Design
-- Responsive layout optimized for all screen sizes
-- Timeless design without heavy animations and motion
-- Endless customization options through [data attributes](https://once-ui.com/docs/theming)
+### The journey line
 
-### Content
-- Render sections conditionally based on the content file
-- Enable or disable pages for blog, work, gallery and about / CV
-- Generate and display social links automatically
-- Set up password protection for URLs
+`src/components/JourneyPath.tsx` draws the glowing line that threads down the page.
+It measures the section anchors, builds one cubic Bézier through them (a simpler
+zigzag below 760px), then on scroll binary-searches `getPointAtLength` to find where
+the curve crosses 75% of the viewport height. That length drives `strokeDashoffset`
+on the glow and light strokes and positions the travelling dot.
 
-### Localization
-- A localized, earlier version of Magic Portfolio is available with the next-intl library
-- To use localization, switch to the 'i18n' branch
+It rebuilds on resize via a `ResizeObserver` on `#page`, so section height changes
+re-fit the path automatically. **If you add or reorder a section, update `ANCHORS`
+and the path definition in that file** — the curve is hand-tuned to the section order.
 
-## Creators
+### Example showcase
 
-Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://www.linkedin.com/in/lorant-one/)
+The "what else I can build" block (`ExampleShowcase` + `DemoSites`) switches
+between eight demo-site mocks. Each mock is pure CSS with its own palette, set
+through `--ds-*` custom properties on a `.ds--<key>` class, so the demos read as
+different brands rather than recoloured copies. They're sized to a fixed stage
+height — if you add content to one, re-check it still fits.
 
-## Get involved
+The mocks are interactive — promote an article or dish into the hero slot, pick
+a day and a time and confirm the booking, like a product or add it to the cart,
+toggle catalogue facets to filter the rows, switch the dashboard metric, select
+a deal. Everything that looks clickable is a real button, so the panel is
+keyboard-reachable and needs no tabindex of its own.
 
-- Join the Design Engineers Club on [Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!
-- Deployed your docs? Share it on the [Once UI Hub](https://once-ui.com/hub) too! We feature our favorite apps on our landing page.
+It auto-advances every 5s while on screen, pauses on hover or focus, and stops
+for good once a visitor picks a category or touches anything inside a mock.
+Reduced motion disables the cycle.
 
-## License
+### Header
 
-Distributed under the CC BY-NC 4.0 License.
-- Attribution is required.
-- Commercial usage is not allowed.
-- You can extend the license to [Dopler CC](https://dopler.app/license) by purchasing a [Once UI Pro](https://once-ui.com/pricing) license.
+The bar is a fixed island. Its border is a gradient that brightens under the
+pointer: the fill is painted to the padding box and the lit edge to the border
+box, so a transparent 1px border reveals only the gradient ring beneath it. A
+second radial gradient blooms inside on hover. Both read `--mx` / `--my`, set
+from `pointermove` in `SiteHeader` and reset to 50% on leave; the listener is
+skipped on coarse pointers. Technique borrowed from the NULA artifact.
 
-See `LICENSE.txt` for more information.
+### Theme and motion
 
-## Deploy with Vercel
+Both are attributes on `<html>` (`data-theme`, `data-motion`), restored before first
+paint by an inline script in the layout and toggled through `useTheme()` /
+`useReducedMotion()` in `src/components/use-preferences.ts`. `data-motion="reduced"`
+flattens every animation in CSS and makes the journey line render fully drawn.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&project-name=portfolio&repository-name=portfolio&redirect-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&demo-title=Magic%20Portfolio&demo-description=Showcase%20your%20designers%20or%20developer%20portfolio&demo-url=https%3A%2F%2Fdemo.magic-portfolio.com&demo-image=%2F%2Fraw.githubusercontent.com%2Fonce-ui-system%2Fmagic-portfolio%2Fmain%2Fpublic%2Fimages%2Fog%2Fhome.jpg)
+The alternate theme is a **dimmed slate, not a light one** — the design is built
+for a dark ground, so the toggle moves between a near-black navy and a lighter
+slate. The attribute value is still `light` so stored preferences keep working.
+
+## Configuration
+
+- **Contact form** — endpoint in `src/resources/formspree.ts`.
+- **Canonical URL** — `NEXT_PUBLIC_SITE_URL`, else the production domain in
+  `src/resources/site.ts`. Vercel preview deployments resolve to their own URL.
+- **Contact details, name, avatar** — `src/resources/site.ts`.
+
+## SEO
+
+Generated automatically: hreflang alternates for both locales, canonical URLs,
+OpenGraph/Twitter cards with a rendered OG image (`/api/og/generate`), `sitemap.xml`,
+`robots.txt`, `llms.txt`, a PWA manifest, and a JSON-LD `@graph`
+(Person + ProfessionalService + WebPage + FAQPage) built in
+`src/resources/structured-data.ts`.
+
+## Notes
+
+- The two brand previews in the directions section (`forme.`, `mono®`) are **design
+  concepts, not client work**, and are labelled as such in the copy.
+- Section eyebrows are numbered `01 /` … `07 /` by hand in the content files, and
+  the hero's `index` ("01 — 07") has to match. Adding a section means renumbering
+  both.
+- Concept photography is Unsplash-licensed; Manrope is SIL OFL.
