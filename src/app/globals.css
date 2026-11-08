@@ -4467,31 +4467,26 @@ button {
   transform: none;
 }
 
-/* Showcase stacks below the tablet breakpoint: tabs become a scrolling strip. */
+/* Showcase stacks below the tablet breakpoint: tabs become a compact grid of tiles. */
 @media (max-width: 900px) {
   .showcase {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 
   .showcase-tabs {
-    display: flex;
-    gap: 7px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: none;
-  }
-
-  .showcase-tabs::-webkit-scrollbar {
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
   }
 
   .showcase-tab {
-    /* Base rule sets width:100%, which leaves one tab per screen in a row. */
-    width: auto;
-    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 6px;
     border-color: var(--border);
-    padding: 10px 13px;
+    text-align: center;
   }
 
   .showcase-tab-text em {
@@ -4499,8 +4494,8 @@ button {
   }
 
   .showcase-tab-text strong {
-    white-space: nowrap;
-    font-size: 0.875rem;
+    font-size: 0.72rem;
+    line-height: 1.25;
   }
 }
 
