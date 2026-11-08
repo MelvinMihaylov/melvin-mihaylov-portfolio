@@ -5,20 +5,21 @@ import { ArrowRight, Sparkles, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const DISMISSED_KEY = "free-banner-dismissed";
+const APPEAR_DELAY_MS = 1500;
 
 type FreeSiteBannerProps = {
   content: LandingContent;
 };
 
 /**
- * Floating "free website" offer. Slides in once the hero is scrolled past,
+ * Floating "free website" offer. Slides in shortly after the page opens,
  * steps aside while pricing or contact is on screen (they already make the offer),
  * and stays closed after the visitor dismisses it.
  */
 export function FreeSiteBanner({ content }: FreeSiteBannerProps) {
   const { freeBanner } = content;
   const [dismissed, setDismissed] = useState(true);
-  const [pastHero, setPastHero] = useState(false);
+  const [ready, setReady] = useState(false);
   const [offerInView, setOfferInView] = useState(false);
 
   useEffect(() => {
@@ -28,9 +29,8 @@ export function FreeSiteBanner({ content }: FreeSiteBannerProps) {
       setDismissed(false);
     }
 
-    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // A short beat first, so the offer lands after the hero has drawn the eye.
+    const timer = setTimeout(() => setReady(true), APPEAR_DELAY_MS);
 
     const visible = new Set<Element>();
     const observer = new IntersectionObserver((entries) => {
@@ -46,7 +46,7 @@ export function FreeSiteBanner({ content }: FreeSiteBannerProps) {
     }
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      clearTimeout(timer);
       observer.disconnect();
     };
   }, []);
@@ -60,7 +60,7 @@ export function FreeSiteBanner({ content }: FreeSiteBannerProps) {
     }
   };
 
-  const shown = !dismissed && pastHero && !offerInView;
+  const shown = !dismissed && ready && !offerInView;
 
   return (
     <aside
