@@ -2,18 +2,23 @@
 
 import type { Concept } from "@/content";
 import classNames from "classnames";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
+import coffee from "../../public/images/concepts/coffee.jpg";
+import honey from "../../public/images/concepts/honey.jpg";
+import renovationAfter from "../../public/images/concepts/renovation-after.jpg";
+import renovationBefore from "../../public/images/concepts/renovation-before.jpg";
+import wine from "../../public/images/concepts/wine.jpg";
 
-const IMAGES: Record<Concept["key"], string> = {
-  renovation: "/images/concepts/renovation-after.jpg",
-  wine: "/images/concepts/wine.jpg",
-  coffee: "/images/concepts/coffee.jpg",
-  honey: "/images/concepts/honey.jpg",
+const IMAGES: Record<Concept["key"], StaticImageData> = {
+  renovation: renovationAfter,
+  wine,
+  coffee,
+  honey,
 };
 
 /** Shown on the left of the split when a concept has `compare`. */
-const BEFORE_IMAGE = "/images/concepts/renovation-before.jpg";
+const BEFORE_IMAGE = renovationBefore;
 
 type ConceptPreviewProps = {
   concept: Concept;
@@ -31,11 +36,25 @@ export function ConceptPreview({ concept, priority = false, sizes }: ConceptPrev
 
   return (
     <div className={classNames("concept", `concept--${concept.key}`)}>
-      <Image src={IMAGES[concept.key]} alt="" fill priority={priority} sizes={imageSizes} />
+      <Image
+        src={IMAGES[concept.key]}
+        alt=""
+        fill
+        priority={priority}
+        sizes={imageSizes}
+        placeholder="blur"
+      />
       {concept.compare && (
         <>
           <div className="concept-before" style={{ clipPath: `inset(0 ${100 - split}% 0 0)` }}>
-            <Image src={BEFORE_IMAGE} alt="" fill priority={priority} sizes={imageSizes} />
+            <Image
+              src={BEFORE_IMAGE}
+              alt=""
+              fill
+              priority={priority}
+              sizes={imageSizes}
+              placeholder="blur"
+            />
           </div>
           <span className="concept-tag before">{concept.compare.before}</span>
           <span className="concept-tag after">{concept.compare.after}</span>

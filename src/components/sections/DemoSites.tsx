@@ -4,6 +4,26 @@ import type { ExampleKey, ExamplePreview } from "@/content";
 import { ArrowRight, Check, Search, ShoppingBag, Star, Upload } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import blogRoad from "../../../public/images/examples/blog-road.jpg";
+import bookingSalon from "../../../public/images/examples/booking-salon.jpg";
+import carInterior from "../../../public/images/examples/car-interior.jpg";
+import carPolish from "../../../public/images/examples/car-polish.jpg";
+import carWash from "../../../public/images/examples/car-wash.jpg";
+import carWheel from "../../../public/images/examples/car-wheel.jpg";
+import catalogueChair from "../../../public/images/examples/catalogue-chair.jpg";
+import dropAudio from "../../../public/images/examples/drop-audio.jpg";
+import dropDesk from "../../../public/images/examples/drop-desk.jpg";
+import dropJuicer from "../../../public/images/examples/drop-juicer.jpg";
+import dropLens from "../../../public/images/examples/drop-lens.jpg";
+import dropSneakers from "../../../public/images/examples/drop-sneakers.jpg";
+import menuDish from "../../../public/images/examples/menu-dish.jpg";
+import portfolioCamera from "../../../public/images/examples/portfolio-camera.jpg";
+import portfolioRoad from "../../../public/images/examples/portfolio-road.jpg";
+import printFigures from "../../../public/images/examples/print-figures.jpg";
+import printLion from "../../../public/images/examples/print-lion.jpg";
+import printPrinter from "../../../public/images/examples/print-printer.jpg";
+import printShop from "../../../public/images/examples/print-shop.jpg";
+import shopVases from "../../../public/images/examples/shop-vases.jpg";
 
 type DemoProps = { preview: ExamplePreview };
 
@@ -13,10 +33,36 @@ type DemoProps = { preview: ExamplePreview };
  * state resets on its own.
  */
 
-/** A stock photo filling its positioned parent. */
-function Photo({ src, sizes = "400px" }: { src: string; sizes?: string }) {
+/** Static imports, so Next ships a tiny blurred preview with each photo. */
+const PHOTOS = {
+  "blog-road": blogRoad,
+  "booking-salon": bookingSalon,
+  "car-interior": carInterior,
+  "car-polish": carPolish,
+  "car-wash": carWash,
+  "car-wheel": carWheel,
+  "catalogue-chair": catalogueChair,
+  "drop-audio": dropAudio,
+  "drop-desk": dropDesk,
+  "drop-juicer": dropJuicer,
+  "drop-lens": dropLens,
+  "drop-sneakers": dropSneakers,
+  "menu-dish": menuDish,
+  "portfolio-camera": portfolioCamera,
+  "portfolio-road": portfolioRoad,
+  "print-figures": printFigures,
+  "print-lion": printLion,
+  "print-printer": printPrinter,
+  "print-shop": printShop,
+  "shop-vases": shopVases,
+};
+
+type PhotoName = keyof typeof PHOTOS;
+
+/** A stock photo filling its positioned parent; a blurred preview shows until it loads. */
+function Photo({ src, sizes = "400px" }: { src: PhotoName; sizes?: string }) {
   return (
-    <Image src={`/images/examples/${src}.jpg`} alt="" fill sizes={sizes} className="ex-photo" />
+    <Image src={PHOTOS[src]} alt="" fill sizes={sizes} placeholder="blur" className="ex-photo" />
   );
 }
 
@@ -207,7 +253,7 @@ function ShopDemo({ preview }: DemoProps) {
 }
 
 /* -------------------------------------------------------- dropshipping */
-const DROP_PHOTOS = ["drop-lens", "drop-juicer", "drop-audio", "drop-desk"];
+const DROP_PHOTOS: PhotoName[] = ["drop-lens", "drop-juicer", "drop-audio", "drop-desk"];
 
 function DropshippingDemo({ preview }: DemoProps) {
   const [cart, setCart] = useState(3);
@@ -317,7 +363,7 @@ function CatalogueDemo({ preview }: DemoProps) {
 }
 
 /* ----------------------------------------------------------- detailing */
-const DETAILING_PHOTOS = ["car-polish", "car-wheel", "car-interior"];
+const DETAILING_PHOTOS: PhotoName[] = ["car-polish", "car-wheel", "car-interior"];
 
 function DetailingDemo({ preview }: DemoProps) {
   const [service, setService] = useState(0);
@@ -360,7 +406,7 @@ function DetailingDemo({ preview }: DemoProps) {
 }
 
 /* ------------------------------------------------------------- print3d */
-const PRINT_PHOTOS = ["print-lion", "print-figures", "print-shop"];
+const PRINT_PHOTOS: PhotoName[] = ["print-lion", "print-figures", "print-shop"];
 
 function Print3dDemo({ preview }: DemoProps) {
   return (
