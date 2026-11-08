@@ -1,3 +1,4 @@
+import { FreeSiteBanner } from "@/components/FreeSiteBanner";
 import { JourneyPath } from "@/components/JourneyPath";
 import { SiteHeader } from "@/components/SiteHeader";
 import { About } from "@/components/sections/About";
@@ -46,6 +47,7 @@ export default async function LandingPage({ params }: LocaleRouteProps) {
       <Pricing content={content} />
       <Contact content={content} locale={locale} />
       <SiteFooter content={content} />
+      <FreeSiteBanner content={content} />
     </main>
   );
 }

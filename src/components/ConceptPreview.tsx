@@ -1,11 +1,19 @@
+"use client";
+
 import type { Concept } from "@/content";
 import classNames from "classnames";
 import Image from "next/image";
+import { useState } from "react";
 
 const IMAGES: Record<Concept["key"], string> = {
-  architecture: "/images/concepts/architecture.avif",
-  audio: "/images/concepts/audio.avif",
+  renovation: "/images/concepts/renovation-after.jpg",
+  wine: "/images/concepts/wine.jpg",
+  coffee: "/images/concepts/coffee.jpg",
+  honey: "/images/concepts/honey.jpg",
 };
+
+/** Shown on the left of the split when a concept has `compare`. */
+const BEFORE_IMAGE = "/images/concepts/renovation-before.jpg";
 
 type ConceptPreviewProps = {
   concept: Concept;
@@ -18,23 +26,39 @@ type ConceptPreviewProps = {
  * and full size in the directions grid — the CSS scales the type down in the former.
  */
 export function ConceptPreview({ concept, priority = false, sizes }: ConceptPreviewProps) {
-  const isObject = concept.key === "audio";
+  const imageSizes = sizes ?? "(max-width: 700px) 100vw, 50vw";
+  const [split, setSplit] = useState(50);
 
   return (
-    <div className={classNames("concept", isObject ? "object" : "architecture")}>
-      <Image
-        src={IMAGES[concept.key]}
-        alt=""
-        fill
-        priority={priority}
-        sizes={sizes ?? "(max-width: 700px) 100vw, 50vw"}
-      />
+    <div className={classNames("concept", `concept--${concept.key}`)}>
+      <Image src={IMAGES[concept.key]} alt="" fill priority={priority} sizes={imageSizes} />
+      {concept.compare && (
+        <>
+          <div className="concept-before" style={{ clipPath: `inset(0 ${100 - split}% 0 0)` }}>
+            <Image src={BEFORE_IMAGE} alt="" fill priority={priority} sizes={imageSizes} />
+          </div>
+          <span className="concept-tag before">{concept.compare.before}</span>
+          <span className="concept-tag after">{concept.compare.after}</span>
+          <span className="concept-divider" style={{ left: `${split}%` }} />
+          <input
+            className="concept-slider"
+            type="range"
+            min={0}
+            max={100}
+            step={0.1}
+            value={split}
+            onChange={(event) => setSplit(Number(event.target.value))}
+            aria-label={concept.compare.label}
+          />
+        </>
+      )}
       <div className="concept-nav">
-        <b>
-          {concept.brand}
-          <span>{concept.brandAccent}</span>
-          {!isObject && "."}
-        </b>
+        {concept.brand && (
+          <b>
+            {concept.brand}
+            {concept.brandAccent && <span>{concept.brandAccent}</span>}
+          </b>
+        )}
         {concept.navItems.map((item) => (
           <span key={item}>{item}</span>
         ))}

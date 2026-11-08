@@ -39,7 +39,7 @@ export function getLandingStructuredData(locale: Locale) {
         description: content.meta.description,
         founder: { "@id": personId },
         areaServed: { "@type": "Country", name: "Bulgaria" },
-        priceRange: "€€",
+        priceRange: "€",
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: content.services.eyebrow,

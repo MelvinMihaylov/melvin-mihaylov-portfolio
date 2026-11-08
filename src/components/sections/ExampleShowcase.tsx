@@ -3,14 +3,15 @@
 import { useReducedMotion } from "@/components/use-preferences";
 import type { ExampleKey, LandingContent } from "@/content";
 import {
+  Box,
   CalendarCheck,
-  ChartColumn,
+  CarFront,
   LayoutGrid,
   type LucideIcon,
   Newspaper,
+  Package,
   ShoppingCart,
   UserRound,
-  Users,
   UtensilsCrossed,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -21,10 +22,11 @@ const EXAMPLE_ICONS: Record<ExampleKey, LucideIcon> = {
   menu: UtensilsCrossed,
   booking: CalendarCheck,
   shop: ShoppingCart,
+  dropshipping: Package,
   catalogue: LayoutGrid,
+  detailing: CarFront,
+  print3d: Box,
   portfolio: UserRound,
-  dashboard: ChartColumn,
-  crm: Users,
 };
 
 /** How long each demo holds before advancing. */

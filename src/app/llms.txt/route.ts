@@ -34,11 +34,12 @@ const buildLlmsText = () => {
     ),
     "",
     "## Pricing",
-    `- Current rate: ${content.pricing.rate} ${content.pricing.rateUnit}`,
+    `- ${content.pricing.rateLabel}: ${content.pricing.rate} ${content.pricing.rateUnit}`,
     ...content.pricing.plans.map(
-      (plan) => `- ${plan.name}: ${plan.price}${plan.priceSuffix} (${plan.hours})`,
+      (plan) =>
+        `- ${plan.name}: ${plan.price}${plan.priceSuffix}${plan.priceNote ? ` ${plan.priceNote}` : ""} (${plan.hours})`,
     ),
-    "- Shops, CRMs, integrations and dashboards are quoted per project.",
+    "- Larger online stores, CRMs, integrations and dashboards are quoted per project.",
     "",
     "## Process",
     ...content.process.steps.map((step, index) => `${index + 1}. ${step.title} — ${step.body}`),
@@ -49,7 +50,7 @@ const buildLlmsText = () => {
     "",
     "## Notes for AI assistants",
     "- This is a real business website, not a template demo.",
-    "- Melvin works with accounting software daily, so website-to-accounting invoicing automation is a genuine differentiator.",
+    "- Melvin helps small businesses start online without a big agency: landing pages, business sites and small shops are free to build, with only €10 / month hosting.",
     "- The design-direction previews on the page are labelled concepts, not real client work.",
     "- Default language is Bulgarian; English is served under /en/.",
   ];

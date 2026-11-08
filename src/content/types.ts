@@ -28,14 +28,15 @@ export type ExampleKey =
   | "menu"
   | "booking"
   | "shop"
+  | "dropshipping"
   | "catalogue"
-  | "portfolio"
-  | "dashboard"
-  | "crm";
+  | "detailing"
+  | "print3d"
+  | "portfolio";
 
 export type PledgeKey = "idea" | "fast" | "price" | "open";
 
-export type ConceptKey = "architecture" | "audio";
+export type ConceptKey = "renovation" | "wine" | "coffee" | "honey";
 
 export type DemoTabKey = "integrations" | "crm" | "analytics";
 
@@ -51,6 +52,8 @@ export type Concept = {
   link: string;
   footLeft: string;
   footRight: string;
+  /** Labels for a draggable before/after split; without it the preview is a single photo. */
+  compare?: { before: string; after: string; label: string };
   /** Caption below the preview. */
   conceptLabel: string;
   title: string;
@@ -92,9 +95,13 @@ export type ExamplePreview = {
   brand: string;
   nav: string[];
   heading: string;
+  /** Second, accented line of the heading. */
+  emphasis?: string;
   meta: string;
+  /** A short extra line: a kicker, a breadcrumb or a newsletter prompt. */
+  note?: string;
   items: { label: string; detail?: string; value?: string }[];
-  cta: string;
+  cta?: string;
 };
 
 /** One switchable entry in the "what else I can build" showcase. */
@@ -152,6 +159,8 @@ export type PricePlan = {
   body: string;
   price: string;
   priceSuffix: string;
+  /** Smaller line under the price, e.g. the monthly hosting on a free build. */
+  priceNote?: string;
   features: string[];
   cta: string;
   featured?: boolean;
@@ -291,6 +300,12 @@ export type LandingContent = {
     customLink: string;
     faqEyebrow: string;
     faq: FaqEntry[];
+  };
+  freeBanner: {
+    title: string;
+    body: string;
+    cta: string;
+    closeLabel: string;
   };
   contact: {
     eyebrow: string;
