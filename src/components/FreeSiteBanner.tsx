@@ -5,7 +5,7 @@ import { ArrowRight, Sparkles, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const DISMISSED_KEY = "free-banner-dismissed";
-const APPEAR_DELAY_MS = 1500;
+const APPEAR_DELAY_MS = 500;
 
 type FreeSiteBannerProps = {
   content: LandingContent;
